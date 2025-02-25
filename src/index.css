@@ -1,0 +1,12 @@
+@tailwind utilities;
+@tailwind base;
+@tailwind components;
+
+*,
+body,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
