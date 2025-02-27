@@ -15,9 +15,12 @@ const Navbar = () => {
             <Link to={'/'} className='text-4xl font-bold'>PAC Asset</Link>
             <div className=' flex gap-20 justify-between '>
                 {
-                    navData.map((item, index) => (
-                        <p onMouseEnter={() => handleItemsToggle(item)} className='' key={index}>{item.text}</p>
-                    )
+                    navData.map((item, index) => {
+                        if (item.items) {
+                            return <Link to={item.path} onMouseEnter={() => handleItemsToggle(item)} className='' key={index}>{item.text}</Link>
+                        }
+                        return <Link to={item.path} className='' key={index}>{item.text}</Link>
+                    }
                     )
                 }
             </div>
