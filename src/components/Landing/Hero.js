@@ -80,7 +80,7 @@ const Hero = ({ heading, text }) => {
             <p className="text-xl font-light mt-5">{text}</p>
           </div>
         </div>
-        <div className="w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primarygray">
+        <div className="w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-secondaryRed">
         </div>
       </div>
     </section>
