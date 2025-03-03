@@ -46,7 +46,7 @@ export const services = [
     {
         icon: 'wealth',
         heading: 'Wealth Management',
-        text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs, by providing them with cutting edge Investment Advisory and Portfolio Management Services premised on sound research and information.',
+        text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs.',
     },
     {
         icon: 'investment',

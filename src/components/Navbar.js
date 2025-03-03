@@ -11,8 +11,8 @@ const Navbar = () => {
         setActiveItems(item.items)
     }
     return (
-        <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-primaryBlue py-10 text-white px-20 flex justify-between items-center'>
-            <Link to={'/'} className='text-4xl font-bold'>PAC Asset</Link>
+        <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-white py-6 text-primaryBlue px-20 flex justify-between items-center'>
+            <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className=' max-w-[250px]' /></Link>
             <div className=' flex gap-20 justify-between '>
                 {
                     navData.map((item, index) => {
@@ -31,9 +31,9 @@ const Navbar = () => {
                         {
                             activeItems.map((item, index) => (
                                 <div key={index} className='w-full max-w-[250px] flex flex-col '>
-                                    <h2 className='text-xl border-b-2 pb-3'>{item.heading}</h2>
+                                    <h2 className='text-xl text-white border-b-2 pb-3'>{item.heading}</h2>
 
-                                    <div className='flex flex-col'>
+                                    <div className='flex flex-col text-white'>
                                         {
                                             item.links.map((item) => {
                                                 if (item.external) {

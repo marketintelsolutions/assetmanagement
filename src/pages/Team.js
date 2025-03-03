@@ -63,10 +63,10 @@ const Team = () => {
                         team.map((item, index) => (
                             <div className='w-full h-full' key={index}>
                                 <div className='w-full'><img src={`/${item.image}.jpg`} className='w-full  object-cover max-h-[200px]' /></div>
-                                <div className='pt-5 px-6 pb-8 bg-black text-white'>
+                                <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
                                     <h2 className='text-2xl  uppercase text-[#e7e0e0]'>{item.name}</h2>
                                     <p className='h-[250px] text-xl  mt-4'>{item.desc[0]}</p>
-                                    <button className='mt-10 py-3 px-4 border hover:bg-secondaryRed hover:text-white border-secondaryRed text-secondaryRed'>READ MORE</button>
+                                    <button className='mt-10 py-3 px-10 border hover:bg-white hover:text-primaryBlue border-white text-white'>READ MORE</button>
                                 </div>
                             </div>
                         ))

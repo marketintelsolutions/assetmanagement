@@ -35,7 +35,7 @@ const WhatWeDo = () => {
                         <div className='w-full max-w-[400px] mx-auto ' key={index}>
                             <div className='w-full'><img src={`/${item.image}.jpg`} className='w-full  object-cover max-h-[200px]' /></div>
                             <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
-                                <h2 className='text-xl'>{item.heading}</h2>
+                                <h2 className='text-xl font-semibold'>{item.heading}</h2>
                                 <p className='text-xl h-[110px] mt-4'>{item.text}</p>
                                 <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button>
                             </div>
