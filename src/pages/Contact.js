@@ -4,9 +4,7 @@ import { LuPhone } from 'react-icons/lu'
 import Hero from '../components/Landing/Hero'
 
 const Contact = () => {
-    useEffect(() => {
-        window.scroll(0, 0)
-    }, [])
+
     return (
         <section>
             <Hero

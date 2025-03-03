@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const services = [
     {
@@ -25,9 +26,9 @@ const services = [
 
 const WhatWeDo = () => {
     return (
-        <section className='py-[100px] w-full max-w-[1200px] mx-auto'>
-            <h1 className='text-4xl'>WHAT WE DO</h1>
-            <p className='mt-10 text-2xl text-justify'>PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients. The company also offers wealth management services for high-net-worth individuals, focusing on long-term goals and estate planning. The company is Licensed and regulated by the Securities & Exchange Commission (SEC), and operates as a Funds and Portfolio Manager in Nigeria.</p>
+        <section className='py-[150px] w-full max-w-[1200px] mx-auto'>
+            <h1 className='text-5xl font-medium text-primaryBlue font-poppins'>WHAT WE DO</h1>
+            <p className='mt-10 text-[22px] text-justify'>PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients. The company also offers wealth management services for high-net-worth individuals, focusing on long-term goals and estate planning. The company is Licensed and regulated by the Securities & Exchange Commission (SEC), and operates as a Funds and Portfolio Manager in Nigeria.</p>
 
             <div className='grid grid-cols-2 max-w-[900px] mx-auto mt-20 gap-0 gap-y-20'>
                 {
@@ -35,9 +36,9 @@ const WhatWeDo = () => {
                         <div className='w-full max-w-[400px] mx-auto ' key={index}>
                             <div className='w-full'><img src={`/${item.image}.jpg`} className='w-full  object-cover max-h-[200px]' /></div>
                             <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
-                                <h2 className='text-xl font-semibold'>{item.heading}</h2>
+                                <h2 className='text-xl font-poppins font-medium'>{item.heading}</h2>
                                 <p className='text-xl h-[110px] mt-4'>{item.text}</p>
-                                <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button>
+                                <Link to={'/contact'}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
                             </div>
                         </div>
                     ))
@@ -50,7 +51,7 @@ const WhatWeDo = () => {
                     {
                         ['Account opening package', 'Client Update Form', 'Fund Subscription Form', 'Fund Redemption Form'].map((item) => (
                             <div className='bg-primaryBlue w-full p-8 px-6 text-white flex flex-col gap-5'>
-                                <p className='text-2xl h-[60px] uppercase '>{item} </p>
+                                <p className='text-2xl h-[60px] uppercase font-medium '>{item} </p>
                                 <button className='border border-white py-3 px-10 w-fit'>DOWNLOAD HERE</button>
                             </div>
                         ))

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const mutualfunds = [
     {
@@ -34,11 +35,11 @@ const MutualFundDetails = () => {
             <div className='grid grid-cols-3 gap-14'>
                 {
                     mutualfunds.map((item) => (
-                        <div className='bg-black py-12 px-10 text-white flex flex-col gap-10 items-center '>
+                        <div className='bg-primaryBlue py-12 px-10 text-white flex flex-col gap-10 items-center '>
                             <img src={`/${item.icon}.png`} alt="balance" />
                             <h2 className='text-2xl'>{item.heading}</h2>
                             <p className='h-[220px] text-center'>{item.text}</p>
-                            <button className='mt-10 py-3 px-4 border hover:bg-secondaryRed hover:text-white border-secondaryRed text-secondaryRed'>CONTACT US</button>
+                            <Link to={'/contact'}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
                         </div>
                     ))
                 }

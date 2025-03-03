@@ -3,6 +3,7 @@ import Hero from '../components/Landing/Hero'
 import WhatWeDo from '../components/About/WhatWeDo'
 
 const About = () => {
+
     return (
         <>
             <Hero

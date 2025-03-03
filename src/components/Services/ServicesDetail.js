@@ -7,7 +7,7 @@ const ServicesDetail = () => {
     const [activeItem, setActiveItem] = useState(services[0])
     return (
         <section className='py-[150px] w-full max-w-max mx-auto'>
-            <h1 className='text-4xl'>OUR SERVICES</h1>
+            <h1 className='text-5xl text-primaryBlue font-poppins font-medium'>OUR SERVICES</h1>
             <p className='mt-10 text-2xl text-justify'>Easy access to investment opportunities</p>
 
             <div className='flex gap-10 mt-20'>

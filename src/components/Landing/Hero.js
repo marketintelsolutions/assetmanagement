@@ -1,72 +1,27 @@
-import React, { ReactElement } from "react";
-import clsx from "clsx";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  DotGroup,
-  ButtonBack,
-  ButtonNext,
-  ButtonPlay,
-} from "pure-react-carousel";
+import React, { ReactElement, useState } from "react";
 
 const slides = [
   {
-    title: 'PAC Asset Management',
-    body: 'PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients.',
-    image: {
-      url: 'https://eu-images.contentstack.com/v3/assets/bltacf39601912ccb86/blte4a02cf8bdbdea0a/614068d86db99f25817e5cc3/IMG_2196.JPG?auto=webp&width=1200&quality=80',
-      description: 'banner image',
-    },
-    cta: {
-      url: '/about',
-      title: 'About',
-    },
-    backgroundImage: {
-      url: 'https://eu-images.contentstack.com/v3/assets/bltacf39601912ccb86/blte4a02cf8bdbdea0a/614068d86db99f25817e5cc3/IMG_2196.JPG?auto=webp&width=1200&quality=80',
-      description: 'banner bg',
-    }
+    image: 'building',
+    heading: 'Relax While Your Investments Grow from a Seed to a Forest',
+    text: 'Just as a seed develops, your investments with us can yield returns and create a source of passive income, allowing you to benefit financially even while you focus on other aspects of life.',
   },
   {
-    title: 'PAC Asset Management',
-    body: 'PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients.',
-    image: {
-      url: 'https://eu-images.contentstack.com/v3/assets/bltacf39601912ccb86/blte4a02cf8bdbdea0a/614068d86db99f25817e5cc3/IMG_2196.JPG?auto=webp&width=1200&quality=80',
-      description: 'banner image',
-    },
-    cta: {
-      url: '/about',
-      title: 'About',
-    },
-    backgroundImage: {
-      url: 'https://eu-images.contentstack.com/v3/assets/bltacf39601912ccb86/blte4a02cf8bdbdea0a/614068d86db99f25817e5cc3/IMG_2196.JPG?auto=webp&width=1200&quality=80',
-      description: 'banner bg',
-    }
+    image: 'building',
+    heading: 'Your Innovative Investment Manager',
+    text: 'At PAC Asset Management, we combine creativity with strategic insight to optimize investment portfolios. We leverage market analysis and trend identification, making bold yet calculated decisions that can significantly impact the performance of investments.',
   },
   {
-    title: 'PAC Asset Management',
-    body: 'PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients.',
-    image: {
-      url: 'https://eu-images.contentstack.com/v3/assets/bltacf39601912ccb86/blte4a02cf8bdbdea0a/614068d86db99f25817e5cc3/IMG_2196.JPG?auto=webp&width=1200&quality=80',
-      description: 'banner image',
-    },
-    cta: {
-      url: '/about',
-      title: 'About',
-    },
-    backgroundImage: {
-      url: 'https://eu-images.contentstack.com/v3/assets/bltacf39601912ccb86/blte4a02cf8bdbdea0a/614068d86db99f25817e5cc3/IMG_2196.JPG?auto=webp&width=1200&quality=80',
-      description: 'banner bg',
-    }
+    image: 'building',
+    heading: 'Helping you secure your future today',
+    text: 'We are positioned to provide you with innovative investment management services, delivering diversified investment opportunities from different sectors of the economy.',
   },
 ]
 
 
 
 const Hero = ({ heading, text }) => {
-  const primaryColor = '#062644';
-
-  const hasMoreThanOneSlide = true;
+  const [activeSlide, setActiveSlide] = useState(slides[0])
 
   return (
     <section className="h-[95vh] relative w-full bg-white">
