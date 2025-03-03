@@ -1,5 +1,4 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import MainLayout from "./components/MainLayout";
 import About from "./pages/About";
@@ -10,6 +9,10 @@ import WealthManagement from "./pages/WealthManagement";
 import AlternativeInvestment from "./pages/AlternativeInvestment";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
+import FundManager from "./pages/FundManager";
+import Faqs from "./pages/Faqs";
+import FundCalculator from "./pages/FundCalculator";
+import Career from "./pages/Career";
 
 function App() {
   const router = createBrowserRouter([
@@ -74,6 +77,38 @@ function App() {
       element: (
         <MainLayout>
           <AlternativeInvestment />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/insights/fund-manager',
+      element: (
+        <MainLayout>
+          <FundManager />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/insights/faqs',
+      element: (
+        <MainLayout>
+          <Faqs />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/insights/fund-calculator',
+      element: (
+        <MainLayout>
+          <FundCalculator />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/careers',
+      element: (
+        <MainLayout>
+          <Career />
         </MainLayout>
       )
     },

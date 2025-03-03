@@ -47,20 +47,12 @@ const team = [
 
 const Team = () => {
     return (
-        <section className="h-[95vh] relative w-full bg-black">
-            <div className="w-full h-full max-w-[90%] mx-auto" style={{ backgroundImage: `url(/construction.jpg)`, backgroundSize: 'cover' }}>
-                <div className="bg-[#00000041] relative h-full w-full flex pt-20 gap-20 items-center justify-end">
-                    <div className="absolute -bottom-[62px] -left-5 w-full max-w-[42%]  ">
-                        <img src="/building.jpg" alt="building" className="w-full object-cover" />
-                    </div>
-                    <div className="w-full max-w-[53%] text-white bg-black px-14 py-20">
-                        <h1 className="text-3xl font-light">BOARD OF DIRECTORS</h1>
-                        <p className="text-xl font-light mt-5">The Board of Directors for PAC Asset Management Limited meets on a quarterly basis and is responsible for setting the Company’s strategic goals and evaluating overall business performance</p>
-                    </div>
-                </div>
-                <div className="w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primaryBlue">
-                </div>
-            </div>
+        <>
+            <Hero
+                heading={'BOARD OF DIRECTORS'}
+                text={'The Board of Directors for PAC Asset Management Limited meets on a quarterly basis and is responsible for setting the Company’s strategic goals and evaluating overall business performance'}
+            />
+
 
             <div className='w-full max-w-max mx-auto py-40'>
                 <h1 className='text-5xl'>BOARD OF DIRECTORS</h1>
@@ -81,7 +73,7 @@ const Team = () => {
                     }
                 </div>
             </div>
-        </section>
+        </>
     )
 }
 

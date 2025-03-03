@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { services } from '../../utils/data'
 import { FaAngleRight } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 const ServicesDetail = () => {
     const [activeItem, setActiveItem] = useState(services[0])
@@ -30,16 +31,17 @@ const ServicesDetail = () => {
                                         <img src={`/${item.icon}.png`} alt="balance" />
                                         <h2 className='text-2xl'>{item.heading}</h2>
                                         <p className='h-[220px] text-center'>{item.text}</p>
-                                        <button className='mt-10 py-3 px-4 border hover:bg-secondaryRed hover:text-white border-secondaryRed text-secondaryRed'>CONTACT US</button>
+                                        <Link to={'/contact'}><button className='mt-10 py-3 px-4 border hover:bg-secondaryRed hover:text-white border-secondaryRed text-secondaryRed'>CONTACT US</button></Link>
                                     </div>
                                 ))
                             }
-                        </div> : <div className=' w-full max-w-max mx-auto'>
-                            <p className=' text-2xl max-w-[600px] text-justify'>{activeItem.text}</p>
-
-                            <button className='mt-10 py-3 px-4 border hover:bg-secondaryRed hover:text-white border-secondaryRed text-secondaryRed'>CONTACT US</button>
-
-                        </div>
+                        </div> :
+                            <div className='bg-black max-w-[450px] py-12 px-10 text-white flex flex-col gap-10 items-center '>
+                                <img src={`/${activeItem.icon}.png`} alt="balance" />
+                                <h2 className='text-2xl'>{activeItem.heading}</h2>
+                                <p className='text-center'>{activeItem.text}</p>
+                                <Link to={'/contact'}><button className='mt-10 py-3 px-4 border hover:bg-secondaryRed hover:text-white border-secondaryRed text-secondaryRed'>CONTACT US</button></Link>
+                            </div>
                     }
                 </div>
             </div>

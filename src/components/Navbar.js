@@ -11,7 +11,7 @@ const Navbar = () => {
         setActiveItems(item.items)
     }
     return (
-        <nav onMouseLeave={() => setIsItems(false)} className='bg-primaryBlue relative py-10 text-white px-20 flex justify-between items-center'>
+        <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-primaryBlue py-10 text-white px-20 flex justify-between items-center'>
             <Link to={'/'} className='text-4xl font-bold'>PAC Asset</Link>
             <div className=' flex gap-20 justify-between '>
                 {
@@ -27,7 +27,7 @@ const Navbar = () => {
             <button className='border border-white text-white px-4 py-3 rounded-[6px]'>SELF SERVICE</button>
             {isItems &&
                 <div className='absolute z-10 w-full h-fit top-full left-0 pt-20 pb-20 bg-[#00000058] backdrop-blur-[3px]'>
-                    <div className='w-full h-full  px-20 mx-auto'>
+                    <div className='w-full h-full flex gap-12 px-20 mx-auto'>
                         {
                             activeItems.map((item, index) => (
                                 <div key={index} className='w-full max-w-[250px] flex flex-col '>
@@ -35,9 +35,12 @@ const Navbar = () => {
 
                                     <div className='flex flex-col'>
                                         {
-                                            item.links.map((item) => (
-                                                <Link to={item.path} className='text-sm capitalize py-3 border-b border-[#a09d9d]'>{item.text}</Link>
-                                            ))
+                                            item.links.map((item) => {
+                                                if (item.external) {
+                                                    return <a href={item.path} target='_blank' className='text-sm capitalize py-3 border-b border-[#a09d9d]' >{item.text}</a>
+                                                }
+                                                return <Link onClick={() => setIsItems(false)} to={item.path} className='text-sm capitalize py-3 border-b border-[#a09d9d]'>{item.text}</Link>
+                                            })
                                         }
                                     </div>
                                 </div>

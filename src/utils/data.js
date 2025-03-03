@@ -54,6 +54,37 @@ export const services = [
         text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.',
     },
 ]
+export const careers = [
+    {
+        icon: 'fund',
+        heading: 'LIFE AT PAC ASSET AMANAGEMENT',
+        text: ['Life at PAC Asset Management is driven by a shared passion for innovation, teamwork, and growth. We’re dedicated to creating an environment where each team member feels valued, empowered, and motivated to bring their best ideas forward. Our culture promotes collaboration, continuous learning, and the pursuit of excellence across all departments.',
+            "Whether it's through exciting tasks, professional development opportunities, or team-building events, we strive to ensure that everyone feels both challenged and supported. Here, you’ll find a balance between hard work and fun—where success is celebrated, and every contribution is recognized.",
+            "Join us and be part of a community where you can grow your career, achieve your goals, and make a real impact."
+        ],
+        image: 'building',
+    },
+    {
+        icon: 'trading',
+        heading: 'CULTURE',
+        text: ['Our work culture is built on a foundation of respect, collaboration, and continuous improvement. We believe that when people feel valued and empowered, they’re inspired to do their best work. Open communication, transparency, and mutual support are at the heart of our daily interactions, creating an environment where ideas can flourish, and innovation thrives.',
+            "At PAC Asset Management, we celebrate diversity and value each team member's unique perspective, fostering a sense of belonging and shared purpose. We emphasize work-life balance, professional growth, and a commitment to achieving excellence together. This culture not only drives our success but also makes the company a place where people are excited to grow and make a difference."
+        ],
+        image: 'building',
+    },
+    {
+        icon: 'wealth',
+        heading: 'PAC ACADEMY',
+        text: ['Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam cupiditate atque doloremque tempora iste, accusamus nobis impedit, porro exercitationem tempore dolorem nam quaerat labore sint amet harum quas reiciendis consequuntur?'],
+        image: 'building',
+    },
+    {
+        icon: 'investment',
+        heading: 'JOB POSTING',
+        text: ['We recruit experienced professionals whenever opportunities arise. If you have expertise in investment management, fund operations, sales, or relationship management, please submit your resume to'],
+        image: 'building',
+    },
+]
 
 export const navData = [
     {
@@ -106,15 +137,34 @@ export const navData = [
         text: 'INSIGHTS',
         items: [
             {
-                heading: 'INSIGHTS',
+                heading: 'RESEARCH',
                 links: [
                     {
-                        text: 'Research',
-                        path: '/insights/research'
+                        text: 'Daily Market',
+                        path: 'https://pacresearch.org/#/resources/daily%20financial%20market%20record',
+                        external: true
                     },
                     {
-                        text: 'Resources',
-                        path: '/insights/resources'
+                        text: 'Sectorial Report',
+                        path: 'https://pacresearch.org/#/resources/sectoral%20report',
+                        external: true
+                    },
+                ]
+            },
+            {
+                heading: 'RESOURCES',
+                links: [
+                    {
+                        text: 'Fund Manager',
+                        path: '/insights/fund-manager'
+                    },
+                    {
+                        text: 'FAQS',
+                        path: '/insights/faqs'
+                    },
+                    {
+                        text: 'Fund Calculator',
+                        path: '/insights/fund-calculator'
                     },
                 ]
             }
@@ -122,26 +172,31 @@ export const navData = [
     },
     {
         text: 'CAREERS',
+        path: '/careers',
         items: [
             {
                 heading: 'CAREERS',
                 links: [
                     {
-                        text: 'Life At PAC Asset Management',
-                        path: '/careers/Life-At-PAC-Asset-Management'
+                        text: 'PAC Asset Management',
+                        path: '/careers'
                     },
-                    {
-                        text: 'Culture',
-                        path: '/careers/culture'
-                    },
-                    {
-                        text: 'PAC Academy',
-                        path: '/careers/PAC-ACADEMY'
-                    },
-                    {
-                        text: 'Job Posting',
-                        path: '/careers/Job-Posting'
-                    },
+                    // {
+                    //     text: 'Life At PAC Asset Management',
+                    //     path: '/careers/Life-At-PAC-Asset-Management'
+                    // },
+                    // {
+                    //     text: 'Culture',
+                    //     path: '/careers/culture'
+                    // },
+                    // {
+                    //     text: 'PAC Academy',
+                    //     path: '/careers/PAC-ACADEMY'
+                    // },
+                    // {
+                    //     text: 'Job Posting',
+                    //     path: '/careers/Job-Posting'
+                    // },
                 ]
             }
         ]
@@ -214,3 +269,164 @@ export const footerData = [
         ],
     },
 ];
+
+export const fundManagerReports = [
+    {
+        title: '2022 Reports',
+        items: [
+            {
+                title: 'December 2022 Fund Manager Report',
+                file: 'dec2022'
+            },
+            {
+                title: 'November 2022 Fund Manager Report',
+                file: 'nov2022'
+            },
+            {
+                title: 'October 2022 Fund Manager Report',
+                file: 'oct2022'
+            },
+            {
+                title: 'September 2022 Fund Manager Report',
+                file: 'sep2022'
+            },
+            {
+                title: 'August 2022 Fund Manager Report',
+                file: 'aug2022'
+            },
+            {
+                title: 'July 2022 Fund Manager Report',
+                file: 'jul2022'
+            },
+            {
+                title: 'June 2022 Fund Manager Report',
+                file: 'jun2022'
+            },
+            {
+                title: 'May 2022 Fund Manager Report',
+                file: 'may2022'
+            },
+            {
+                title: 'April 2022 Fund Manager Report',
+                file: 'apr2022'
+            },
+            {
+                title: 'March 2022 Fund Manager Report',
+                file: 'mar2022'
+            },
+            {
+                title: 'February 2022 Fund Manager Report',
+                file: 'feb2022'
+            },
+            {
+                title: 'January 2022 Fund Manager Report',
+                file: 'jan2022'
+            },
+        ]
+    },
+    {
+        title: '2021 Reports',
+        items: [
+            {
+                title: 'December 2021 Fund Manager Report',
+                file: 'dec2021'
+            },
+            {
+                title: 'November 2021 Fund Manager Report',
+                file: 'nov2021'
+            },
+            {
+                title: 'October 2021 Fund Manager Report',
+                file: 'oct2021'
+            },
+            {
+                title: 'September 2021 Fund Manager Report',
+                file: 'sep2021'
+            },
+            {
+                title: 'August 2021 Fund Manager Report',
+                file: 'aug2021'
+            },
+            {
+                title: 'July 2021 Fund Manager Report',
+                file: 'jul2021'
+            },
+            {
+                title: 'June 2021 Fund Manager Report',
+                file: 'jun2021'
+            },
+            {
+                title: 'May 2021 Fund Manager Report',
+                file: 'may2021'
+            },
+            {
+                title: 'April 2021 Fund Manager Report',
+                file: 'apr2021'
+            },
+            {
+                title: 'March 2021 Fund Manager Report',
+                file: 'mar2021'
+            },
+            {
+                title: 'February 2021 Fund Manager Report',
+                file: 'feb2021'
+            },
+            {
+                title: 'January 2021 Fund Manager Report',
+                file: 'jan2021'
+            },
+        ]
+    },
+    {
+        title: '2020 Reports',
+        items: [
+            {
+                title: 'December 2020 Fund Manager Report',
+                file: 'dec2020'
+            },
+
+            {
+                title: 'September 2020 Fund Manager Report',
+                file: 'sep2020'
+            },
+            {
+                title: 'August 2020 Fund Manager Report',
+                file: 'aug2020'
+            },
+            {
+                title: 'July 2020 Fund Manager Report',
+                file: 'jul2020'
+            },
+            {
+                title: 'June 2020 Fund Manager Report',
+                file: 'jun2020'
+            },
+
+        ]
+    },
+    {
+        title: '2019 Reports',
+        items: [
+            {
+                title: 'September 2019 Fund Manager Report',
+                file: 'sep2019'
+            },
+
+            {
+                title: 'May 2019 Fund Manager Report',
+                file: 'may2019'
+            },
+
+            {
+                title: 'February 2019 Fund Manager Report',
+                file: 'feb2019'
+            },
+            {
+                title: 'January 2019 Fund Manager Report',
+                file: 'jan2019'
+            },
+        ]
+
+
+    },
+]
