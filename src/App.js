@@ -13,6 +13,7 @@ import FundManager from "./pages/FundManager";
 import Faqs from "./pages/Faqs";
 import FundCalculator from "./pages/FundCalculator";
 import Career from "./pages/Career";
+import TeamMember from "./pages/TeamMember";
 
 function App() {
   const router = createBrowserRouter([
@@ -37,6 +38,14 @@ function App() {
       element: (
         <MainLayout>
           <Team />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/team/:id',
+      element: (
+        <MainLayout>
+          <TeamMember />
         </MainLayout>
       )
     },
