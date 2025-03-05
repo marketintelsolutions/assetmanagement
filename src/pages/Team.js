@@ -11,6 +11,8 @@ const Team = () => {
             <Hero
                 heading={'BOARD OF DIRECTORS'}
                 text={'The Board of Directors for PAC Asset Management Limited meets on a quarterly basis and is responsible for setting the Company’s strategic goals and evaluating overall business performance'}
+                image='teambg'
+                bgImage={'about2'}
             />
 
 

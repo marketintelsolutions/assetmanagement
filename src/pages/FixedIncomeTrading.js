@@ -8,6 +8,8 @@ const FixedIncomeTrading = () => {
             <Hero
                 heading={'Fixed Income Trading'}
                 text={'We offer fixed income portfolio management service to our client who wish to participate in the Fixed Income Markets locally and internationally.'}
+                image='fixedincome'
+                bgImage='fixedincomeBak'
             />
 
             <div className='py-[150px] w-full max-w-max mx-auto'>

@@ -8,6 +8,8 @@ const WealthManagement = () => {
             <Hero
                 heading={'Wealth Management'}
                 text={'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs,'}
+                image='wealth'
+                bgImage='wealthbck'
             />
 
             <div className='py-[150px] w-full max-w-max mx-auto'>

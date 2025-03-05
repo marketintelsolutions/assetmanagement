@@ -5,6 +5,7 @@ export const services = [
         icon: 'fund',
         coloredIcon: 'fundc',
         heading: 'Mutual Funds',
+        image: 'mutualfunds',
         text: 'Our mutual funds are registered with the Securities and Exchange Commission and tailored to meet diverse investor goals, allowing you to build a well-balanced portfolio across various asset classes.',
         items: [
             {
