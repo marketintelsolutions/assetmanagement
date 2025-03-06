@@ -10,6 +10,8 @@ const AlternativeInvestment = () => {
                 <Hero
                     heading={'Alternative Investment'}
                     text={'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.'}
+                    image='alternativeinvestments'
+                    bgImage='building2'
                 />
 
                 <div className='py-[150px] w-full max-w-max mx-auto'>

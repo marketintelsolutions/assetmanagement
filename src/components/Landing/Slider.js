@@ -51,9 +51,9 @@ const Slider = () => {
                     <div className="absolute -bottom-[62px] -left-5 w-full max-w-[42%] transition-opacity duration-500">
                         <img src={`/${activeSlide.image}.jpg`} alt="building" className="w-full object-cover" />
                     </div>
-                    <div className="w-full max-w-[53%] text-primaryBlue bg-white px-14 py-20">
-                        <h1 className="text-5xl font-poppins font-medium">{activeSlide.heading}</h1>
-                        <p className="text-xl font-light mt-5">{activeSlide.text}</p>
+                    <div className="w-full max-w-[53%] text-primaryBlue bg-white px-8 py-8">
+                        <h1 className="text-2xl font-poppins font-medium">{activeSlide.heading}</h1>
+                        <p className="text-base font-light mt-5">{activeSlide.text}</p>
                     </div>
                 </div>
                 <div className="w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primarygray flex items-center justify-center">

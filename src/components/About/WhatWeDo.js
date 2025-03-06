@@ -3,24 +3,29 @@ import { Link } from 'react-router-dom'
 
 const services = [
     {
-        image: 'building',
+        image: 'mutualfunds',
         heading: 'MUTUAL FUNDS',
-        text: 'We have different types of mutual funds designed to meet the unique needs of our clients'
+        text: 'We have different types of mutual funds designed to meet the unique needs of our clients',
+        path: '/services/mutual-funds'
     },
     {
-        image: 'building',
+        image: 'fixedincome',
         heading: 'FIXED INCOME TRADING',
-        text: 'Our expert team is strategically positioned to capitalize on opportunities in the fixed-income market.'
+        text: 'Our expert team is strategically positioned to capitalize on opportunities in the fixed-income market.',
+        path: '/services/fixed-income-trading'
     },
     {
-        image: 'building',
+        image: 'wealth',
         heading: 'WEALTH MANAGEMENT',
-        text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs'
+        text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs',
+        path: '/services/wealth-management'
     },
     {
-        image: 'building',
+        image: 'alternativeinvestments',
         heading: 'ALTERNATIVE ASSETS',
-        text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics'
+        text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics',
+        path: '/services/alternative-investment'
+
     },
 ]
 
@@ -38,7 +43,7 @@ const WhatWeDo = () => {
                             <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
                                 <h2 className='text-xl font-poppins font-medium'>{item.heading}</h2>
                                 <p className='text-xl h-[110px] mt-4'>{item.text}</p>
-                                <Link to={'/contact'}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
+                                <Link to={item.path}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>READ MORE</button></Link>
                             </div>
                         </div>
                     ))
