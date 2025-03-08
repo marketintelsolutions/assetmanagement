@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const slides = [
     {
@@ -20,7 +20,6 @@ const slides = [
 
 const Slider = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const activeSlide = slides[activeIndex];
 
     // Auto transition effect
     useEffect(() => {
@@ -45,54 +44,66 @@ const Slider = () => {
     };
 
     return (
-        <section className="h-[95vh] relative w-full bg-white">
-            <div className="w-full h-full max-w-[90%] mx-auto" style={{ backgroundImage: `url(/construction.jpg)`, backgroundSize: 'cover' }}>
-                <div className="bg-[#0000007e] relative h-full w-full flex pt-20 gap-20 items-center justify-end">
-                    <div className="absolute -bottom-[62px] -left-5 w-full max-w-[42%] transition-opacity duration-500">
-                        <img src={`/${activeSlide.image}.jpg`} alt="building" className="w-full object-cover" />
-                    </div>
-                    <div className="w-full max-w-[53%] text-primaryBlue bg-white px-8 py-8">
-                        <h1 className="text-2xl font-poppins font-medium">{activeSlide.heading}</h1>
-                        <p className="text-base font-light mt-5">{activeSlide.text}</p>
-                    </div>
-                </div>
-                <div className="w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primarygray flex items-center justify-center">
-
-                </div>
-                <div className="w-full h-[140px] absolute -bottom-[100px] right-0 opacity-95  flex items-center justify-center">
-                    {/* Control buttons */}
-                    <div className="flex items-center justify-center gap-6 w-[80%]">
-                        <button
-                            onClick={prevSlide}
-                            className="bg-primaryBlue text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
+        <section className="h-[95lvh] relative w-full max-w-[100%] bg-white">
+            <div className="w-full  mx-auto h-full px-20 ">
+                {/* Container for all slides */}
+                <div
+                    className="w-full    h-full flex transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+                >
+                    {slides.map((slide, index) => (
+                        <div
+                            key={index}
+                            className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
+                            style={{ backgroundImage: `url(/construction.jpg)`, backgroundSize: 'cover' }}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-
-                        {/* Slide indicators */}
-                        <div className="flex space-x-3">
-                            {slides.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => goToSlide(index)}
-                                    className={`w-3 h-3 rounded-full ${index === activeIndex ? "bg-primaryBlue" : "bg-gray-400"
-                                        }`}
-                                    aria-label={`Go to slide ${index + 1}`}
-                                />
-                            ))}
+                            <div className="bg-[#0000007e] relative h-full w-full flex pt-20 gap-20 items-center justify-end">
+                                <div className="absolute z-[10] -bottom-[62px] -left-5 w-full max-w-[42%] transition-opacity duration-500">
+                                    <img src={`/${slide.image}.jpg`} alt="building" className="w-full object-cover" />
+                                </div>
+                                <div className="w-full max-w-[53%] text-primaryBlue bg-white px-8 py-8">
+                                    <h1 className="text-2xl font-poppins font-medium">{slide.heading}</h1>
+                                    <p className="text-base font-light mt-5">{slide.text}</p>
+                                </div>
+                            </div>
+                            <div className="w-full max-w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primarygray flex items-center justify-center">
+                            </div>
                         </div>
+                    ))}
+                </div>
+            </div>
+            <div className="w-full h-[140px] absolute -bottom-[100px] right-0 opacity-95 flex items-center justify-center">
+                {/* Control buttons */}
+                <div className="flex items-center justify-center gap-3 w-[80%]">
+                    <button
+                        onClick={prevSlide}
+                        className="bg-primaryBlue text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
 
-                        <button
-                            onClick={nextSlide}
-                            className="bg-primaryBlue text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
+                    {/* Slide indicators */}
+                    <div className="flex space-x-3">
+                        {slides.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => goToSlide(index)}
+                                className={`w-3 h-3 rounded-full ${index === activeIndex ? "bg-primaryBlue" : "bg-gray-400"}`}
+                                aria-label={`Go to slide ${index + 1}`}
+                            />
+                        ))}
                     </div>
+
+                    <button
+                        onClick={nextSlide}
+                        className="bg-primaryBlue text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </section>

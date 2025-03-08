@@ -13,3 +13,7 @@ body,
   scroll-behavior: smooth;
   font-family: "Open Sans", "Poppins", serif;
 }
+
+body {
+  overflow-x: hidden;
+}

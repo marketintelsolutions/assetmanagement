@@ -1,6 +1,7 @@
 import React from 'react'
 import { services } from '../../utils/data'
 import { Link } from 'react-router-dom'
+import SlideIn from '../SlideIn'
 
 const SectionTwo = () => {
     return (
@@ -12,14 +13,18 @@ const SectionTwo = () => {
                     <div className='grid grid-cols-2 w-fit mx-auto justify-center gap-14 mt-10  '>
                         {
                             services.map((item, index) => (
-                                <div key={index} className='max-w-[500px] mx-auto bg-white p-5 pt-8 pb-14 shadow-[0px_0px_25px_5px_rgba(0,0,0,0.1)] hover:shadow-[5px_5px_25px_15px_rgba(0,0,0,0.15)]'>
-                                    <div className='flex gap-5 items-center'>
-                                        <img src={`${item.coloredIcon}.png`} alt={item.coloredIcon} className='max-w-[50px]' />
-                                        <h2 className='text-2xl font-poppins font-semibold text-secondaryBlue'>{item.heading}</h2>
+                                <SlideIn key={index} duration={900} distance={70} direction="right" delay={index * 150}>
+                                    <div className='max-w-[500px] mx-auto bg-white px-8 pt-8 pb-14 shadow-[0px_0px_25px_5px_rgba(0,0,0,0.1)] hover:shadow-[5px_5px_25px_15px_rgba(0,0,0,0.15)]'>
+                                        <div className='flex gap-5 items-center'>
+                                            <img src={`${item.coloredIcon}.png`} alt={item.coloredIcon} className='max-w-[50px]' />
+                                            <h2 className='text-2xl font-poppins font-semibold text-secondaryBlue'>{item.heading}</h2>
+                                        </div>
+                                        <p className='mt-5 h-[130px] text-justify text-lg'>{item.text}</p>
+                                        <Link to={item.path}>
+                                            <button className='mt-5 text-secondaryBlue hover:opacity-50 font-semibold'>Read More</button>
+                                        </Link>
                                     </div>
-                                    <p className='mt-5 h-[130px] text-lg'>{item.text}</p>
-                                    <button className='mt-5 text-secondaryBlue font-semibold'>Read More</button>
-                                </div>
+                                </SlideIn>
                             ))
                         }
                     </div>
@@ -28,14 +33,18 @@ const SectionTwo = () => {
 
             <div className='bg-primaryBlue my-[150px] py-10 text-white'>
                 <div className='w-full max-w-max mx-auto flex justify-center gap-20'>
-                    <div className='max-w-[500px]'>
-                        <h1 className='uppercase text-3xl font-poppins'>Invest For Your Children Open a Gift Mutual Fund today</h1>
-                        <p className='text-lg mt-5'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
-                        <button className='text-white border-white border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
-                    </div>
-                    <div className='max-w-[400px]'>
-                        <img src="/construction.jpg" alt="building" className='w-full h-full' />
-                    </div>
+                    <SlideIn duration={900} distance={70} direction="left" delay={150}>
+                        <div className='max-w-[500px]'>
+                            <h1 className='uppercase text-3xl font-poppins'>Invest For Your Children Open a Gift Mutual Fund today</h1>
+                            <p className='text-lg mt-5'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
+                            <button className='text-white border-white hover:bg-white hover:text-primaryBlue border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
+                        </div>
+                    </SlideIn>
+                    <SlideIn duration={900} distance={90} direction="right" delay={350}>
+                        <div className='max-w-[400px]'>
+                            <img src="/construction.jpg" alt="building" className='w-full h-full' />
+                        </div>
+                    </SlideIn>
                 </div>
             </div>
 
@@ -47,14 +56,18 @@ const SectionTwo = () => {
                         <img src="/video.jpg" alt="video" className='w-full h-full object-cover' />
                     </a>
                     <div>
-                        <h2 className='text-primaryBlue text-3xl uppercase font-poppins' >Talk to a Financial Advisor</h2>
-                        <p className='text-lg mt-10'>
-                            We believe that investing should not only be easy but that every interaction with us should be a memorable experience.
-                            <br /><br />
-                            Looking for more information about our products or are you in need of good advice regarding your Personal or corporate investments?
-                            <br /><br />
-                            Talk to us or schedule a call with us today
-                        </p>
+                        <SlideIn duration={900} distance={50} direction="bottom" delay={150}>
+                            <h2 className='text-primaryBlue text-3xl uppercase font-poppins' >Talk to a Financial Advisor</h2>
+                        </SlideIn>
+                        <SlideIn duration={900} distance={50} direction="bottom" delay={300}>
+                            <p className='text-lg mt-10'>
+                                We believe that investing should not only be easy but that every interaction with us should be a memorable experience.
+                                <br /><br />
+                                Looking for more information about our products or are you in need of good advice regarding your Personal or corporate investments?
+                                <br /><br />
+                                Talk to us or schedule a call with us today
+                            </p>
+                        </SlideIn>
                         <Link to={'/contact'}> <button className='text-primaryBlue border-primaryBlue hover:bg-primaryBlue hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>Contact Us</button></Link>
 
                     </div>

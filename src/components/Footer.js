@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="relative px-7 md:px-0 pt-[97px] bg-primaryBlue text-white border-t-[1px] border-[#EFF0F6]">
       <div className="absolute -top-10 right-0 bg-primarygray h-20 w-full max-w-[50%]"></div>
       <article className="flex flex-col">
-        <section className="max-w-[1100px] flex gap-20 pb-[22px] w-full  mx-auto text-center sm:flex justify-between">
+        <section className="max-w-[1150px] flex gap-20 pb-[22px] w-full  mx-auto text-center sm:flex justify-between">
           <div className="flex flex-col mb-12">
             {/* <span><Logocolored />logo</span> */}
             <Link to={'/'} className='text-4xl  text-left font-bold'>PAC Asset</Link>

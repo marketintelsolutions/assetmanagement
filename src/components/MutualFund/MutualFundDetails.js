@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import SlideIn from '../SlideIn'
 
 const mutualfunds = [
     {
@@ -34,13 +35,15 @@ const MutualFundDetails = () => {
         <section className='py-[150px] w-full max-w-max mx-auto'>
             <div className='grid grid-cols-3 gap-14'>
                 {
-                    mutualfunds.map((item) => (
-                        <div className='bg-primaryBlue py-12 px-10 text-white flex flex-col gap-10 items-center '>
-                            <img src={`/${item.icon}.png`} alt="balance" />
-                            <h2 className='text-2xl'>{item.heading}</h2>
-                            <p className='h-[220px] text-center'>{item.text}</p>
-                            <Link to={'/contact'}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
-                        </div>
+                    mutualfunds.map((item, index) => (
+                        <SlideIn duration={900} distance={90} direction="right" delay={index * 150}>
+                            <div className='bg-primaryBlue py-12 px-10 text-white flex flex-col gap-10 items-center '>
+                                <img src={`/${item.icon}.png`} alt="balance" />
+                                <h2 className='text-2xl'>{item.heading}</h2>
+                                <p className='h-[220px] text-center'>{item.text}</p>
+                                <Link to={'/contact'}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
+                            </div>
+                        </SlideIn>
                     ))
                 }
             </div>
