@@ -17,17 +17,17 @@ const Navbar = () => {
             <div className='bg-primaryBlue py-4'>
                 <div className='w-full max-w-max mx-auto flex justify-end'>
                     <div className='flex gap-12 items-center'>
-                        <div className='flex text-white text-2xl gap-12'>
+                        <div className='flex text-white text-2xl gap-8'>
                             <span><IoLogoFacebook /></span>
                             <span><FaLinkedin /></span>
                         </div>
-                        <div className='flex gap-2 items-center text-xl text-white'>
+                        <div className='flex gap-2 items-center text-l text-white'>
                             <span><FaPhone /></span>
-                            <p>+234906006000</p>
+                            <p>+234 271 6899 | 271 8632</p>
                         </div>
-                        <div className='flex gap-2 items-center text-xl text-white'>
+                        <div className='flex gap-2 items-center text-l text-white'>
                             <span><IoMail /></span>
-                            <p>company@mail.com</p>
+                            <p>info@pacassetmanagement.com</p>
                         </div>
                     </div>
                 </div>
