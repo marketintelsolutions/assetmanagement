@@ -8,6 +8,8 @@ const FundCalculator = () => {
             <Hero
                 heading={'Fund Calculator'}
                 text={'We offer a calculator that you can use to calculate your Upfront Interest, Discount Value, and Effective Yield'}
+                image={'fundcalc'}
+                bgImage={'fundcalcbg'}
             />
             <FundCalculatorDetails />
         </>

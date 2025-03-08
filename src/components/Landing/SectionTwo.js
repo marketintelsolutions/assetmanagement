@@ -34,7 +34,7 @@ const SectionTwo = () => {
                         <button className='text-white border-white border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
                     </div>
                     <div className='max-w-[400px]'>
-                        <img src="/construction.jpg" alt="building" className='w-full h-full' />
+                        <img src="/childreninvest.jpg" alt="childreninvest" className='w-full h-full' />
                     </div>
                 </div>
             </div>

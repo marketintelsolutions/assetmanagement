@@ -62,12 +62,12 @@ export const services = [
 export const careers = [
     {
         icon: 'fund',
-        heading: 'LIFE AT PAC ASSET AMANAGEMENT',
+        heading: 'LIFE AT PAC ASSET MANAGEMENT',
         text: ['Life at PAC Asset Management is driven by a shared passion for innovation, teamwork, and growth. We’re dedicated to creating an environment where each team member feels valued, empowered, and motivated to bring their best ideas forward. Our culture promotes collaboration, continuous learning, and the pursuit of excellence across all departments.',
             "Whether it's through exciting tasks, professional development opportunities, or team-building events, we strive to ensure that everyone feels both challenged and supported. Here, you’ll find a balance between hard work and fun—where success is celebrated, and every contribution is recognized.",
             "Join us and be part of a community where you can grow your career, achieve your goals, and make a real impact."
         ],
-        image: 'building',
+        image: 'careerbg',
     },
     {
         icon: 'trading',
@@ -75,19 +75,19 @@ export const careers = [
         text: ['Our work culture is built on a foundation of respect, collaboration, and continuous improvement. We believe that when people feel valued and empowered, they’re inspired to do their best work. Open communication, transparency, and mutual support are at the heart of our daily interactions, creating an environment where ideas can flourish, and innovation thrives.',
             "At PAC Asset Management, we celebrate diversity and value each team member's unique perspective, fostering a sense of belonging and shared purpose. We emphasize work-life balance, professional growth, and a commitment to achieving excellence together. This culture not only drives our success but also makes the company a place where people are excited to grow and make a difference."
         ],
-        image: 'building',
+        image: 'culture',
     },
     {
         icon: 'wealth',
         heading: 'PAC ACADEMY',
         text: ['Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam cupiditate atque doloremque tempora iste, accusamus nobis impedit, porro exercitationem tempore dolorem nam quaerat labore sint amet harum quas reiciendis consequuntur?'],
-        image: 'building',
+        image: 'academy',
     },
     {
         icon: 'investment',
         heading: 'JOB POSTING',
         text: ['We recruit experienced professionals whenever opportunities arise. If you have expertise in investment management, fund operations, sales, or relationship management, please submit your resume to'],
-        image: 'building',
+        image: 'job',
     },
 ]
 

@@ -10,6 +10,8 @@ const Contact = () => {
             <Hero
                 heading={'Contact Us'}
                 text={'We would love to hear from you'}
+                image={'contact'}
+                bgImage={'contactbg'}
             />
 
             <div className='py-40 w-full max-w-[1100px] mx-auto flex flex-wrap gap-4 justify-between'>

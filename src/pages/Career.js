@@ -8,6 +8,8 @@ const Career = () => {
             <Hero
                 heading={'Career'}
                 text={'Together, we deliver transformational investment solutions tailored to meet the needs of our investors.'}
+                image={'career'}
+                bgImage={'careerbg'}
             />
             <CareerDetails />
         </>
