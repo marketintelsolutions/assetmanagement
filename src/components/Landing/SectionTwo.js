@@ -42,7 +42,7 @@ const SectionTwo = () => {
                     </SlideIn>
                     <SlideIn duration={900} distance={90} direction="right" delay={350}>
                         <div className='max-w-[400px]'>
-                            <img src="/construction.jpg" alt="building" className='w-full h-full' />
+                            <img src="/childreninvest.jpg" alt="building" className='w-full h-full' />
                         </div>
                     </SlideIn>
                 </div>
