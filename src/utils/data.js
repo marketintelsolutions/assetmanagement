@@ -7,6 +7,7 @@ export const services = [
         heading: 'Mutual Funds',
         image: 'mutualfunds',
         text: 'Our mutual funds are registered with the Securities and Exchange Commission and tailored to meet diverse investor goals, allowing you to build a well-balanced portfolio across various asset classes.',
+        path: '/services/mutual-funds',
         items: [
             {
                 icon: 'balance',
@@ -45,18 +46,21 @@ export const services = [
         coloredIcon: 'tradingc',
         heading: 'Fixed Income Trading',
         text: 'We offer fixed income portfolio management service to our client who wish to participate in the Fixed Income Markets locally and internationally.',
+        path: '/services/fixed-income-trading'
     },
     {
         icon: 'wealth',
         coloredIcon: 'wealthc',
         heading: 'Wealth Management',
         text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs.',
+        path: '/services/wealth-management'
     },
     {
         icon: 'investment',
         coloredIcon: 'investmentc',
         heading: 'Alternative Investment',
         text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.',
+        path: '/services/alternative-investment'
     },
 ]
 export const careers = [
@@ -255,6 +259,21 @@ export const footerData = [
                 icon: false,
             },
             {
+                text: "Services",
+                path: "services",
+                icon: false,
+            },
+            {
+                text: "Careers",
+                path: "careers",
+                icon: false,
+            },
+            {
+                text: "Fund Calculator",
+                path: "insights/fund-calculator",
+                icon: false,
+            },
+            {
                 text: "Contact us",
                 path: "contact",
                 icon: false,
@@ -268,7 +287,17 @@ export const footerData = [
 
             {
                 text: "Plot 8A, Elsie Femi Pearse, Off Adeola Odeku, Victoria Island, Lagos.",
-                icon: CiLocationOn,
+                icon: false,
+                path: "",
+            },
+            {
+                text: "Suite 62, NICON Luxury Hotel Plot 903 Tafawa Balewa way, Area 11, Abuja",
+                icon: false,
+                path: "",
+            },
+            {
+                text: "8, Blohum Street, Dzorwulu, Along Dzorwulu Road, Accra, Ghana.",
+                icon: false,
                 path: "",
             },
         ],
@@ -438,7 +467,7 @@ export const fundManagerReports = [
 
 export const team = [
     {
-        image: 'building',
+        image: 'chris',
         name: 'Chris Oshiafi',
         slug: 'chris-oshiafi',
         desc: [
@@ -448,7 +477,7 @@ export const team = [
         ],
     },
     {
-        image: 'building',
+        image: 'sina',
         name: 'Sina Alimi',
         slug: 'sina-alimi',
         desc: [
@@ -459,7 +488,7 @@ export const team = [
         ],
     },
     {
-        image: 'building',
+        image: 'eric',
         name: 'Eric Okoruwa',
         slug: 'eric-okoruwa',
         desc: [
@@ -470,7 +499,7 @@ export const team = [
         ],
     },
     {
-        image: 'building',
+        image: 'dele',
         name: 'Dele Ige',
         slug: 'dele-ige',
         desc: [
