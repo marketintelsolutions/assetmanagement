@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="relative px-7 md:px-0 pt-[97px] bg-primaryBlue text-white border-t-[1px] border-[#EFF0F6]">
-      <div className="absolute -top-10 right-0 bg-primarygray h-20 w-full max-w-[50%]"></div>
+    <footer className="relative px-7 md:px-5 pt-[97px] bg-primaryBlue text-white border-t-[1px] border-[#EFF0F6]">
+      <div className="absolute -top-10 right-0 bg-primarygray h-20 w-full max-w-[80%] md:max-w-[50%]"></div>
       <article className="flex flex-col">
-        <section className="max-w-[1150px] flex gap-20 pb-[22px] w-full  mx-auto text-center sm:flex justify-between">
+        <section className="max-w-max flex flex-col md:flex-row gap-10 md:gap-20 pb-[22px] w-full  mx-auto text-center sm:flex justify-between">
           <div className="flex flex-col mb-12">
             {/* <span><Logocolored />logo</span> */}
             <Link to={'/'} className='text-4xl  text-left font-bold'>PAC Asset</Link>
 
-            <p className="w-[310.36px] mt-[28px] mb-6  text-left text-xl font-normal font-['DM Sans'] leading-[30px]">
+            <p className="md:w-[310.36px] mt-[28px] mb-6  text-left text-xl font-normal font-['DM Sans'] leading-[30px]">
               PAC Asset offers a wide range of investment advice, products and services, including brokerage ; retirement accounts, ETFs, online trading & more.
             </p>
             <div className="flex gap-[22px] text-[20px] text-primaryPurple items-center">
@@ -29,7 +29,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div className="text-left grid grid-cols-1 mb:grid-cols-2 md:flex gap-y-[36px] gap-x-0  md:gap-[49px] ">
+          <div className="text-left grid grid-cols-1 w-full md:max-w-[60%] justify-between  mb:grid-cols-2 md:flex gap-[35px] md:gap-y-[36px] gap-x-[36px] lg:gap-x-0  md:gap-[49px] ">
             {footerData.map((footerItem, index) => {
               return (
                 <div key={index} className="flex flex-col gap-10">

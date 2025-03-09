@@ -2,8 +2,8 @@ import React from 'react'
 
 const FundCalculatorDetails = () => {
     return (
-        <section className='py-[150px] w-full max-w-max mx-auto '>
-            <h1 className='text-4xl text-left w-full max-w-[700px] mx-auto'>CALCULATOR</h1>
+        <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto '>
+            <h1 className='text-2xl md:text-3xl lg:text-4xl text-left w-full max-w-[700px] mx-auto'>CALCULATOR</h1>
 
             <form className='mt-20 w-full max-w-[700px] mx-auto flex flex-col gap-6'>
                 <input type="number" name="faceValue" className='px-4 py-3 border w-full rounded-[6px] ' placeholder='Face Value' />
