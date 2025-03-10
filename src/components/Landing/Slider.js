@@ -45,7 +45,7 @@ const Slider = () => {
 
     return (
         <section className="h-[95lvh] relative w-full max-w-[100%] bg-white">
-            <div className="w-full  mx-auto h-full px-20 ">
+            <div className="w-full  mx-auto h-full lg:px-20 ">
                 {/* Container for all slides */}
                 <div
                     className="w-full    h-full flex transition-transform duration-500 ease-in-out"
@@ -57,16 +57,16 @@ const Slider = () => {
                             className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
                             style={{ backgroundImage: `url(/relaxbg.jpg)`, backgroundSize: 'cover' }}
                         >
-                            <div className="bg-[#0000007e] relative h-full w-full flex pt-20 gap-20 items-center justify-end">
-                                <div className="absolute z-[10] -bottom-[62px] -left-5 w-full max-w-[42%] transition-opacity duration-500">
-                                    <img src={`/${slide.image}.jpg`} alt="building" className="w-full object-cover" />
+                            <div className="bg-[#0000007e] relative  h-full w-full flex lg:pt-20 gap-20 items-end lg:items-center justify-end">
+                                <div className="absolute z-[1]  lg:-bottom-[62px] h-full lg:left-[-5] w-full lg:max-w-[42%] transition-opacity duration-500">
+                                    <img src={`/${slide.image}.jpg`} alt="building" className="w-full h-full object-cover" />
                                 </div>
-                                <div className="w-full max-w-[53%] text-primaryBlue bg-white px-8 py-8">
+                                <div className="relative z-[2] w-full max-w-[90%] h-[40%] lg:max-w-[53%] text-primaryBlue bg-white px-8 py-8">
                                     <h1 className="text-2xl font-poppins font-medium">{slide.heading}</h1>
                                     <p className="text-base font-light mt-5">{slide.text}</p>
                                 </div>
                             </div>
-                            <div className="w-full max-w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primarygray flex items-center justify-center">
+                            <div className="w-full max-w-[95%] lg:max-w-[550px] h-[140px] absolute -bottom-[62px] right-0 opacity-95 bg-primarygray flex items-center justify-center">
                             </div>
                         </div>
                     ))}

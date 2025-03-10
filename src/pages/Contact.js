@@ -15,7 +15,7 @@ const Contact = () => {
                 bgImage={'contactbg'}
             />
 
-            <div className='py-40 w-full max-w-[1100px] mx-auto flex flex-wrap gap-4 justify-between'>
+            <div className='py-40 px-10 lg:px-5 w-full max-w-[1100px] mx-auto flex flex-wrap gap-4 justify-between'>
                 <SlideIn duration={900} distance={90} direction="left" delay={150}>
                     <div className='flex flex-col gap-4 shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)] p-10 h-fit rounded-[10px]'>
                         <h1 className='text-[40px]'>Contact Channels</h1>

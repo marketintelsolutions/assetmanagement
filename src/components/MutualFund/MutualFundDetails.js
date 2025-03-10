@@ -32,16 +32,20 @@ const mutualfunds = [
 
 const MutualFundDetails = () => {
     return (
-        <section className='py-[150px] w-full max-w-max mx-auto'>
-            <div className='grid grid-cols-3 gap-14'>
+        <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-14'>
                 {
                     mutualfunds.map((item, index) => (
                         <SlideIn duration={900} distance={90} direction="right" delay={index * 150}>
-                            <div className='bg-primaryBlue py-12 px-10 text-white flex flex-col gap-10 items-center '>
-                                <img src={`/${item.icon}.png`} alt="balance" />
+                            <div className='bg-primaryBlue py-6 md:py-12 px-5 md:px-10 text-white flex flex-col gap-5 md:gap-10 items-center '>
+                                <div className='w-full max-w-[50px] md:max-w-[70px] lg:max-w-[100px]'>
+                                    <img src={`/${item.icon}.png`} alt="balance" className='w-full' />
+                                </div>
                                 <h2 className='text-2xl'>{item.heading}</h2>
-                                <p className='h-[220px] text-center'>{item.text}</p>
-                                <Link to={'/contact'}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
+                                <p className='lg:h-[220px] text-center'>{item.text}</p>
+                                <Link to={'/contact'}>
+                                    <button className='pt-5 md:mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button>
+                                </Link>
                             </div>
                         </SlideIn>
                     ))
