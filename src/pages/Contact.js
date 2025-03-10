@@ -62,7 +62,7 @@ const Contact = () => {
                                 <label htmlFor="message" className='text-[15px] font-semibold text-gray-400'>Your Message</label>
                                 <textarea type="text" id='message' className='h-[120px] resize-none focus:outline-none focus:border-black pb-4 rounded-[10px] px-4 py-5 bg-[rgba(194,196,200,0.48)]  text-sm w-full' />
                             </div>
-                            <button type='button' className='w-full py-4 mt-10 rounded-full bg-primaryOrange  text-white hover:bg-black hover:text-white '>Send Message</button>
+                            <button type='button' className='w-full py-4 mt-10 rounded-full border border-primaryBlue hover:text-primaryBlue bg-primaryBlue  text-white hover:bg-transparent  '>Send Message</button>
                         </form>
                     </SlideIn>
                 </div>
