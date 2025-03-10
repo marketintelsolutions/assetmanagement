@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from "react";
 
 const slides = [
   {
-    image: 'building',
+    image: 'relax',
     heading: 'Relax While Your Investments Grow from a Seed to a Forest',
     text: 'Just as a seed develops, your investments with us can yield returns and create a source of passive income, allowing you to benefit financially even while you focus on other aspects of life.',
   },

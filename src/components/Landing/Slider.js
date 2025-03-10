@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const slides = [
     {
-        image: 'building',
+        image: 'relax',
         heading: 'Relax While Your Investments Grow from a Seed to a Forest',
         text: 'Just as a seed develops, your investments with us can yield returns and create a source of passive income, allowing you to benefit financially even while you focus on other aspects of life.',
     },
@@ -55,7 +55,7 @@ const Slider = () => {
                         <div
                             key={index}
                             className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
-                            style={{ backgroundImage: `url(/construction.jpg)`, backgroundSize: 'cover' }}
+                            style={{ backgroundImage: `url(/relaxbg.jpg)`, backgroundSize: 'cover' }}
                         >
                             <div className="bg-[#0000007e] relative h-full w-full flex pt-20 gap-20 items-center justify-end">
                                 <div className="absolute z-[10] -bottom-[62px] -left-5 w-full max-w-[42%] transition-opacity duration-500">
