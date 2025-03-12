@@ -7,12 +7,12 @@ const slides = [
         text: 'Just as a seed develops, your investments with us can yield returns and create a source of passive income, allowing you to benefit financially even while you focus on other aspects of life.',
     },
     {
-        image: 'building',
+        image: 'slide2',
         heading: 'Your Innovative Investment Manager',
         text: 'At PAC Asset Management, we combine creativity with strategic insight to optimize investment portfolios. We leverage market analysis and trend identification, making bold yet calculated decisions that can significantly impact the performance of investments.',
     },
     {
-        image: 'building',
+        image: 'slide3',
         heading: 'Helping you secure your future today',
         text: 'We are positioned to provide you with innovative investment management services, delivering diversified investment opportunities from different sectors of the economy.',
     },
@@ -55,7 +55,7 @@ const Slider = () => {
                         <div
                             key={index}
                             className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
-                            style={{ backgroundImage: `url(/relaxbg.jpg)`, backgroundSize: 'cover' }}
+                            style={{ backgroundImage: `url(/slidebg.jpg)`, backgroundSize: 'cover' }}
                         >
                             <div className="bg-[#0000007e] relative  h-full w-full flex lg:pt-20 gap-20 items-end lg:items-center justify-end">
                                 <div className="absolute z-[1]  lg:-bottom-[62px] h-full lg:-left-5 w-full lg:max-w-[42%] transition-opacity duration-500">
