@@ -54,7 +54,7 @@ const Slider = () => {
                     {slides.map((slide, index) => (
                         <div
                             key={index}
-                            className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
+                            className={`w-full relative flex-shrink-0 transition-all ${activeIndex === index ? "flex" : "opacity-0"} `}
                             style={{ backgroundImage: `url(/relaxbg.jpg)`, backgroundSize: 'cover' }}
                         >
                             <div className="bg-[#0000007e] relative  h-full w-full flex lg:pt-20 gap-20 items-end lg:items-center justify-end">
