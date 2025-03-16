@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
+import MobileAnimation from '../MobileAnimation'
+import spiralAsh from "../../utils/animations/spiral_ash.json";
 
 const mutualfunds = [
     {
@@ -32,25 +34,32 @@ const mutualfunds = [
 
 const MutualFundDetails = () => {
     return (
-        <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-14'>
-                {
-                    mutualfunds.map((item, index) => (
-                        <SlideIn duration={900} distance={90} direction="right" delay={index * 150}>
-                            <div className='bg-primaryBlue py-6 md:py-12 px-5 md:px-10 text-white flex flex-col gap-5 md:gap-10 items-center '>
-                                <div className='w-full max-w-[50px] md:max-w-[70px] lg:max-w-[100px]'>
-                                    <img src={`/${item.icon}.png`} alt="balance" className='w-full' />
-                                </div>
-                                <h2 className='text-2xl'>{item.heading}</h2>
-                                <p className='lg:h-[220px] text-center'>{item.text}</p>
-                                <Link to={'/contact'}>
-                                    <button className='pt-5 md:mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button>
-                                </Link>
-                            </div>
-                        </SlideIn>
-                    ))
-                }
+        <section className='w-full relative'>
+            <div className='z-[2] absolute right-[-20%] bottom-[-0%]'>
+                <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
+            <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+                <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-14'>
+
+                    {
+                        mutualfunds.map((item, index) => (
+                            <SlideIn duration={900} distance={90} direction="right" delay={index * 150}>
+                                <div className='bg-primaryBlue py-6 md:py-12 px-5 md:px-10 text-white flex flex-col gap-5 md:gap-10 items-center '>
+                                    <div className='w-full max-w-[50px] md:max-w-[70px] lg:max-w-[100px]'>
+                                        <img src={`/${item.icon}.png`} alt="balance" className='w-full' />
+                                    </div>
+                                    <h2 className='text-[22px]'>{item.heading}</h2>
+                                    <p className='lg:h-[230px] text-center'>{item.text}</p>
+                                    <Link to={'/contact'}>
+                                        <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>CONTACT US</button>
+
+                                    </Link>
+                                </div>
+                            </SlideIn>
+                        ))
+                    }
+                </div>
+            </section>
         </section>
     )
 }

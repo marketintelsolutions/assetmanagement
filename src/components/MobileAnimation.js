@@ -1,24 +1,21 @@
 import React from "react";
 import Lottie from "react-lottie";
-import animationData from "../utils/animations/spiral_ash.json";
 
-class MobileAnimation extends React.Component {
-  render() {
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice",
-      },
-    };
+const MobileAnimation = ({ animationData, size = 500 }) => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
-    return (
-      <div>
-        <Lottie options={defaultOptions} height={400} width={400} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Lottie options={defaultOptions} height={size} width={size} />
+    </div>
+  );
 }
 
 export default MobileAnimation;

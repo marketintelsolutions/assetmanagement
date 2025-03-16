@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
+import spiralAsh from "../../utils/animations/spiral_ash.json";
+import MobileAnimation from '../MobileAnimation';
 
 const services = [
     {
@@ -30,49 +32,93 @@ const services = [
     },
 ]
 
+const transactions = [
+    {
+        heading: 'Account opening package',
+        icon: 'package',
+        image: 'mutualfunds',
+    },
+    {
+        heading: 'Client Update Form',
+        icon: 'client',
+        image: 'mutualfunds',
+    },
+    {
+        heading: 'Fund Subscription Form',
+        icon: 'subscription',
+        image: 'mutualfunds',
+    },
+    {
+        heading: 'Fund Redemption Form',
+        icon: 'form',
+        image: 'mutualfunds',
+    },
+]
+
 const WhatWeDo = () => {
     return (
-        <section className='py-[150px] px-10 lg:px-5 w-full max-w-[1200px] mx-auto'>
-            <SlideIn duration={900} distance={70} direction="left" delay={150}>
-                <h1 className='text-5xl font-medium text-primaryBlue font-poppins'>WHAT WE DO</h1>
-            </SlideIn>
-            <SlideIn duration={900} distance={70} direction="left" delay={250}>
-                <p className='mt-10 text-lg md:text-[20px] lg:text-[22px] text-justify'>PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients. The company also offers wealth management services for high-net-worth individuals, focusing on long-term goals and estate planning. The company is Licensed and regulated by the Securities & Exchange Commission (SEC), and operates as a Funds and Portfolio Manager in Nigeria.</p>
-            </SlideIn>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 max-w-[900px] mx-auto mt-20 gap-x-5 gap-y-5 md:gap-y-20'>
-                {
-                    services.map((item, index) => (
-                        <SlideIn duration={900} distance={70} direction="right" delay={index * 150}>
-                            <div className='w-full md:max-w-[400px] mx-auto ' key={index}>
-                                <div className='w-full'><img src={`/${item.image}.jpg`} className='w-full  object-cover max-h-[200px]' /></div>
-                                <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
-                                    <h2 className='text-xl font-poppins font-medium'>{item.heading}</h2>
-                                    <p className='text-xl md:h-[110px] mt-4'>{item.text}</p>
-                                    <Link to={item.path}> <button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>READ MORE</button></Link>
-                                </div>
-                            </div>
-                        </SlideIn>
-                    ))
-                }
+        <section className='relative w-full'>
+            <div className=' absolute right-[-25%] top-[10%]'>
+                <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
+            <div className='py-[150px] px-10 lg:px-5 w-full max-w-[1200px] mx-auto'>
+                <SlideIn duration={900} distance={70} direction="left" delay={150}>
+                    <h1 className='text-4xl font-medium text-primaryBlue font-poppins'>WHAT WE DO</h1>
+                </SlideIn>
+                <SlideIn duration={900} distance={70} direction="left" delay={250}>
+                    <p className='mt-10 text-base md:text-[20px] lg:text-lg text-justify'>PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients. The company also offers wealth management services for high-net-worth individuals, focusing on long-term goals and estate planning. The company is Licensed and regulated by the Securities & Exchange Commission (SEC), and operates as a Funds and Portfolio Manager in Nigeria.</p>
+                </SlideIn>
 
-            <div className='w-full max-w-max mx-auto mt-20'>
-                <h1 className='text-4xl'>Downloads</h1>
-                <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
+
+                <div className=' grid grid-cols-1 md:grid-cols-2 max-w-[900px] mx-auto mt-20 gap-x-5 gap-y-5 md:gap-y-20'>
                     {
-                        ['Account opening package', 'Client Update Form', 'Fund Subscription Form', 'Fund Redemption Form'].map((item, index) => (
-                            <SlideIn duration={900} distance={70} direction="bottom" delay={index * 150}>
-                                <div className='bg-primaryBlue w-full p-8 px-6 text-white flex flex-col gap-5'>
-                                    <p className='text-2xl h-[60px] uppercase font-medium '>{item} </p>
-                                    <button className='border border-white py-3 px-10 w-fit'>DOWNLOAD HERE</button>
+                        services.map((item, index) => (
+                            <SlideIn duration={900} distance={70} direction="right" delay={index * 150}>
+                                <div className='w-full md:max-w-[400px] mx-auto ' key={index}>
+                                    <div className='w-full'><img src={`/${item.image}.jpg`} className='w-full  object-cover max-h-[200px]' /></div>
+                                    <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
+                                        <h2 className='text-xl font-poppins font-medium'>{item.heading}</h2>
+                                        <p className='text-xl md:h-[120px] mt-4'>{item.text}</p>
+                                        <Link to={item.path}>
+                                            <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
+                                        </Link>
+                                    </div>
                                 </div>
                             </SlideIn>
                         ))
                     }
                 </div>
-            </div>
 
+
+                <div className='w-full max-w-max mx-auto mt-20'>
+                    <h1 className='text-4xl'>Downloads</h1>
+                    <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
+                        {
+                            transactions.map((item, index) => (
+                                <SlideIn duration={900} distance={70} direction="bottom" delay={index * 150}>
+                                    <div
+                                        key={index}
+                                        style={{
+                                            backgroundImage: `url(/${item.image}.jpg)`,
+                                            backgroundSize: 'cover'
+                                        }}
+                                        className={`max-w-[450px] transform transition-transform duration-500 `}
+                                    >
+                                        <div className='h-full w-full p-10 bg-[#0000005b] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#00000080]'>
+                                            <span><img src={`/${item.icon}.png`} className='w-[80px]' /></span>
+                                            <h2 className='text-secondaryRed mt-[200px] h-[80px] text-[30px]'>{item.heading}</h2>
+                                            {/* <p className='text-base h-[100px] font-extralight mt-4 text-white'>{item.text}</p> */}
+                                            <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>Download Here</button>
+
+                                        </div>
+                                    </div>
+                                </SlideIn>
+                            ))
+                        }
+                    </div>
+                </div>
+
+            </div>
         </section>
     )
 }

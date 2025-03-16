@@ -3,30 +3,45 @@ import { services } from '../../utils/data'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
 import MobileAnimation from '../MobileAnimation'
+import spiralAsh from "../../utils/animations/spiral_ash.json";
+import spiralRed from "../../utils/animations/spiral_lightred.json";
 
 const SectionTwo = () => {
     return (
         <section className='py-24 relative'>
-            <div className='absolute right-0 top-0'>
-                <MobileAnimation />
-            </div>
-            <div className='bg-[rgba(249,248,248,1)] px-10 lg:px-0 py-10'>
+
+            <div className='relative bg-[rgba(249,248,248,1)] px-10 lg:px-0 py-10'>
+                <div className=' absolute right-0 top-0'>
+                    <MobileAnimation animationData={spiralAsh} />
+                </div>
+                <div className='absolute left-0 bottom-0'>
+                    <MobileAnimation animationData={spiralRed} />
+                </div>
                 <div className='w-full max-w-max mx-auto'>
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-poppins font-medium text-primaryBlue">SERVICES</h1>
+                    <h1 className="relative z-[2] text-3xl md:text-4xl w-full flex items-center justify-between lg:text-5xl font-poppins font-medium text-primaryBlue">
+                        <span>SERVICES</span>
+                        <Link to={'/services'}>
+                            <button className='text-secondaryRed text-base bg-white hover:border-white  border-secondaryRed hover:bg-primaryBlue hover:text-white border  py-3 px-6 rounded-[6px]'>Read More</button>
+                        </Link>
+                    </h1>
                     <h2 className='text-[20px]  md:text-[23px] lg:text-[26px] font-light mt-5 md:mt-10'>Providing transformational solutions for Africa’s unique challenges</h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 w-fit mx-auto justify-center gap-14 mt-10  '>
                         {
                             services.map((item, index) => (
                                 <SlideIn key={index} duration={900} distance={70} direction="right" delay={index * 150}>
-                                    <div className='max-w-[500px] mx-auto bg-white px-8 pt-8 pb-14 shadow-[0px_0px_25px_5px_rgba(0,0,0,0.1)] hover:shadow-[5px_5px_25px_15px_rgba(0,0,0,0.15)]'>
-                                        <div className='flex gap-5 items-center'>
-                                            <img src={`${item.coloredIcon}.png`} alt={item.coloredIcon} className='max-w-[50px]' />
-                                            <h2 className='text-[18px] md:text-[20px] lg:text-2xl font-poppins font-semibold text-secondaryBlue'>{item.heading}</h2>
+                                    <div
+                                        key={index}
+                                        style={{
+                                            backgroundImage: `url(/${item.image}.jpg)`,
+                                            backgroundSize: 'cover'
+                                        }}
+                                        className={`max-w-[450px] transform transition-transform duration-500 `}
+                                    >
+                                        <div className='h-full w-full p-10 bg-[#0000005b] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#00000080]'>
+                                            <span><img src={`/${item.icon}.png`} /></span>
+                                            <h2 className='text-secondaryRed mt-[200px] text-[30px]'>{item.heading}</h2>
+                                            <p className='text-base h-[100px] font-extralight mt-4 text-white'>{item.text}</p>
                                         </div>
-                                        <p className='mt-5 lg:h-[130px] text-justify text-[14px] md:text-[16px] lg:text-lg'>{item.text}</p>
-                                        <Link to={item.path}>
-                                            <button className='mt-5 text-secondaryBlue hover:opacity-50 font-semibold'>Read More</button>
-                                        </Link>
                                     </div>
                                 </SlideIn>
                             ))
@@ -54,6 +69,9 @@ const SectionTwo = () => {
 
 
             <div className='relative py-12'>
+                <div className='absolute right-0 bottom-0'>
+                    <MobileAnimation animationData={spiralRed} size={400} />
+                </div>
                 <div className='zr:hidden lg:flex absolute left-0 top-0 bg-primaryBlue h-full w-[47%] shadow-[0px_0px_20px_9px_rgba(0,0,0,0.15)]'></div>
                 <div className='relative z-10 flex flex-col md:flex-row gap-20 max-w-[1100px] mx-auto'>
                     <a target='_blank' href='https://youtu.be/UiYd0bSVzs4' className=' lg:max-w-[700px] shadow-[0px_0px_20px_9px_rgba(0,0,0,0.15)]'>
@@ -72,7 +90,9 @@ const SectionTwo = () => {
                                 Talk to us or schedule a call with us today
                             </p>
                         </SlideIn>
-                        <Link to={'/contact'}> <button className='text-primaryBlue border-primaryBlue hover:bg-primaryBlue hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>Contact Us</button></Link>
+                        <Link to={'/contact'}>
+                            <button className='text-secondaryRed mt-10 text-base bg-white hover:border-white  border-secondaryRed hover:bg-primaryBlue hover:text-white border  py-3 px-6 rounded-[6px]'>Contact Us</button>
+                        </Link>
 
                     </div>
                 </div>
