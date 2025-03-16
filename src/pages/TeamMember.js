@@ -17,6 +17,7 @@ const TeamMember = () => {
                 heading={teamMember?.name}
                 image={teamMember?.image}
                 text={''}
+                bgImage={'teambg'}
             />
 
 
