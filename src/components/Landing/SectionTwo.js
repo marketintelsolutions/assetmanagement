@@ -2,10 +2,14 @@ import React from 'react'
 import { services } from '../../utils/data'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
+import MobileAnimation from '../MobileAnimation'
 
 const SectionTwo = () => {
     return (
-        <section className='py-24'>
+        <section className='py-24 relative'>
+            <div className='absolute right-0 top-0'>
+                <MobileAnimation />
+            </div>
             <div className='bg-[rgba(249,248,248,1)] px-10 lg:px-0 py-10'>
                 <div className='w-full max-w-max mx-auto'>
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-poppins font-medium text-primaryBlue">SERVICES</h1>
@@ -37,7 +41,7 @@ const SectionTwo = () => {
                         <div className='md:max-w-[500px] px-10 lg:px-0'>
                             <h1 className='uppercase text-3xl font-poppins'>Invest For Your Children Open a Gift Mutual Fund today</h1>
                             <p className='text-lg mt-5'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
-                            <button className='text-white border-white hover:bg-white hover:text-primaryBlue border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
+                            <button className='text-secondaryRed bg-white hover:border-white  border-secondaryRed hover:bg-white hover:text-primaryBlue border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
                         </div>
                     </SlideIn>
                     <SlideIn duration={900} distance={90} direction="right" delay={350}>

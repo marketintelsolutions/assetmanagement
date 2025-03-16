@@ -2,6 +2,7 @@ import React from 'react'
 import Hero from '../components/Landing/Hero'
 import SectionTwo from '../components/Landing/SectionTwo'
 import Slider from '../components/Landing/Slider'
+import MobileAnimation from '../components/MobileAnimation'
 
 const Landing = () => {
     return (

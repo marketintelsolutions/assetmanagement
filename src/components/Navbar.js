@@ -79,7 +79,7 @@ const Navbar = () => {
                     }
                 </div>
                 <div className='flex'>
-                    <button className='zr:hidden lg:flex border border-primaryBlue text-primaryBlue hover:bg-primaryBlue hover:text-white px-4 py-3 rounded-[6px]'>SELF SERVICE</button>
+                    <button className='zr:hidden lg:flex border border-secondaryRed text-secondaryRed hover:border-primaryBlue hover:bg-primaryBlue hover:text-white px-4 py-3 rounded-[6px]'>SELF SERVICE</button>
                     <button onClick={() => setIsMenu((prev) => !prev)} className='text-3xl zr:flex lg:hidden text-primaryBlue'>
                         <span><FiMenu /></span>
                     </button>

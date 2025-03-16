@@ -57,7 +57,7 @@ const Slider = () => {
                             className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
                             style={{ backgroundImage: `url(/slidebg.jpg)`, backgroundSize: 'cover' }}
                         >
-                            <div className="bg-[#0000007e] relative  h-full w-full flex lg:pt-20 gap-20 items-end lg:items-center justify-end">
+                            <div className="bg-[#000000b2] relative  h-full w-full flex lg:pt-20 gap-20 items-end lg:items-center justify-end">
                                 <div className="absolute z-[1]  lg:-bottom-[62px] h-full lg:-left-5 w-full lg:max-w-[42%] transition-opacity duration-500">
                                     <img src={`/${slide.image}.jpg`} alt="building" className="w-full h-full object-cover" />
                                 </div>

@@ -8,7 +8,7 @@ const CareerDetail = () => {
     return (
         <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
             <SlideIn duration={900} distance={90} direction="left" delay={150}>
-                <p className='mt-0 text-xl md:text-2xl text-justify'>At PAC Asset Management, we continuously seek top talent who thrive on challenges, we are always looking for top talent who embrace challenges, offering opportunities that foster personal growth and career fulfilment. Together, we deliver transformational investment solutions tailored to meet the needs of our investors.</p>
+                <p className='mt-0 text-lg md:text-xl text-justify'>At PAC Asset Management, we continuously seek top talent who thrive on challenges, we are always looking for top talent who embrace challenges, offering opportunities that foster personal growth and career fulfilment. Together, we deliver transformational investment solutions tailored to meet the needs of our investors.</p>
 
             </SlideIn>
             <div className='flex flex-col lg:flex-row gap-10 mt-20'>
