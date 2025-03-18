@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { services } from '../../utils/data'
 import { FaAngleRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import Button from '../Button';
 
 const ServicesDetail = () => {
     const [activeItem, setActiveItem] = useState(services[0])
@@ -31,7 +32,7 @@ const ServicesDetail = () => {
                                         <img src={`/${item.icon}.png`} alt="balance" />
                                         <h2 className='text-xl md:text-2xl'>{item.heading}</h2>
                                         <p className='md:h-[220px] text-center'>{item.text}</p>
-                                        <Link to={'/contact'}><button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
+                                        <Link to={'/contact'}><Button text={'CONTACT US'} /></Link>
                                     </div>
                                 ))
                             }
@@ -40,7 +41,7 @@ const ServicesDetail = () => {
                                 <img src={`/${activeItem.icon}.png`} alt="balance" />
                                 <h2 className='text-2xl'>{activeItem.heading}</h2>
                                 <p className='text-center'>{activeItem.text}</p>
-                                <Link to={'/contact'}><button className='mt-10 py-3 px-4 border hover:bg-white hover:text-primaryBlue border-white text-white'>CONTACT US</button></Link>
+                                <Link to={'/contact'}><Button text={'CONTACT US'} /></Link>
                             </div>
                     }
                 </div>

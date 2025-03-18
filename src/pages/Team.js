@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import { team } from '../utils/data'
 import SlideIn from '../components/SlideIn'
 import MobileAnimation from '../components/MobileAnimation'
-import spiralAsh from "../utils/animations/spiral_ash.json";
+import spiralRed from "../utils/animations/spiral_lightred.json";
+import Button from '../components/Button'
 
 
 
@@ -20,8 +21,8 @@ const Team = () => {
 
 
             <div className='w-full relative'>
-                <div className='z-[2] absolute right-[-20%] top-[0%]'>
-                    <MobileAnimation animationData={spiralAsh} size={600} />
+                <div className=' absolute right-[-20%] top-[30%]'>
+                    <MobileAnimation animationData={spiralRed} size={900} />
                 </div>
                 <div className=' w-full max-w-max mx-auto px-10 lg:px-5 py-40'>
 
@@ -42,7 +43,7 @@ const Team = () => {
                                             <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
                                                 <h2 className='text-2xl  uppercase text-[#e7e0e0]'>{item.name}</h2>
                                                 <p className='h-[250px] text-xl  mt-4'>{item.desc[0]}</p>
-                                                <Link to={`/team/${item.slug}`}>  <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>READ MORE</button>
+                                                <Link to={`/team/${item.slug}`}>  <Button text={'READ MORE'} />
                                                 </Link>
                                             </div>
                                         </div>
