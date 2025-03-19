@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
-import spiralAsh from "../../utils/animations/spiral_ash.json";
+import spiralRed from "../../utils/animations/spiral_lightred.json";
 import MobileAnimation from '../MobileAnimation';
+import Button from '../Button';
 
 const services = [
     {
@@ -59,7 +60,7 @@ const WhatWeDo = () => {
     return (
         <section className='relative w-full'>
             <div className=' absolute right-[-25%] top-[10%]'>
-                <MobileAnimation animationData={spiralAsh} size={800} />
+                <MobileAnimation animationData={spiralRed} size={950} />
             </div>
             <div className='py-[150px] px-10 lg:px-5 w-full max-w-[1200px] mx-auto'>
                 <SlideIn duration={900} distance={70} direction="left" delay={150}>
@@ -80,7 +81,7 @@ const WhatWeDo = () => {
                                         <h2 className='text-xl font-poppins font-medium'>{item.heading}</h2>
                                         <p className='text-xl md:h-[120px] mt-4'>{item.text}</p>
                                         <Link to={item.path}>
-                                            <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
+                                            <button className='text-secondaryRed bg-white hover:border-transparent  border-secondaryRed  hover:text-primaryBlue border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
                                         </Link>
                                     </div>
                                 </div>
@@ -90,7 +91,10 @@ const WhatWeDo = () => {
                 </div>
 
 
-                <div className='w-full max-w-max mx-auto mt-20'>
+                <div className='relative w-full max-w-max mx-auto mt-20'>
+                    <div className=' absolute right-[5%] bottom-[0%]'>
+                        <MobileAnimation animationData={spiralRed} size={550} />
+                    </div>
                     <h1 className='text-4xl'>Downloads</h1>
                     <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                         {
@@ -106,10 +110,8 @@ const WhatWeDo = () => {
                                     >
                                         <div className='h-full w-full p-10 bg-[#0000005b] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#00000080]'>
                                             <span><img src={`/${item.icon}.png`} className='w-[80px]' /></span>
-                                            <h2 className='text-secondaryRed mt-[200px] h-[80px] text-[30px]'>{item.heading}</h2>
-                                            {/* <p className='text-base h-[100px] font-extralight mt-4 text-white'>{item.text}</p> */}
-                                            <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>Download Here</button>
-
+                                            <h2 className='text-white mt-[200px] h-[80px] text-[30px]'>{item.heading}</h2>
+                                            <Button text={'Download Here'} />
                                         </div>
                                     </div>
                                 </SlideIn>

@@ -9,7 +9,7 @@ const CareerDetail = () => {
     const [activeItem, setActiveItem] = useState(careers[0])
     return (
         <section className='w-full relative'>
-            <div className=' absolute right-[-25%] top-[10%]'>
+            <div className=' absolute right-[-25%] top-[20%]'>
                 <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
             <div className=' py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>

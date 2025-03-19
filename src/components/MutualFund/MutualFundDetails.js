@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
 import MobileAnimation from '../MobileAnimation'
 import spiralAsh from "../../utils/animations/spiral_ash.json";
+import Button from '../Button';
 
 const mutualfunds = [
     {
@@ -51,8 +52,7 @@ const MutualFundDetails = () => {
                                     <h2 className='text-[22px]'>{item.heading}</h2>
                                     <p className='lg:h-[230px] text-center'>{item.text}</p>
                                     <Link to={'/contact'}>
-                                        <button className='text-secondaryRed bg-white hover:border-secondaryRed  border-secondaryRed hover:bg-secondaryRed hover:text-white border mt-10 py-3 px-6 rounded-[6px]'>CONTACT US</button>
-
+                                        <Button text={'CONTACT US'} />
                                     </Link>
                                 </div>
                             </SlideIn>

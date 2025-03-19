@@ -10,8 +10,8 @@ const FundManagerDetails = () => {
 
     return (
         <section className='w-full relative'>
-            <div className='z-[2] absolute right-[-15%] top-[-0%]'>
-                <MobileAnimation animationData={spiralAsh} size={600} />
+            <div className=' absolute right-[-15%] top-[20%]'>
+                <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
             <div className='w-full max-w-max mx-auto px-10 lg:px-5 py-[150px]'>
                 <SlideIn duration={900} distance={90} direction="left" delay={150}>

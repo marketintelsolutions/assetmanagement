@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import SlideIn from '../components/SlideIn'
 import MobileAnimation from '../components/MobileAnimation'
 import spiralAsh from "../utils/animations/spiral_ash.json";
+import Button from '../components/Button'
 
 const FixedIncomeTrading = () => {
     return (
@@ -30,7 +31,7 @@ const FixedIncomeTrading = () => {
                         </p>
                     </SlideIn>
 
-                    <Link to={'/contact'}>  <button className='text-secondaryRed mt-10 text-base bg-white hover:border-white  border-secondaryRed hover:bg-primaryBlue hover:text-white border  py-3 px-6 rounded-[6px]'>CONTACT US</button></Link>
+                    <Link to={'/contact'}> <Button bg={true} text={'CONTACT US'} /></Link>
 
                 </div>
             </div>

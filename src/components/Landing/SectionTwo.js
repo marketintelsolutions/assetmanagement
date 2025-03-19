@@ -3,20 +3,19 @@ import { services } from '../../utils/data'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
 import MobileAnimation from '../MobileAnimation'
-import spiralAsh from "../../utils/animations/spiral_ash.json";
 import spiralRed from "../../utils/animations/spiral_lightred.json";
 
 const SectionTwo = () => {
     return (
         <section className='py-24 relative'>
+            <div className=' absolute right-[-15%] top-[10%]'>
+                <MobileAnimation animationData={spiralRed} size={900} />
+            </div>
+            {/* <div className='absolute left-0 bottom-0'>
+                <MobileAnimation animationData={spiralRed} />
+            </div> */}
+            <div className=' bg-[rgba(249,248,248,1)] px-10 lg:px-0 py-10'>
 
-            <div className='relative bg-[rgba(249,248,248,1)] px-10 lg:px-0 py-10'>
-                <div className=' absolute right-0 top-0'>
-                    <MobileAnimation animationData={spiralAsh} />
-                </div>
-                <div className='absolute left-0 bottom-0'>
-                    <MobileAnimation animationData={spiralRed} />
-                </div>
                 <div className='w-full max-w-max mx-auto'>
                     <h1 className="relative z-[2] text-3xl md:text-4xl w-full flex items-center justify-between lg:text-5xl font-poppins font-medium text-primaryBlue">
                         <span>SERVICES</span>
