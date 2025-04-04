@@ -3,6 +3,8 @@ import { services } from '../../utils/data'
 import { FaAngleRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import Button from '../Button';
+import MobileAnimation from '../MobileAnimation';
+import spiralRed from "../../utils/animations/spiral_lightred.json";
 
 const ServicesDetail = () => {
     const [activeItem, setActiveItem] = useState(services[0])
@@ -10,6 +12,10 @@ const ServicesDetail = () => {
         <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
             <h1 className='text-5xl text-primaryBlue font-poppins font-medium'>OUR SERVICES</h1>
             <p className='mt-10 text-2xl text-justify'>Easy access to investment opportunities</p>
+
+            <div className=' absolute right-[-25%] top-[160%]'>
+                <MobileAnimation animationData={spiralRed} size={900} />
+            </div>
 
             <div className='flex flex-col lg:flex-row gap-10 mt-20'>
                 <div className='flex flex-row flex-wrap h-fit lg:flex-col gap-10'>
@@ -46,7 +52,6 @@ const ServicesDetail = () => {
                     }
                 </div>
             </div>
-
         </section>
     )
 }

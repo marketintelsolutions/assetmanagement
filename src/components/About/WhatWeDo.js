@@ -37,29 +37,29 @@ const transactions = [
     {
         heading: 'Account opening package',
         icon: 'package',
-        image: 'mutualfunds',
+        image: 'account_opening',
     },
     {
         heading: 'Client Update Form',
         icon: 'client',
-        image: 'mutualfunds',
+        image: 'clientform',
     },
     {
         heading: 'Fund Subscription Form',
         icon: 'subscription',
-        image: 'mutualfunds',
+        image: 'fundsub',
     },
     {
         heading: 'Fund Redemption Form',
         icon: 'form',
-        image: 'mutualfunds',
+        image: 'redemption',
     },
 ]
 
 const WhatWeDo = () => {
     return (
         <section className='relative w-full'>
-            <div className=' absolute right-[-25%] top-[10%]'>
+            <div className=' absolute right-[-25%] top-[20%]'>
                 <MobileAnimation animationData={spiralRed} size={950} />
             </div>
             <div className='py-[150px] px-10 lg:px-5 w-full max-w-[1200px] mx-auto'>
@@ -92,9 +92,7 @@ const WhatWeDo = () => {
 
 
                 <div className='relative w-full max-w-max mx-auto mt-20'>
-                    <div className=' absolute right-[5%] bottom-[0%]'>
-                        <MobileAnimation animationData={spiralRed} size={550} />
-                    </div>
+                    
                     <h1 className='text-4xl'>Downloads</h1>
                     <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                         {

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
 import MobileAnimation from '../MobileAnimation'
-import spiralAsh from "../../utils/animations/spiral_ash.json";
+import spiralAsh from "../../utils/animations/spiral_lightred.json";
 import Button from '../Button';
 
 const mutualfunds = [
@@ -36,7 +36,7 @@ const mutualfunds = [
 const MutualFundDetails = () => {
     return (
         <section className='w-full relative'>
-            <div className='z-[2] absolute right-[-20%] bottom-[-0%]'>
+            <div className='z-[2] absolute right-[-20%] Top-[-0%]'>
                 <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
             <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>

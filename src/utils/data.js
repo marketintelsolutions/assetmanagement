@@ -43,7 +43,7 @@ export const services = [
     },
     {
         icon: 'trading',
-        image: 'mutualfunds',
+        image: 'fixedincomeBak',
         coloredIcon: 'tradingc',
         heading: 'Fixed Income Trading',
         text: 'We offer fixed income portfolio management service to our client who wish to participate in the Fixed Income Markets locally and internationally.',
@@ -51,7 +51,7 @@ export const services = [
     },
     {
         icon: 'wealth',
-        image: 'mutualfunds',
+        image: 'wealth',
         coloredIcon: 'wealthc',
         heading: 'Wealth Management',
         text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs.',
@@ -59,7 +59,7 @@ export const services = [
     },
     {
         icon: 'investment',
-        image: 'mutualfunds',
+        image: 'alternativeinvestments',
         coloredIcon: 'investmentc',
         heading: 'Alternative Investment',
         text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.',
