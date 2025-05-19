@@ -55,7 +55,7 @@ const SectionTwo = () => {
                         <div className='md:max-w-[500px] px-10 lg:px-0'>
                             <h1 className='uppercase text-3xl font-poppins'>Invest For Your Children Open a Gift Mutual Fund today</h1>
                             <p className='text-lg mt-5'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
-                            <button className='text-secondaryRed bg-white hover:border-white  border-secondaryRed hover:bg-white hover:text-primaryBlue border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
+                            <button className='text-white bg-secondaryRed   border-secondaryRed hover:bg-white hover:text-primaryBlue  mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
                         </div>
                     </SlideIn>
                     <SlideIn duration={900} distance={90} direction="right" delay={350}>
@@ -90,7 +90,7 @@ const SectionTwo = () => {
                             </p>
                         </SlideIn>
                         <Link to={'/contact'}>
-                            <button className='text-secondaryRed mt-10 text-base bg-white hover:border-white  border-secondaryRed hover:bg-primaryBlue hover:text-white border  py-3 px-6 rounded-[6px]'>Contact Us</button>
+                            <button className='text-white bg-secondaryRed border border-secondaryRed  border-secondaryRed hover:bg-white hover:text-secondaryRed  mt-10 py-3 px-6 rounded-[6px]'>Contact Us</button>
                         </Link>
 
                     </div>
