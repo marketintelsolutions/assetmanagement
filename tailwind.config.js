@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         primaryBlue: '#062644',
         primarygray: 'rgb(166,166,167)',
-        secondaryRed: '#ed1c24',
+        secondaryRed: '#4493c4',
         secondaryBlue: '#0095D8'
       },
       maxWidth: {
