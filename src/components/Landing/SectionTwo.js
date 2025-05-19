@@ -8,7 +8,7 @@ import spiralRed from "../../utils/animations/spiral_lightred.json";
 const SectionTwo = () => {
     return (
         <section className='py-24 relative'>
-            <div className=' absolute right-[-15%] top-[10%]'>
+            <div className=' absolute right-[-25%] top-[20%]'>
                 <MobileAnimation animationData={spiralRed} size={900} />
             </div>
             {/* <div className='absolute left-0 bottom-0'>
@@ -38,7 +38,7 @@ const SectionTwo = () => {
                                     >
                                         <div className='h-full w-full p-10 bg-[#0000005b] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#00000080]'>
                                             <span><img src={`/${item.icon}.png`} /></span>
-                                            <h2 className='text-secondaryRed mt-[200px] text-[30px]'>{item.heading}</h2>
+                                            <h2 className='text-white mt-[200px] text-[30px] font-bold'>{item.heading}</h2>
                                             <p className='text-base h-[100px] font-extralight mt-4 text-white'>{item.text}</p>
                                         </div>
                                     </div>
