@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { navData } from '../utils/data'
 import { Link } from 'react-router-dom'
-import { FaAngleDown, FaLinkedin, FaPhone } from 'react-icons/fa6'
+import { FaAngleDown, FaInstagram, FaLinkedin, FaPhone } from 'react-icons/fa6'
 import { IoLogoFacebook, IoMail } from 'react-icons/io5'
 import { FiMenu } from 'react-icons/fi'
 
@@ -20,16 +20,16 @@ const Navbar = () => {
                 <div className='w-full max-w-max mx-auto flex justify-end'>
                     <div className='flex gap-12 items-center'>
                         <div className='flex text-white text-2xl gap-8'>
-                            <span><IoLogoFacebook /></span>
-                            <span><FaLinkedin /></span>
+                            <a target='_blank' href='https://www.linkedin.com/company/pac-asset-management'><FaLinkedin /></a>
+                            <a target='_blank' href='https://www.instagram.com/pacassetmanagement?igsh=MXAzeWRsYmp2bGxnZQ=='><FaInstagram /></a>
                         </div>
                         <div className='flex gap-2 items-center text-l text-white'>
                             <span><FaPhone /></span>
-                            <p>+234 271 6899 | 271 8632</p>
+                            <a href='tel:+2348111111006'>+234 811 111 1006</a>
                         </div>
                         <div className='flex gap-2 items-center text-l text-white'>
                             <span><IoMail /></span>
-                            <p>info@pacassetmanagement.com</p>
+                            <a href='mailto:info@pacassetmanagement.com'>info@pacassetmanagement.com</a>
                         </div>
                     </div>
                 </div>

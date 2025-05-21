@@ -7,7 +7,7 @@ const MutualFund = () => {
         <>
             <Hero
                 heading={'Mutual Fund'}
-                text={'We have different types of mutual funds designed to meet the unique needs of our clients'}
+                text={'We have different types of mutual funds designed to meet the unique needs of our clients.'}
                 image={'mutualfunds'}
                 bgImage={'mutualfundsbak'}
             />

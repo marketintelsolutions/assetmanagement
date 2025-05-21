@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
 import spiralRed from "../../utils/animations/spiral_lightred.json";
 import MobileAnimation from '../MobileAnimation';
-import Button from '../Button';
+import Button from '../ui/Button';
 
 const services = [
     {
         image: 'mutualfunds',
         heading: 'MUTUAL FUNDS',
-        text: 'We have different types of mutual funds designed to meet the unique needs of our clients',
+        text: 'We have different types of mutual funds designed to meet the unique needs of our clients.',
         path: '/services/mutual-funds'
     },
     {
@@ -21,40 +21,19 @@ const services = [
     {
         image: 'wealth',
         heading: 'WEALTH MANAGEMENT',
-        text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs',
+        text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs.',
         path: '/services/wealth-management'
     },
     {
         image: 'alternativeinvestments',
         heading: 'ALTERNATIVE ASSETS',
-        text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics',
+        text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.',
         path: '/services/alternative-investment'
 
     },
 ]
 
-const transactions = [
-    {
-        heading: 'Account opening package',
-        icon: 'package',
-        image: 'account_opening',
-    },
-    {
-        heading: 'Client Update Form',
-        icon: 'client',
-        image: 'clientform',
-    },
-    {
-        heading: 'Fund Subscription Form',
-        icon: 'subscription',
-        image: 'fundsub',
-    },
-    {
-        heading: 'Fund Redemption Form',
-        icon: 'form',
-        image: 'redemption',
-    },
-]
+
 
 const WhatWeDo = () => {
     return (
@@ -81,7 +60,7 @@ const WhatWeDo = () => {
                                         <h2 className='text-xl font-poppins font-medium'>{item.heading}</h2>
                                         <p className='text-xl md:h-[120px] mt-4'>{item.text}</p>
                                         <Link to={item.path}>
-                                            <button className='text-secondaryRed bg-white hover:border-transparent  border-secondaryRed  hover:text-primaryBlue border mt-10 py-3 px-6 rounded-[6px]'>Invest Now</button>
+                                            <Button>Invest Now</Button>
                                         </Link>
                                     </div>
                                 </div>
@@ -89,35 +68,6 @@ const WhatWeDo = () => {
                         ))
                     }
                 </div>
-
-
-                <div className='relative w-full max-w-max mx-auto mt-20'>
-                    
-                    <h1 className='text-4xl'>Downloads</h1>
-                    <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
-                        {
-                            transactions.map((item, index) => (
-                                <SlideIn duration={900} distance={70} direction="bottom" delay={index * 150}>
-                                    <div
-                                        key={index}
-                                        style={{
-                                            backgroundImage: `url(/${item.image}.jpg)`,
-                                            backgroundSize: 'cover'
-                                        }}
-                                        className={`max-w-[450px] transform transition-transform duration-500 `}
-                                    >
-                                        <div className='h-full w-full p-10 bg-[#0000005b] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#00000080]'>
-                                            <span><img src={`/${item.icon}.png`} className='w-[80px]' /></span>
-                                            <h2 className='text-white mt-[200px] h-[80px] text-[30px]'>{item.heading}</h2>
-                                            <Button text={'Download Here'} />
-                                        </div>
-                                    </div>
-                                </SlideIn>
-                            ))
-                        }
-                    </div>
-                </div>
-
             </div>
         </section>
     )

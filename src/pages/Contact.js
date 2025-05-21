@@ -12,7 +12,7 @@ const Contact = () => {
         <section>
             <Hero
                 heading={'Contact Us'}
-                text={'We would love to hear from you'}
+                text={'We would love to hear from you.'}
                 image={'contact'}
                 bgImage={'contactbg'}
             />
@@ -21,25 +21,27 @@ const Contact = () => {
                 <div className=' absolute right-[-25%] top-[10%]'>
                     <MobileAnimation animationData={spiralAsh} size={800} />
                 </div>
-                <div className='py-40 px-10 lg:px-5 w-full max-w-[1100px] mx-auto flex flex-wrap gap-4 justify-between'>
+                <div className='py-40 px-10 lg:px-5 w-full max-w-[1200px] mx-auto flex flex-wrap gap-4 justify-between'>
                     <SlideIn duration={900} distance={90} direction="left" delay={150}>
-                        <div className='flex flex-col gap-4 shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)] p-10 h-fit rounded-[10px]'>
+                        <div className='w-full lg:min-w-[500px] flex flex-col gap-4 shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)] p-10 h-fit rounded-[10px]'>
                             <h1 className='text-[40px]'>Contact Channels</h1>
-                            <p className='text-[20px] font-light'>We would love to hear from you</p>
+                            <p className='text-[20px] font-light'>We would love to hear from you.</p>
                             <p className='text-[17px] font-extralight mt-12 flex gap-4'>
                                 <span className='text-primaryOrange'><IoLocationOutline size={50} /></span>
                                 <span>
-                                    PLot 22, Akiogun New Market Road,
-                                    <br />  Oniru Victoria Island, Lagos
+                                    Plot 8A, Elsie Femi Pearse Street,<br />
+                                    Off Adeola Odeku,<br />
+                                    Victoria Island,<br />
+                                    Lagos.
                                 </span>
                             </p>
                             <p className='text-[17px] font-extralight mt-8 flex gap-4 items-center'>
                                 <span className='text-primaryOrange'><IoMailOutline size={50} /></span>
-                                <span className='text-black'>hello@truebondglobalinvestments.com</span>
+                                <span className='text-black'>info@pacassetmanagement.com</span>
                             </p>
-                            <p className='text-[17px] font-extralight mt-8 flex gap-4'>
+                            <p className='text-[17px] font-extralight mt-8 flex items-center gap-4'>
                                 <span className='text-primaryOrange'><LuPhone size={50} /></span>
-                                <span className='text-black'> 09062447811,  07074521822, 09062979783,<br /> 09131038886, 09062979787</span>
+                                <span className='text-black'> +234 811 111 1006</span>
                             </p>
                         </div>
                     </SlideIn>

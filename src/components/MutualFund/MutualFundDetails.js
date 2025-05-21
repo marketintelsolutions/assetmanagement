@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
 import MobileAnimation from '../MobileAnimation'
-import spiralAsh from "../../utils/animations/spiral_lightred.json";
+import spiralAsh from "../../utils/animations/spiral_ash.json";
 import Button from '../Button';
 
 const mutualfunds = [
@@ -36,16 +36,16 @@ const mutualfunds = [
 const MutualFundDetails = () => {
     return (
         <section className='w-full relative'>
-            <div className='z-[2] absolute right-[-20%] Top-[-0%]'>
+            <div className=' absolute right-[-20%] Top-[-0%]'>
                 <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
             <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
-                <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-14'>
+                <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-5'>
 
                     {
                         mutualfunds.map((item, index) => (
                             <SlideIn duration={900} distance={90} direction="right" delay={index * 150}>
-                                <div className='bg-primaryBlue py-6 md:py-12 px-5 md:px-10 text-white flex flex-col gap-5 md:gap-10 items-center '>
+                                <div className='bg-primaryBlue py-6 md:py-12 px-5 md:px-7 text-white flex flex-col gap-5 md:gap-10 items-center '>
                                     <div className='w-full max-w-[50px] md:max-w-[70px] lg:max-w-[100px]'>
                                         <img src={`/${item.icon}.png`} alt="balance" className='w-full' />
                                     </div>

@@ -12,31 +12,38 @@ export const services = [
             {
                 icon: 'balance',
                 heading: 'PACAM BALANCED FUND',
-                text: 'This Fund invests in a combination of equities and fixed income instruments giving you a chance to maximize the benefits across these asset classes. The Fund allocation model emphasizes diversification and stability of investment using fixed income asset class to balance out the volatility of equity investments whilst maximizing benefits of both asset classes.',
+                text: [
+                    'This Fund invests in a combination of equities and fixed income instruments giving you a chance to maximize the benefits across these asset classes.',
+                    'The Fund allocation model emphasizes diversification and stability of investment using fixed income asset class to balance out the volatility of equity investments whilst maximizing benefits of both asset classes.'
+                ],
                 image: 'building'
             },
             {
                 icon: 'equity',
                 heading: 'PACAM Equity Fund',
-                text: 'PACAM Equity Fund is a pure equity fund that invests your money predominantly in a portfolio of Nigerian companies, using a rigorous research-based system. The fund provides long-term capital preservation by investing at least 75% of the fund’s assets in a diversified portfolio of high-quality companies listed on the Nigerian Stock Exchange. To manage liquidity, the fund may also invest up to 23% in short-term money market instruments.',
+                text: [
+                    'PACAM Equity Fund is a pure equity fund that invests your money predominantly in a portfolio of Nigerian companies, using a rigorous research-based system.',
+                    'The fund provides long-term capital preservation by investing at least 75% of the fund’s assets in a diversified portfolio of high-quality companies listed on the Nigerian Stock Exchange.',
+                    'To manage liquidity, the fund may also invest up to 23% in short-term money market instruments.'
+                ],
                 image: 'building'
             },
             {
                 icon: 'fixed',
                 heading: 'PACAM Fixed Income Fund',
-                text: 'PACAM Fixed Income Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds and other investment grade ﬁxed income instruments giving investors opportunity to invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.',
+                text: ['PACAM Fixed Income Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds and other investment grade ﬁxed income instruments giving investors opportunity to invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.'],
                 image: 'building'
             },
             {
                 icon: 'market',
                 heading: 'PACAM Money Market Fund',
-                text: 'The PACAM Money Market Fund invests in high-quality short-term Money Market securities such as Treasury Bills, Bank Placements, Commercial Papers, and other money market instruments.',
+                text: ['The PACAM Money Market Fund invests in high-quality short-term Money Market securities such as Treasury Bills, Bank Placements, Commercial Papers, and other money market instruments.'],
                 image: 'building'
             },
             {
                 icon: 'euro',
                 heading: 'PACAM Eurobond Fund',
-                text: 'This Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds, and other investment grade Fixed income instruments giving investor’s opportunity to Invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.',
+                text: ['This Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds, and other investment grade Fixed income instruments giving investor’s opportunity to Invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.'],
                 image: 'building'
             },
         ]
@@ -55,7 +62,59 @@ export const services = [
         coloredIcon: 'wealthc',
         heading: 'Wealth Management',
         text: 'Our wealth management solutions deliver lifestyle management and diversified investment opportunities bespoke to each client’s needs.',
-        path: '/services/wealth-management'
+        path: '/services/wealth-management',
+        items: [
+            {
+                icon: 'plan',
+                heading: 'Financial Planning',
+                text: [
+                    'Analyzing client’s Financial Situation.',
+                    'Development of Customized Plan.',
+                    '',
+                    '',
+                    'PROVIDE GUIDANCE ON:',
+                    'Retirement Planning',
+                    'Estate Planning',
+                    ' Tax Planning',
+                    'Risk Management and Insurance',
+                    'Wealth Preservation and Asset Protection'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'manage',
+                heading: 'Investment Management',
+                text: [
+                    'Portfolio Construction',
+                    'Asset Allocation',
+                    'Investment Selection',
+                    'Monitoring and Rebalancing of Portfolios to optimize returns and Manage Risk'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'family',
+                heading: 'Family Office Services',
+                text: [
+                    'Managing Financial Affairs.',
+                    'Coordinating with tax and legal professional',
+                    'Provide administrative support.',
+                    'Addressing Multi-generational wealth transfer and family governance.'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'education',
+                heading: 'Education and Communication',
+                text: [
+                    'Educate Clients about Investment Management strategies, Financial Concepts and Market Trends.',
+                    'Provide regular reports and updates on investment performance.',
+                    'Offer ongoing communication and support to keep engaged in their financial plans.'
+                ],
+                image: 'building'
+            },
+
+        ]
     },
     {
         icon: 'investment',
@@ -87,7 +146,7 @@ export const careers = [
     {
         icon: 'wealth',
         heading: 'PAC ACADEMY',
-        text: ['Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam cupiditate atque doloremque tempora iste, accusamus nobis impedit, porro exercitationem tempore dolorem nam quaerat labore sint amet harum quas reiciendis consequuntur?'],
+        text: ['Are you a recent graduate looking to build a successful career in the financial sector? The PACAM Academy is designed to equip young, ambitious graduates with the skills, knowledge, and hands-on experience needed to thrive in today\’s dynamic financial industry.', 'Our academy offers structured training programs, mentorship from seasoned experts, and exposure to real-world financial operations. Participants will gain a solid foundation in investment management, client relations, financial analysis, and more.', 'At the end of the program, high-performing candidates may be offered full-time positions within the firm.Join us and take the first step toward a rewarding career in finance. Your future in finance starts here.'],
         image: 'academy',
     },
     {
@@ -177,6 +236,10 @@ export const navData = [
                     {
                         text: 'Fund Calculator',
                         path: '/insights/fund-calculator'
+                    },
+                    {
+                        text: 'Forms',
+                        path: '/insights/forms'
                     },
                 ]
             }
@@ -294,7 +357,7 @@ export const footerData = [
                 path: "",
             },
             {
-                text: "Suite 62, NICON Luxury Hotel Plot 903 Tafawa Balewa way, Area 11, Abuja",
+                text: "Suite 62, NICON Luxury Hotel Plot 903 Tafawa Balewa way, Area 11, Abuja.",
                 icon: false,
                 path: "",
             },
@@ -308,6 +371,34 @@ export const footerData = [
 ];
 
 export const fundManagerReports = [
+    {
+        title: '2025 Reports',
+        items: [
+            {
+                title: 'January 2025 Fund Manager\'s Report ',
+                file: 'jan2025'
+            },
+            {
+                title: 'February 2025 Fund Manager\'s Report ',
+                file: 'feb2025',
+                ppt: true
+            },
+            {
+                title: 'March 2025 Fund Manager\'s Report ',
+                file: 'mar2025'
+            },
+
+        ]
+    },
+    {
+        title: '2024 Reports',
+        items: [
+            {
+                title: 'December 2024 Fund Manager\'s Report ',
+                file: 'dec2024'
+            },
+        ]
+    },
     {
         title: '2022 Reports',
         items: [
@@ -515,3 +606,164 @@ export const team = [
     },
 
 ]
+
+export const categorizedFaqData = {
+    "Money Market Fund": [
+        {
+            question: "What is a Money Market Fund?",
+            answer: "A low-risk mutual fund that invests in short-term debt instruments like treasury bills, commercial papers, and certificates of deposit."
+        },
+        {
+            question: "How does a money market fund work?",
+            answer: "It pools money from investors to buy low-risk, short-term securities, aiming to preserve capital and provide modest returns."
+        },
+        {
+            question: "Is my capital safe in the PACAM money market fund?",
+            answer: "The NAV or Par value of the Money Market fund is not subject to market volatility and is stable throughout the life of the fund."
+        },
+        {
+            question: "How liquid is a money market fund?",
+            answer: "Highly liquid—investors can usually withdraw funds within 24–48 hours."
+        },
+        {
+            question: "What fees are associated with money market funds?",
+            answer: "The fund is responsible to pay fees for services rendered by parties to the fund. By regulation, the fund expense should not exceed 2% of Net Asset Value."
+        },
+        {
+            question: "Can I lose money in a money market fund?",
+            answer: "No. A money market fund is designed as a low risk investment vehicle that invests in risk-free or low-risk instruments."
+        },
+        {
+            question: "How is return earned and paid?",
+            answer: "Incomes from underlying assets of the portfolio are accrued daily and distributions are made at the end of each quarter."
+        },
+        {
+            question: "How do I withdraw or access my funds?",
+            answer: "You can redeem your funds using the Mobile App, Web application or surface mail."
+        }
+    ],
+    "Equity Fund": [
+        {
+            question: "What is an equity fund?",
+            answer: "A mutual fund that invests primarily in shares (stocks) of listed companies. Stocks are usually selected from the different sectors of the economy to reduce risk exposure."
+        },
+        {
+            question: "What kind of stocks are included in an equity fund?",
+            answer: "Blue-chip, growth, value, or sector-specific stocks."
+        },
+        {
+            question: "What is the risk level of investing in equity funds?",
+            answer: "High—due to stock market volatility, but with potential for high long-term returns."
+        },
+        {
+            question: "What is the potential return on equity funds?",
+            answer: "It can vary based on market conditions."
+        },
+        {
+            question: "Who should invest in equity funds?",
+            answer: "Investors with higher risk tolerance and long-term investment goals."
+        },
+        {
+            question: "Are dividends paid to investors in an equity fund?",
+            answer: "Yes, dividends are distributed annually."
+        },
+        {
+            question: "What are the fees or charges on equity funds?",
+            answer: "The fund is responsible to pay fees for services rendered by parties to the fund. By regulation, the fund expense should not exceed 2% of Net Asset Value."
+        },
+        {
+            question: "How are equity funds managed?",
+            answer: "By professional fund managers who buy and sell stocks to meet the fund's objectives."
+        }
+    ],
+    "Balanced Fund": [
+        {
+            question: "What is a balanced fund?",
+            answer: "A mutual fund that invests in a mix of equities and fixed-income securities to balance risk and return."
+        },
+        {
+            question: "How is a balanced fund different from other mutual funds?",
+            answer: "It combines the growth potential of stocks with the stability of other infixed income instruments."
+        },
+        {
+            question: "Who should consider investing in a balanced fund?",
+            answer: "Moderate-risk investors looking for growth with some stability."
+        },
+        {
+            question: "What are the risks and returns of a balanced fund?",
+            answer: "Moderate risk; returns typically fall between those of equity and fixed income funds."
+        },
+        {
+            question: "What is the investment horizon for balanced funds?",
+            answer: "Medium to long term (1–5 years or more)."
+        },
+        {
+            question: "Is PACAM Balanced funds actively managed?",
+            answer: "Yes it is actively managed."
+        },
+        {
+            question: "What fees apply to the PACAM Balanced funds?",
+            answer: "The fund is responsible to pay fees for services rendered by parties to the fund. By regulation, the fund expense should not exceed 2% of Net Asset Value."
+        }
+    ],
+    "Eurobond Fund": [
+        {
+            question: "What is a Eurobond fund?",
+            answer: "A mutual fund that invests in Eurobonds—bonds issued in foreign currencies, typically USD, by governments or corporations."
+        },
+        {
+            question: "How does a Eurobond fund generate returns?",
+            answer: "Through interest, coupons and valuation gains on underlying assets."
+        },
+        {
+            question: "What currencies is the PACAM Eurobond funds denominated in?",
+            answer: "USD."
+        },
+        {
+            question: "Is a Eurobond fund suitable for risk-averse investors?",
+            answer: "Yes, it is suitable for risk-averse investors but it still carries currency risks."
+        },
+        {
+            question: "What is the minimum holding period?",
+            answer: "The minimum holding period is 6months."
+        },
+        {
+            question: "Is the PACAM Eurobond fund registered?",
+            answer: "Yes, it is registered with the SEC."
+        },
+        {
+            question: "How often distributions made?",
+            answer: "The fund distributes dividends annually."
+        }
+    ],
+    "Fixed Income Fund": [
+        {
+            question: "What is a fixed income fund?",
+            answer: "A mutual fund that invests in government and corporate bonds, treasury notes, and other fixed-return securities."
+        },
+        {
+            question: "What types of instruments are included in a fixed income fund?",
+            answer: "Bonds, treasury bills, debentures, and sometimes money market instruments."
+        },
+        {
+            question: "How safe are PACAM fixed income funds?",
+            answer: "Instruments issues by the sovereign are regards as very safe. The fund's portfolio consists largely of instruments issued by the Federal Government of Nigeria."
+        },
+        {
+            question: "How is interest income paid?",
+            answer: "Dividends are distributed annually."
+        },
+        {
+            question: "Who should invest in fixed income funds?",
+            answer: "Conservative investors seeking regular income with moderate risk."
+        },
+        {
+            question: "How do interest rates affect fixed income funds?",
+            answer: "Rising rates make fund NAV cheaper and vice versa."
+        },
+        {
+            question: "What fees or charges apply?",
+            answer: "The fund is responsible to pay fees for services rendered by parties to the fund. By regulation, the fund expense should not exceed 2% of Net Asset Value."
+        }
+    ]
+};
