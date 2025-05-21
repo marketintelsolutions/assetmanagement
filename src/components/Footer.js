@@ -1,5 +1,5 @@
 import React from "react";
-import { FaInstagram, FaX } from "react-icons/fa6";
+import { FaInstagram, FaLinkedin, FaX } from "react-icons/fa6";
 import { RiTwitterXFill } from "react-icons/ri";
 import { footerData } from "../utils/data";
 import { Link } from "react-router-dom";
@@ -12,17 +12,17 @@ const Footer = () => {
         <section className="max-w-max flex flex-col md:flex-row gap-10 md:gap-20 pb-[22px] w-full  mx-auto text-center sm:flex justify-between">
           <div className="flex flex-col mb-12">
             {/* <span><Logocolored />logo</span> */}
-            <Link to={'/'} className='text-4xl  text-left font-bold'>PAC Asset</Link>
+            <Link to={'/'} className='text-4xl  text-left font-bold'><img src="/logowhite.svg" alt="logo" className='w-full max-w-[280px]' /></Link>
 
             <p className="md:w-[310.36px] mt-[28px] mb-6  text-left text-xl font-normal font-['DM Sans'] leading-[30px]">
-              PAC Asset offers a wide range of investment advice, products and services, including brokerage ; retirement accounts, ETFs, online trading & more.
+              PAC Asset offers a wide range of investment advice, products and services, including brokerage; retirement accounts, ETFs, online trading & more.
             </p>
             <div className="flex gap-[22px] text-[20px] text-primaryPurple items-center">
-              <a href="https://x.com/vapzersignals?s=21" target="_blank">
-                <RiTwitterXFill />
+              <a href="https://www.linkedin.com/company/pac-asset-management" target="_blank">
+                <FaLinkedin />
               </a>
               <a
-                href="https://www.instagram.com/vapzer.ai?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr"
+                href="https://www.instagram.com/pacassetmanagement?igsh=MXAzeWRsYmp2bGxnZQ=="
                 target="_blank"
               >
                 <FaInstagram />
@@ -70,7 +70,7 @@ const Footer = () => {
         </section>
         <section className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full flex flex-col sm:flex-row justify-between">
           <p className="  text-lg font-normal font-dm_sans text-left w-full max-w-[1100px] mx-auto leading-[30px]">
-            Copyright © {new Date().getFullYear()} PAC Asset
+            Copyright © {new Date().getFullYear()} PAC Asset Management
           </p>
 
         </section>

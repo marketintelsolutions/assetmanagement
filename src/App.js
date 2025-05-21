@@ -14,6 +14,7 @@ import Faqs from "./pages/Faqs";
 import FundCalculator from "./pages/FundCalculator";
 import Career from "./pages/Career";
 import TeamMember from "./pages/TeamMember";
+import Forms from "./pages/Forms";
 
 function App() {
   const router = createBrowserRouter([
@@ -110,6 +111,14 @@ function App() {
       element: (
         <MainLayout>
           <FundCalculator />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/insights/forms',
+      element: (
+        <MainLayout>
+          <Forms />
         </MainLayout>
       )
     },

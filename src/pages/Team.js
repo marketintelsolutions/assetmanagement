@@ -5,7 +5,7 @@ import { team } from '../utils/data'
 import SlideIn from '../components/SlideIn'
 import MobileAnimation from '../components/MobileAnimation'
 import spiralRed from "../utils/animations/spiral_lightred.json";
-import Button from '../components/Button'
+import Button from '../components/ui/Button'
 
 
 
@@ -14,7 +14,7 @@ const Team = () => {
         <>
             <Hero
                 heading={'BOARD OF DIRECTORS'}
-                text={'The Board of Directors for PAC Asset Management Limited meets on a quarterly basis and is responsible for setting the Company’s strategic goals and evaluating overall business performance'}
+                text={'The Board of Directors for PAC Asset Management Limited meets on a quarterly basis and is responsible for setting the Company’s strategic goals and evaluating overall business performance.'}
                 image='teambg'
                 bgImage={'about2'}
             />
@@ -33,7 +33,7 @@ const Team = () => {
 
                     <div className='relative w-full'>
 
-                        <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-20 gap-10'>
+                        <div className=' grid grid-cols-1 md:grid-cols-2 md:max-w-[70%] mx-auto mt-20 gap-10'>
 
                             {
                                 team.map((item, index) => (
@@ -42,8 +42,9 @@ const Team = () => {
                                             <div className='w-full'><img src={`/${item.image}.jpg`} className='w-full  object-cover max-h-[450px]' /></div>
                                             <div className='pt-5 px-6 pb-8 bg-primaryBlue text-white'>
                                                 <h2 className='text-2xl  uppercase text-[#e7e0e0]'>{item.name}</h2>
-                                                <p className='h-[250px] text-xl  mt-4'>{item.desc[0]}</p>
-                                                <Link to={`/team/${item.slug}`}>  <Button text={'READ MORE'} />
+                                                <p className=' text-xl  mt-4'>{item.desc[0].slice(0, 130)}...</p>
+                                                <Link to={`/team/${item.slug}`}>
+                                                    <Button>READ MORE</Button>
                                                 </Link>
                                             </div>
                                         </div>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { fundManagerReports } from '../../utils/data'
-import { FaRegFilePdf } from 'react-icons/fa6'
+import { FaFilePowerpoint, FaRegFilePdf } from 'react-icons/fa6'
 import SlideIn from '../SlideIn'
 import MobileAnimation from '../MobileAnimation'
 import spiralAsh from "../../utils/animations/spiral_ash.json";
+import { BsFiletypePpt } from 'react-icons/bs'
 
 const FundManagerDetails = () => {
     const [activeReport, setActiveReport] = useState(fundManagerReports[0])
@@ -33,10 +34,10 @@ const FundManagerDetails = () => {
                         {
                             activeReport.items.map((item, index) => (
                                 <div key={index} className='flex md:max-w-[70%] items-center justify-between'>
-                                    <a target='_blank' href={`/pdf/${item.file}.pdf`} className='hover:text-primaryBlue text-sm md:text-base'>
+                                    <a target='_blank' href={`/pdf/${item.file}.${item.ppt ? `pptx` : `pdf`}`} className='hover:text-primaryBlue text-sm md:text-base'>
                                         {item.title}
                                     </a>
-                                    <span className='text-primaryBlue'><FaRegFilePdf size={30} /></span>
+                                    <span className='text-primaryBlue'>{item.ppt ? <BsFiletypePpt size={30} /> : <FaRegFilePdf size={30} />}</span>
                                 </div>
                             ))
                         }

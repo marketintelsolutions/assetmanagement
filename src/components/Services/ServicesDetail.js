@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { services } from '../../utils/data'
 import { FaAngleRight } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
-import Button from '../Button';
 import MobileAnimation from '../MobileAnimation';
-import spiralRed from "../../utils/animations/spiral_lightred.json";
+import spiralRed from "../../utils/animations/spiral_ash.json";
+import Button from '../ui/Button';
 
 const ServicesDetail = () => {
     const [activeItem, setActiveItem] = useState(services[0])
     return (
-        <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+        <section className='py-[150px] px-10 lg:px-5 w-full max-w-[1380px] mx-auto'>
             <h1 className='text-5xl text-primaryBlue font-poppins font-medium'>OUR SERVICES</h1>
             <p className='mt-10 text-2xl text-justify'>Easy access to investment opportunities</p>
 
@@ -17,7 +17,7 @@ const ServicesDetail = () => {
                 <MobileAnimation animationData={spiralRed} size={900} />
             </div>
 
-            <div className='flex flex-col lg:flex-row gap-10 mt-20'>
+            <div className='relative z-[2] flex flex-col lg:flex-row gap-10 mt-20'>
                 <div className='flex flex-row flex-wrap h-fit lg:flex-col gap-10'>
                     {
                         services.map((item, index) => (
@@ -31,14 +31,23 @@ const ServicesDetail = () => {
                 </div>
                 <div>
                     {
-                        activeItem?.items ? <div className='grid grid-cols-1 md:grid-cols-2 gap-14'>
+                        activeItem?.items ? <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                             {
                                 activeItem.items.map((item, index) => (
-                                    <div key={index} className='bg-primaryBlue py-12 px-10 text-white flex flex-col gap-10 items-center '>
+                                    <div key={index} className='bg-primaryBlue py-12 px-8 text-white flex flex-col gap-8 items-start '>
                                         <img src={`/${item.icon}.png`} alt="balance" />
-                                        <h2 className='text-xl md:text-2xl'>{item.heading}</h2>
-                                        <p className='md:h-[220px] text-center'>{item.text}</p>
-                                        <Link to={'/contact'}><Button text={'CONTACT US'} /></Link>
+                                        <h2 className='text-xl text-left w-full md:text-2xl'>{item.heading}</h2>
+                                        <div className='flex flex-col gap-4'>
+                                            {
+                                                item.text.map((textItem, index) =>
+                                                    <p key={index} className='text-justify'>{textItem}</p>
+                                                )}
+                                        </div>
+                                        <div className='h-full  flex items-end'>
+                                            <Link className='' to={'/contact'}>
+                                                <Button>CONTACT US</Button>
+                                            </Link>
+                                        </div>
                                     </div>
                                 ))
                             }
@@ -47,7 +56,7 @@ const ServicesDetail = () => {
                                 <img src={`/${activeItem.icon}.png`} alt="balance" />
                                 <h2 className='text-2xl'>{activeItem.heading}</h2>
                                 <p className='text-center'>{activeItem.text}</p>
-                                <Link to={'/contact'}><Button text={'CONTACT US'} /></Link>
+                                <Link to={'/contact'}><Button>CONTACT US</Button></Link>
                             </div>
                     }
                 </div>

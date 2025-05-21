@@ -5,16 +5,19 @@ const slides = [
         image: 'relax',
         heading: 'Relax While Your Investments Grow from a Seed to a Forest',
         text: 'Just as a seed develops, your investments with us can yield returns and create a source of passive income, allowing you to benefit financially even while you focus on other aspects of life.',
+        bg: 'investmentbigbg'
     },
     {
         image: 'slide2',
         heading: 'Your Innovative Investment Manager',
         text: 'At PAC Asset Management, we combine creativity with strategic insight to optimize investment portfolios. We leverage market analysis and trend identification, making bold yet calculated decisions that can significantly impact the performance of investments.',
+        bg: 'managerbigbg'
     },
     {
         image: 'slide3',
         heading: 'Helping you secure your future today',
         text: 'We are positioned to provide you with innovative investment management services, delivering diversified investment opportunities from different sectors of the economy.',
+        bg: 'slidebg'
     },
 ];
 
@@ -25,7 +28,7 @@ const Slider = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex((current) => (current === slides.length - 1 ? 0 : current + 1));
-        }, 5000); // Change slide every 5 seconds
+        }, 7000); // Change slide every 5 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -55,7 +58,7 @@ const Slider = () => {
                         <div
                             key={index}
                             className={`w-full relative flex-shrink-0 ${activeIndex === index ? "flex" : "opacity-0"} `}
-                            style={{ backgroundImage: `url(/slidebg.jpg)`, backgroundSize: 'cover' }}
+                            style={{ backgroundImage: `url(/${slide.bg}.jpg)`, backgroundSize: 'cover' }}
                         >
                             <div className="bg-[#000000b2] relative  h-full w-full flex lg:pt-20 gap-20 items-end lg:items-center justify-end">
                                 <div className="absolute z-[1]  lg:-bottom-[62px] h-full lg:-left-5 w-full lg:max-w-[42%] transition-opacity duration-500">
@@ -72,7 +75,7 @@ const Slider = () => {
                     ))}
                 </div>
             </div>
-            <div className="w-full h-[140px] absolute -bottom-[100px] right-0 opacity-95 flex items-center justify-center">
+            <div className="w-full h-[140px] z-[5] absolute -bottom-[100px] right-0 opacity-95 flex items-center justify-center">
                 {/* Control buttons */}
                 <div className="flex items-center justify-center gap-3 w-[80%]">
                     <button
@@ -98,7 +101,7 @@ const Slider = () => {
 
                     <button
                         onClick={nextSlide}
-                        className="bg-primaryBlue text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
+                        className="bg-primaryBlue  text-white w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
