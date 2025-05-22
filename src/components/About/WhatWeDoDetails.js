@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SlideIn from '../SlideIn'
-import spiralRed from "../../utils/animations/spiral_lightred.json";
+import spiralRed from "../../utils/animations/spiral_ash.json";
 import MobileAnimation from '../MobileAnimation';
 import Button from '../ui/Button';
 
@@ -35,7 +35,7 @@ const services = [
 
 
 
-const WhatWeDo = () => {
+const WhatWeDoDetails = () => {
     return (
         <section className='relative w-full'>
             <div className=' absolute right-[-25%] top-[20%]'>
@@ -73,4 +73,4 @@ const WhatWeDo = () => {
     )
 }
 
-export default WhatWeDo
+export default WhatWeDoDetails

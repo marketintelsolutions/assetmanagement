@@ -7,6 +7,7 @@ import spiralAsh from "../utils/animations/spiral_ash.json";
 import { services } from '../utils/data'
 import Button from '../components/Button'
 
+
 const WealthManagement = () => {
     const wealthManagement = services.find((item) => item.heading === 'Wealth Management')
 
@@ -56,6 +57,25 @@ const WealthManagement = () => {
                             ))
                         }
                     </div>
+                </div>
+
+                <div className='w-full max-w-[1200px] mx-auto flex gap-14 mb-24 items-start'>
+
+                    <div className='w-full max-w-[30%]'>
+                        <h2 className='text-4xl font-medium text-primaryBlue font-poppins'>OUR SERVICES</h2>
+                        <div className=' flex flex-col gap-6 mt-10 '>
+                            {
+                                wealthManagement.services.map((item, index) => (
+                                    <p className='text-lg flex items-center gap-2'>
+                                        <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                                        {item.text}</p>
+                                ))
+                            }
+
+
+                        </div>
+                    </div>
+                    <div className='w-full h-[450px] object-cover relative '><div className='absolute top-0 left-0 w-full h-full bg-[#0000008e]'></div><img src="/corevalue.jpg" alt="corevalue" className='w-full h-full' /></div>
                 </div>
             </div>
 
