@@ -113,7 +113,41 @@ export const services = [
                 ],
                 image: 'building'
             },
+        ],
+        services: [
+            {
+                icon: '',
+                text: 'Investment Portfolio Management'
+            },
+            {
+                icon: '',
+                text: 'Estate/Tax Planning'
+            },
 
+
+
+
+
+            {
+                icon: '',
+                text: 'Retirement/Gratuity Planning'
+            },
+            {
+                icon: '',
+                text: 'Family Office Services'
+            },
+            {
+                icon: '',
+                text: 'Endowment/Philanthropic Planning'
+            },
+            {
+                icon: '',
+                text: 'Risk Management/Insurance'
+            },
+            {
+                icon: '',
+                text: 'Concierge will be an add-on'
+            },
         ]
     },
     {
@@ -160,18 +194,19 @@ export const careers = [
 export const navData = [
     {
         text: 'ABOUT US',
+        path: '/about',
         items: [
             {
                 heading: 'ABOUT US',
                 links: [
                     {
                         text: 'What we do',
-                        path: '/about'
+                        path: '/about/what-we-do'
                     },
 
                     {
                         text: 'Team',
-                        path: '/team'
+                        path: '/about/team'
                     },
                 ]
             }
