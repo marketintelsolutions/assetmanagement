@@ -11,7 +11,7 @@ const Services = () => {
                 <h1 className="relative z-[2] text-3xl md:text-4xl w-full flex items-center justify-between lg:text-5xl font-poppins font-medium text-primaryBlue">
                     <span>SERVICES</span>
                     <Link to={'/services'}>
-                        <button className='text-secondaryRed text-base bg-white hover:border-white  border-secondaryRed hover:bg-secondaryRed hover:text-white border  py-3 px-6 rounded-[6px]'>Read More</button>
+                        <button className='text-secondaryRed text-base bg-white hover:border-white  border-secondaryRed hover:bg-secondaryRed hover:text-white border  py-3 px-6 rounded-full'>Read More</button>
                     </Link>
                 </h1>
                 <h2 className='text-[20px]  md:text-[23px] lg:text-[26px] font-light mt-5 md:mt-10'>Providing transformational solutions for Africa’s unique challenges.</h2>
@@ -23,7 +23,7 @@ const Services = () => {
                                     <h3 className="text-white text-2xl font-bold font-['Lato'] tracking-tight">Fixed Income Trading</h3>
                                     <p className=" h-[112px] mt-[18px] mb-[25px] text-white text-base font-normal font-sans leading-normal">We offer fixed income portfolio management service to our client who wish to participate in the Fixed Income Markets locally and internationally.</p>
                                     <Link to={'/services/fixed-income-trading'} >
-                                        <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-[6px] items-center inline-flex justify-between">
+                                        <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-full items-center inline-flex justify-between">
                                             <span className="text-center text-sm md:text-base font-normal font-sans leading-tight tracking-tight">Read More </span>
                                             <span className=''><FaArrowRightLong /></span>
                                         </button>
@@ -35,7 +35,7 @@ const Services = () => {
                                     <h3 className="text-white text-2xl font-bold font-['Lato'] tracking-tight">Alternative Investment</h3>
                                     <p className=" h-[112px] mt-[18px] mb-[25px] text-white text-base font-normal font-sans leading-normal">Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.</p>
                                     <Link to={'/services/alternative-investment'} >
-                                        <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-[6px] items-center inline-flex justify-between">
+                                        <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-full items-center inline-flex justify-between">
                                             <span className="text-center text-sm md:text-base font-normal font-sans leading-tight tracking-tight">Read More </span>
                                             <span className=''><FaArrowRightLong /></span>
                                         </button>
@@ -53,7 +53,7 @@ const Services = () => {
                                     </p>
                                     <div className='w-[391px]'>
                                         <Link to={'/services/wealth-management'} >
-                                            <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-[6px] items-center inline-flex justify-between">
+                                            <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-full items-center inline-flex justify-between">
                                                 <span className="text-center text-sm md:text-base font-normal font-sans leading-tight tracking-tight">Read More </span>
                                                 <span className=''><FaArrowRightLong /></span>
                                             </button>
@@ -69,7 +69,7 @@ const Services = () => {
                                 <h1 className='text-white text-3xl md:text-4xl font-bold'>Mutual Funds</h1>
                                 <p className="min-h-[110px] text-white text-lg md:text-xl font-normal font-sans leading-normal">Our mutual funds are registered with the Securities and Exchange Commission and tailored to meet diverse investor goals, allowing you to build a well-balanced portfolio across various asset classes.</p>
                                 <Link to={'/services/mutual-funds'} >
-                                    <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-[6px] items-center inline-flex justify-between">
+                                    <button className="md:w-[173px] gap-2 h-[51px] px-5 md:px-[30px] text-white hover:text-secondaryRed py-[15px] bg-secondaryRed hover:bg-white border border-secondaryRed rounded-full items-center inline-flex justify-between">
                                         <span className="text-center text-sm md:text-base font-normal font-sans leading-tight tracking-tight">Read More </span>
                                         <span className=''><FaArrowRightLong /></span>
                                     </button>

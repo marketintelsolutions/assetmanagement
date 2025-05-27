@@ -56,7 +56,8 @@ const SectionTwo = () => {
                             </p>
                         </SlideIn>
                         <Link to={'/contact'}>
-                            <button className='text-white bg-secondaryRed border  border-secondaryRed hover:bg-white hover:text-secondaryRed  mt-10 py-3 px-6 rounded-[6px]'>Contact Us</button>
+
+                            <Button>Contact Us</Button>
                         </Link>
 
                     </div>

@@ -1,4 +1,6 @@
 import { CiLocationOn } from "react-icons/ci";
+import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemptionForm";
+import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm";
 
 export const services = [
     {
@@ -802,3 +804,37 @@ export const categorizedFaqData = {
         }
     ]
 };
+
+export const forms = [
+    {
+        heading: 'Balanced Fund Redemption Form',
+        icon: 'package',
+        image: 'account_opening',
+        slug: 'balanced-fund-redemption-form',
+        component: <PacamRedemptionForm />,
+    },
+    {
+        heading: 'Individual Indemnity Form',
+        icon: 'client',
+        image: 'clientform',
+        slug: 'indemnity-form',
+        component: <EmailIndemnityForm variant="individual" />,
+    },
+    {
+        heading: 'Corporate Indemnity Form',
+        icon: 'client',
+        image: 'clientform',
+        slug: 'indemnity-form',
+        component: <EmailIndemnityForm variant="corporate" />,
+    },
+    {
+        heading: 'Fund Subscription Form',
+        icon: 'subscription',
+        image: 'fundsub',
+    },
+    {
+        heading: 'Fund Redemption Form',
+        icon: 'form',
+        image: 'redemption',
+    },
+]

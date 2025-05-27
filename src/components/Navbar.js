@@ -89,7 +89,7 @@ const Navbar = () => {
                         <a
                             target='_blank'
                             href='https://cp-pac.zanibal.com/'>
-                            <button className='zr:hidden lg:flex border border-secondaryRed text-secondaryRed hover:border-primaryBlue hover:bg-secondaryRed hover:text-white px-4 py-3 rounded-[6px]'>
+                            <button className='zr:hidden lg:flex border border-secondaryRed text-secondaryRed hover:border-primaryBlue hover:bg-secondaryRed hover:text-white px-4 py-3 rounded-full'>
                                 SELF SERVICE
                             </button>
                         </a>
