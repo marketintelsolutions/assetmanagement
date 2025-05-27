@@ -39,7 +39,7 @@ const MutualFundDetails = () => {
             <div className=' absolute right-[-20%] Top-[-0%]'>
                 <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
-            <section className='py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+            <section className='py-[150px] px-6 md:px-10 lg:px-5 w-full max-w-max mx-auto'>
                 <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-5'>
 
                     {
@@ -49,8 +49,8 @@ const MutualFundDetails = () => {
                                     <div className='w-full max-w-[50px] md:max-w-[70px] lg:max-w-[100px]'>
                                         <img src={`/${item.icon}.png`} alt="balance" className='w-full' />
                                     </div>
-                                    <h2 className='text-[22px]'>{item.heading}</h2>
-                                    <p className='lg:h-[230px] text-center'>{item.text}</p>
+                                    <h2 className='text-lg md:text-[22px]'>{item.heading}</h2>
+                                    <p className='lg:h-[230px] text-center text-sm md:text-base'>{item.text}</p>
                                     <Link to={'/contact'}>
                                         <Button text={'CONTACT US'} />
                                     </Link>

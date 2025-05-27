@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import SlideIn from '../components/SlideIn'
 import MobileAnimation from '../components/MobileAnimation'
 import spiralAsh from "../utils/animations/spiral_ash.json";
-import Button from '../components/Button'
+import Button from '../components/ui/Button'
 
 const FixedIncomeTrading = () => {
     return (
@@ -17,10 +17,10 @@ const FixedIncomeTrading = () => {
             />
 
             <div className='relative w-full'>
-                <div className='z-[2] absolute right-[-15%] top-[-0%]'>
+                <div className=' absolute right-[-15%] top-[-0%]'>
                     <MobileAnimation animationData={spiralAsh} size={600} />
                 </div>
-                <div className=' py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+                <div className='relative py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
 
                     <SlideIn duration={900} distance={90} direction="left" delay={150}>
                         <h1 className='text-2xl md:text-3xl lg:text-4xl'>WHAT WE DO</h1>
@@ -31,7 +31,7 @@ const FixedIncomeTrading = () => {
                         </p>
                     </SlideIn>
 
-                    <Link to={'/contact'}> <Button bg={true} text={'CONTACT US'} /></Link>
+                    <Link to={'/contact'}> <Button>CONTACT US</Button></Link>
 
                 </div>
             </div>

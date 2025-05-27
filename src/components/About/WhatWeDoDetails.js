@@ -41,7 +41,7 @@ const WhatWeDoDetails = () => {
             <div className=' absolute right-[-25%] top-[20%]'>
                 <MobileAnimation animationData={spiralRed} size={950} />
             </div>
-            <div className='py-[150px] px-10 lg:px-5 w-full max-w-[1200px] mx-auto'>
+            <div className='relative z-[2] py-[150px] px-10 lg:px-5 w-full max-w-[1200px] mx-auto'>
                 <SlideIn duration={900} distance={70} direction="left" delay={150}>
                     <h1 className='text-4xl font-medium text-primaryBlue font-poppins'>WHAT WE DO</h1>
                 </SlideIn>
