@@ -9,7 +9,7 @@ import spiralAsh from "../utils/animations/spiral_ash.json";
 const Contact = () => {
 
     return (
-        <section>
+        <section className='w-full relative overflow-hidden'>
             <Hero
                 heading={'Contact Us'}
                 text={'We would love to hear from you.'}
@@ -21,9 +21,9 @@ const Contact = () => {
                 <div className=' absolute right-[-25%] top-[10%]'>
                     <MobileAnimation animationData={spiralAsh} size={800} />
                 </div>
-                <div className='py-40 px-10 lg:px-5 w-full max-w-[1200px] mx-auto flex flex-wrap gap-4 justify-between'>
-                    <SlideIn duration={900} distance={90} direction="left" delay={150}>
-                        <div className='w-full lg:min-w-[500px] flex flex-col gap-4 shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)] p-10 h-fit rounded-[10px]'>
+                <div className='py-40 px-6 md:px-10 lg:px-5 w-full max-w-[1200px] mx-auto flex flex-wrap gap-4 justify-between'>
+                    <SlideIn duration={900} distance={90} direction="left" delay={150} className='w-full'>
+                        <div className='w-full lg:min-w-[500px] flex flex-col gap-4 shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)] p-5 md:p-10 h-fit rounded-[10px]'>
                             <h1 className='text-[40px]'>Contact Channels</h1>
                             <p className='text-[20px] font-light'>We would love to hear from you.</p>
                             <p className='text-[17px] font-extralight mt-12 flex gap-4'>
@@ -48,8 +48,8 @@ const Contact = () => {
 
                     <div className='w-full lg:max-w-[50%]'>
                         <SlideIn duration={900} distance={90} direction="right" delay={300}>
-                            <form className='w-full flex flex-col gap-10 p-10 rounded-[10px] bg-white shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)]'>
-                                <h2>Send us a mail</h2>
+                            <form className='w-full flex flex-col gap-5 md:gap-10 px-5 py-8 md:py-10 md:px-10 rounded-[10px] bg-white shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)]'>
+                                <h2 className='text-xl font-semibold'>Send us a mail</h2>
                                 <div className='w-full flex flex-col gap-4'>
                                     <label htmlFor="name" className='text-[15px] font-semibold text-gray-400'>Your name</label>
                                     <input type="text" id='name' className='focus:outline-none  focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)]  text-base w-full' />

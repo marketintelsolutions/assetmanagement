@@ -9,7 +9,7 @@ import Button from '../ui/Button';
 const ServicesDetail = () => {
     const [activeItem, setActiveItem] = useState(services[0])
     return (
-        <section className='py-[150px] px-6 md:px-10 lg:px-5 w-full max-w-[1380px] mx-auto'>
+        <section className=' py-[150px] px-6 md:px-10 lg:px-5 w-full max-w-[1380px] mx-auto'>
             <h1 className='text-3xl md:text-4xl lg:text-5xl text-primaryBlue font-poppins font-medium'>OUR SERVICES</h1>
             <p className='mt-10 text-xl md:text-2xl text-justify'>Easy access to investment opportunities</p>
 

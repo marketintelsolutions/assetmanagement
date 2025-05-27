@@ -35,27 +35,27 @@ const Navbar = () => {
                 </div>
             </div>
             <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-white w-full  py-2'>
-                <div className='py-6 text-primaryBlue px-10 xl:px-0 max-w-max mx-auto flex gap-5 justify-between items-center'>
-                    <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className=' max-w-[250px]' /></Link>
-                    <div className={`absolute lg:static zr:top-[100%] lg:top-auto lg:bg-transparent bg-[#00000065] zr:w-full lg:w-auto lg:left-auto zr:left-0 px-10 lg:px-0 py-10 lg:py-0 flex gap-10 lg:gap-12 xl:gap-20 backdrop-blur-[2px] lg:backdrop-blur-none justify-between zr:flex-col lg:flex-row ${isMenu ? 'flex' : 'zr:hidden lg:flex'}`}>
+                <div className='py-6 text-primaryBlue px-6 md:px-10 xl:px-0 max-w-max mx-auto flex gap-5 justify-between items-center'>
+                    <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className='max-w-[200px] md:max-w-[250px]' /></Link>
+                    <div className={`absolute lg:static zr:top-[100%] lg:top-auto lg:bg-transparent bg-[#00000065] zr:w-full lg:w-auto lg:left-auto zr:left-0 px-6 md:px-10 lg:px-0 py-10 lg:py-0 flex gap-10 lg:gap-12 xl:gap-20 backdrop-blur-[2px] lg:backdrop-blur-none justify-between zr:flex-col lg:flex-row ${isMenu ? 'flex' : 'zr:hidden lg:flex'}`}>
                         {
                             navData.map((item, index) => {
                                 return <>
-                                    <Link
+                                    <div
                                         key={index}
-                                        to={item.path}
-                                        onClick={() => setIsMenu(false)}
+
                                         onMouseEnter={() => item.items && handleItemsToggle(item)}
                                         className='text-white lg:text-primaryBlue flex justify-between border-b lg:border-none border-white pb-3 lg:pb-0'
                                     >
-                                        <span className='text-[15px] xl:text-base'>{item.text}</span>
-                                        <span className='zr:flex lg:hidden'><FaAngleDown /></span>
-                                    </Link>
+                                        <Link to={item.path}
+                                            onClick={() => setIsMenu((prev) => !prev)}> <span className='text-[15px] xl:text-base'>{item.text}</span></Link>
+                                        {item.items && <span onClick={() => handleItemsToggle(item)} className=' zr:flex lg:hidden'><FaAngleDown /></span>}
+                                    </div>
                                     {isItems && activeItem.text === item.text &&
                                         <div className='lg:absolute z-10 w-full h-fit top-full left-0 pt-0 lg:pt-20 lg:pb-20 lg:bg-[#0000008a] '>
                                             <div className='w-full h-full flex gap-12 lg:px-20 mx-auto'>
                                                 {
-                                                    activeItem.items.map((item, index) => (
+                                                    activeItem.items && activeItem.items.map((item, index) => (
                                                         <div key={index} className='w-full max-w-[250px] flex flex-col '>
                                                             <h2 className='text-lg md:text-xl text-white border-b-2 pb-3'>{item.heading}</h2>
 

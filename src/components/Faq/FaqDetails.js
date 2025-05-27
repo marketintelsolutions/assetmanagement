@@ -18,19 +18,19 @@ const FaqDetails = () => {
     const categories = Object.keys(categorizedFaqData);
 
     return (
-        <div className="relative z-10 w-full bg-[#222222] text-white py-20 my-40">
+        <div className="relative z-10 w-full bg-primarygray text-white py-20 my-40">
             <div className="w-full max-w-[1000px] mx-auto px-4">
-                <h2 className="text-3xl mb-4 font-light font-poppins tracking-[4px]">FREQUENTLY ASKED QUESTIONS</h2>
-                <p className="text-base font-light mb-10">Find answers to common questions about our investment funds and services.</p>
+                <h2 className="text-2xl md:text-3xl mb-4 font-light font-poppins tracking-[4px]">FREQUENTLY ASKED QUESTIONS</h2>
+                <p className="text-xs md:text-base font-light mb-10">Find answers to common questions about our investment funds and services.</p>
 
                 {/* Category tabs */}
-                <div className="flex flex-wrap mb-8 border-b border-gray-700">
+                <div className=" grid grid-cols-2 md:flex flex-wrap mb-8  border-gray-700">
                     {categories.map((category) => (
                         <button
                             key={category}
-                            className={`px-4 py-2 mr-2 mb-2 text-sm font-medium transition-colors ${activeCategory === category
-                                ? 'bg-primaryOrange text-white'
-                                : 'bg-transparent text-gray-300 hover:bg-gray-700'
+                            className={`px-4 py-2 text-left md:text-center font-semibold mr-2 mb-2 text-sm  transition-colors ${activeCategory === category
+                                ? 'bg-primaryBlue text-white'
+                                : 'bg-transparent text-black hover:text-white hover:bg-gray-700 border-b border-black'
                                 }`}
                             onClick={() => handleCategoryChange(category)}
                         >
@@ -40,7 +40,7 @@ const FaqDetails = () => {
                 </div>
 
                 {/* Active category title */}
-                <h3 className="text-2xl mb-6 font-medium">{activeCategory}</h3>
+                <h3 className="text-xl md:text-2xl mb-6 font-medium">{activeCategory}</h3>
 
                 {/* FAQ accordion for active category */}
                 <div className="space-y-4">
@@ -53,7 +53,7 @@ const FaqDetails = () => {
                                 className="w-full flex justify-between items-center py-5 px-4 hover:bg-primaryOrange transition-colors"
                                 onClick={() => toggleAccordion(index)}
                             >
-                                <span className="text-left text-lg font-light">{item.question}</span>
+                                <span className="text-left text-base md:text-lg font-light">{item.question}</span>
                                 <IoIosArrowDown
                                     className={`transform transition-transform duration-300 ${activeIndex === index ? 'rotate-180' : ''
                                         }`}
@@ -67,7 +67,7 @@ const FaqDetails = () => {
                                     : 'max-h-0 opacity-0'
                                     }`}
                             >
-                                <p className="px-4 pb-5 text-base font-light leading-relaxed">
+                                <p className="px-4 pb-5 text-sm md:text-base font-light leading-relaxed">
                                     {item.answer}
                                 </p>
                             </div>
