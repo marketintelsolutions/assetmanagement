@@ -14,7 +14,7 @@ const AboutDetails = () => {
             <div className='flex gap-10 items-center mt-20'>
                 <div className='w-full max-w-[500px]'><img src="/missionimg.jpg" alt="missionimg" className='w-full' /></div>
                 <div className='w-full max-w-[50%] flex flex-col gap-10'>
-                    <p className='text-[30px] font-normal'>"We are committed to providing a safe investment outlet to meet our client’s clearly understood investment objectives. <br /> Our services would provide innovative investment opportunities to meet
+                    <p className='text-[30px] font-normal text-justify'>"We are committed to providing a safe investment outlet to meet our client’s clearly understood investment objectives. <br /> Our services would provide innovative investment opportunities to meet
                         the continuous changes of client needs with a passion for creating sustainable value."</p>
                     <p className='text-lg font-bold text-primaryBlue'>MISSION</p>
                 </div>
@@ -51,7 +51,7 @@ const AboutDetails = () => {
             </div>
 
             <div className='bg-primaryBlue py-10 px-20 mt-20 flex flex-col '>
-                <h2 className='text-4xl font-medium text-white font-poppins'>PAC AT A GLANCE</h2>
+                <h2 className='text-4xl font-medium text-white font-poppins'>PAC Asset Management At a Glance</h2>
                 <div className=' gap-8 mt-10 text-white text-lg grid grid-cols-2'>
                     <p className='flex items-center gap-2'>
                         <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
@@ -59,7 +59,7 @@ const AboutDetails = () => {
                     </p>
                     <p className='flex items-center gap-2'>
                         <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        Regulated by the Securities & Exchange Commission
+                        Regulated by The Securities & Exchange Commission
                     </p>
                     <p className='flex items-center gap-2'>
                         <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
@@ -67,7 +67,7 @@ const AboutDetails = () => {
                     </p>
                     <p className='flex items-center gap-2'>
                         <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        5 Active Mutual Funds
+                        Active Mutual Funds, Fixed Income Trading, Wealth Management, Alternative Investments.
                     </p>
                     <p className='flex items-center gap-2'>
                         <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
