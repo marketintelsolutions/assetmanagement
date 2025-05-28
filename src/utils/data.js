@@ -1,6 +1,7 @@
 import { CiLocationOn } from "react-icons/ci";
 import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemptionForm";
 import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm";
+import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm";
 
 export const services = [
     {
@@ -828,13 +829,11 @@ export const forms = [
         component: <EmailIndemnityForm variant="corporate" />,
     },
     {
-        heading: 'Fund Subscription Form',
+        heading: 'Corporate Investment Application',
         icon: 'subscription',
         image: 'fundsub',
+        slug: 'corporate-investment-application',
+        component: <CorporateInvestmentForm />,
     },
-    {
-        heading: 'Fund Redemption Form',
-        icon: 'form',
-        image: 'redemption',
-    },
+
 ]

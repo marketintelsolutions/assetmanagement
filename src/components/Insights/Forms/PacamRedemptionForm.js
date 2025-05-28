@@ -5,8 +5,8 @@ import { EmailTemplateGenerator } from './EmailTemplateGenerator';
 import { EmailService } from './EmailService';
 
 const PacamRedemptionForm = ({
-    apiKey = 'your-plunk-api-key',
-    fundManagerEmail = 'fundmanager@pacam.com'
+    apiKey = `${process.env.REACT_APP_PLUNK_API_KEY}`,
+    fundManagerEmail = `${process.env.REACT_APP_SUBMISSION_EMAIL}`
 }) => {
     const [formData, setFormData] = useState({
         date: '',
@@ -262,8 +262,8 @@ const PacamRedemptionForm = ({
                     {/* Status Messages */}
                     {submitStatus && (
                         <div className={`flex items-center gap-3 p-4 rounded-lg ${submitStatus.type === 'success'
-                                ? 'bg-green-50 text-green-800 border border-green-200'
-                                : 'bg-red-50 text-red-800 border border-red-200'
+                            ? 'bg-green-50 text-green-800 border border-green-200'
+                            : 'bg-red-50 text-red-800 border border-red-200'
                             }`}>
                             {submitStatus.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
                             <span>{submitStatus.message}</span>

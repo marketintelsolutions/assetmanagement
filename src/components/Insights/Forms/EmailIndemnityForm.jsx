@@ -13,8 +13,8 @@ import { EmailService } from "./EmailService";
 const EmailIndemnityForm = ({
   variant = "individual",
   onSubmit,
-  apiKey = "your-plunk-api-key",
-  adminEmail = "compliance@pacam.com",
+  apiKey = `${process.env.REACT_APP_PLUNK_API_KEY}`,
+  adminEmail = `${process.env.REACT_APP_SUBMISSION_EMAIL}`,
 }) => {
   const [formData, setFormData] = useState({
     preferredEmail: "",
