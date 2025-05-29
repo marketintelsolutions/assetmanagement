@@ -178,14 +178,14 @@ const AboutDetails = () => {
                     </div>
                     <div className='w-full max-w-[400px] flex flex-col gap-8 '>
                         <SlideIn direction='right'>
-                            <div className='w-full flex flex-col items-center bg-[#c0ab35] px-12 py-16 text-white'>
+                            <div className='w-full flex flex-col items-center bg-[#d2ac47] px-12 py-16 text-white'>
                                 <img src="/awardone.png" alt="awardone" className='w-full max-w-[100px]' />
                                 <h3 className='mt-10 text-center uppercase font-bold text-xl'>PACAM Fixed Income Fund</h3>
                                 <p className='mt-4 text-lg text-center'>Best Fixed Income Fund <br /> for the Year 2022</p>
                             </div>
                         </SlideIn>
                         <SlideIn direction='right' delay={250}>
-                            <div className='w-full flex flex-col items-center bg-[#c0ab35] px-12 py-16 text-white'>
+                            <div className='w-full flex flex-col items-center bg-[#d2ac47] px-12 py-16 text-white'>
                                 <img src="/awardtwo.png" alt="awardone" className='w-full max-w-[100px]' />
                                 <h3 className='mt-10 text-center uppercase font-bold text-xl'>PACAM Eurobond Fund</h3>
                                 <p className='mt-4 text-lg text-center'>Best Fixed Income Fund <br /> for the Year 2023</p>
