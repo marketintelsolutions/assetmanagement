@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { team } from '../utils/data'
 import SlideIn from '../components/SlideIn'
 import MobileAnimation from '../components/MobileAnimation'
-import spiralRed from "../utils/animations/spiral_lightred.json";
+import spiralRed from "../utils/animations/spiral_ash.json";
 import Button from '../components/ui/Button'
 
 

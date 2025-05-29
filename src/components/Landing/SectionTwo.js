@@ -18,10 +18,10 @@ const SectionTwo = () => {
             <div className='bg-primaryBlue relative z-[2] my-[150px] pt-10 lg:pb-10 text-white'>
                 <div className='w-full max-w-max mx-auto flex flex-col md:flex-row justify-center gap-20'>
                     <SlideIn duration={900} distance={70} direction="left" delay={150}>
-                        <div className='md:max-w-[500px] px-10 lg:px-0'>
+                        <div className='md:max-w-[500px] px-6 md:px-10 lg:px-0'>
                             <h1 className='uppercase text-3xl font-poppins'>INVEST FOR YOUR CHILDREN'S FUTURE: OPEN A GIFT MUTUAL FUND TODAY</h1>
                             <p className='text-lg mt-5'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
-                            <Button>Invest Now</Button>
+                            <a target='_blank' href='https://cp-pac.zanibal.com/'><Button>Invest Now</Button></a>
                         </div>
                     </SlideIn>
                     <SlideIn duration={900} distance={90} direction="right" delay={350}>
@@ -38,11 +38,11 @@ const SectionTwo = () => {
                     <MobileAnimation animationData={spiralRed} size={400} />
                 </div>
                 <div className='zr:hidden lg:flex absolute left-0 top-0 bg-primaryBlue h-full w-[47%] shadow-[0px_0px_20px_9px_rgba(0,0,0,0.15)]'></div>
-                <div className='relative z-10 flex flex-col md:flex-row gap-20 max-w-[1100px] mx-auto'>
+                <div className='relative z-10 flex flex-col md:flex-row gap-20 max-w-[1400px] mx-auto'>
                     <a target='_blank' href='https://youtu.be/UiYd0bSVzs4' className=' lg:max-w-[700px] shadow-[0px_0px_20px_9px_rgba(0,0,0,0.15)]'>
                         <img src="/video.jpg" alt="video" className='w-full h-full object-cover' />
                     </a>
-                    <div className='px-10 lg:px-0'>
+                    <div className='px-6 md:px-10 lg:px-0'>
                         <SlideIn duration={900} distance={50} direction="bottom" delay={150}>
                             <h2 className='text-primaryBlue text-xl md:text-2xl lg:text-3xl uppercase font-poppins' >Talk to a Financial Advisor</h2>
                         </SlideIn>
@@ -56,7 +56,8 @@ const SectionTwo = () => {
                             </p>
                         </SlideIn>
                         <Link to={'/contact'}>
-                            <button className='text-white bg-secondaryRed border  border-secondaryRed hover:bg-white hover:text-secondaryRed  mt-10 py-3 px-6 rounded-[6px]'>Contact Us</button>
+
+                            <Button>Contact Us</Button>
                         </Link>
 
                     </div>

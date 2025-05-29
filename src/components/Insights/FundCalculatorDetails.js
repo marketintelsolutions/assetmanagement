@@ -8,7 +8,7 @@ const FundCalculatorDetails = () => {
             <div className='z-[2] absolute right-[-15%] top-[-0%]'>
                 <MobileAnimation animationData={spiralAsh} size={600} />
             </div>
-            <div className=' py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto '>
+            <div className='relative z-[2] py-[150px] px-6 md:px-10 lg:px-5 w-full max-w-max mx-auto '>
                 <h1 className='text-2xl md:text-3xl lg:text-4xl text-left w-full max-w-[700px] mx-auto'>CALCULATOR</h1>
 
                 <form className='mt-20 w-full max-w-[700px] mx-auto flex flex-col gap-6'>

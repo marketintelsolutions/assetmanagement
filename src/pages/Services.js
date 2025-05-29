@@ -4,7 +4,7 @@ import ServicesDetail from '../components/Services/ServicesDetail'
 
 const Services = () => {
     return (
-        <>
+        <div className='relative w-full  overflow-hidden'>
             <Hero
                 heading={'Services'}
                 text={'We have different types of services designed to meet the unique needs of our clients.'}
@@ -12,7 +12,7 @@ const Services = () => {
                 image='services'
             />
             <ServicesDetail />
-        </>
+        </div>
     )
 }
 

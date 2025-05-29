@@ -5,6 +5,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "cra-template": "1.2.0",
+    "lucide-react": "^0.511.0",
     "pure-react-carousel": "^1.32.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -2,29 +2,10 @@ import React from 'react'
 import Button from '../components/ui/Button'
 import SlideIn from '../components/SlideIn'
 import Hero from '../components/Landing/Hero'
+import { forms } from '../utils/data'
+import { Link } from 'react-router-dom'
 
-const transactions = [
-    {
-        heading: 'Account opening package',
-        icon: 'package',
-        image: 'account_opening',
-    },
-    {
-        heading: 'Client Update Form',
-        icon: 'client',
-        image: 'clientform',
-    },
-    {
-        heading: 'Fund Subscription Form',
-        icon: 'subscription',
-        image: 'fundsub',
-    },
-    {
-        heading: 'Fund Redemption Form',
-        icon: 'form',
-        image: 'redemption',
-    },
-]
+
 
 const Forms = () => {
     return (
@@ -37,10 +18,10 @@ const Forms = () => {
             />
             <div className='relative w-full max-w-max mx-auto my-40'>
 
-                <h1 className='text-4xl'>Downloads</h1>
+                <h1 className='text-4xl'>Forms</h1>
                 <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                     {
-                        transactions.map((item, index) => (
+                        forms.map((item, index) => (
                             <SlideIn duration={900} distance={70} direction="bottom" delay={index * 150}>
                                 <div
                                     key={index}
@@ -53,7 +34,7 @@ const Forms = () => {
                                     <div className='h-full w-full p-10 bg-[#0000005b] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#00000080]'>
                                         <span><img src={`/${item.icon}.png`} className='w-[80px]' /></span>
                                         <h2 className='text-white mt-[200px] h-[80px] text-[30px]'>{item.heading}</h2>
-                                        <Button>Download Here</Button>
+                                        <Link to={`/insights/forms/${item.slug}`}><Button>View Form</Button></Link>
                                     </div>
                                 </div>
                             </SlideIn>

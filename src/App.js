@@ -16,6 +16,7 @@ import Career from "./pages/Career";
 import TeamMember from "./pages/TeamMember";
 import Forms from "./pages/Forms";
 import WhatWeDo from "./pages/WhatWeDo";
+import FormItem from "./pages/FormItem";
 
 function App() {
   const router = createBrowserRouter([
@@ -128,6 +129,14 @@ function App() {
       element: (
         <MainLayout>
           <Forms />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/insights/forms/:id',
+      element: (
+        <MainLayout>
+          <FormItem />
         </MainLayout>
       )
     },

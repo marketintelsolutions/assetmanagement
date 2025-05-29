@@ -16,8 +16,8 @@ const Navbar = () => {
     }
     return (
         <>
-            <div className='bg-primaryBlue py-4 zr:hidden lg:flex'>
-                <div className='w-full max-w-max mx-auto flex justify-end'>
+            <div className='bg-primaryBlue px-6 xl:px-0 py-4 zr:hidden lg:flex'>
+                <div className='w-full  max-w-max mx-auto flex justify-end'>
                     <div className='flex gap-12 items-center'>
                         <div className='flex text-white text-2xl gap-8'>
                             <a target='_blank' href='https://www.linkedin.com/company/pac-asset-management'><FaLinkedin /></a>
@@ -34,57 +34,71 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-white py-6 text-primaryBlue px-10 lg:px-20 flex justify-between items-center'>
-                <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className=' max-w-[250px]' /></Link>
-                <div className={`absolute lg:static zr:top-[100%] lg:top-auto lg:bg-transparent bg-[#00000065] zr:w-full lg:w-auto lg:left-auto zr:left-0 px-10 lg:px-0 py-10 lg:py-0 flex gap-12 lg:gap-20 backdrop-blur-[2px] lg:backdrop-blur-none justify-between zr:flex-col lg:flex-row ${isMenu ? 'flex' : 'zr:hidden lg:flex'}`}>
-                    {
-                        navData.map((item, index) => {
-                            return <>
-                                <Link to={item.path} onMouseEnter={() => item.items && handleItemsToggle(item)} className='text-white lg:text-primaryBlue flex justify-between border-b lg:border-none border-white pb-3 lg:pb-0' key={index}>
-                                    <span>{item.text}</span>
-                                    <span className='zr:flex lg:hidden'><FaAngleDown /></span>
-                                </Link>
-                                {isItems && activeItem.text === item.text &&
-                                    <div className='lg:absolute z-10 w-full h-fit top-full left-0 pt-0 lg:pt-20 lg:pb-20 lg:bg-[#0000008a] '>
-                                        <div className='w-full h-full flex gap-12 lg:px-20 mx-auto'>
-                                            {
-                                                activeItem.items.map((item, index) => (
-                                                    <div key={index} className='w-full max-w-[250px] flex flex-col '>
-                                                        <h2 className='text-xl text-white border-b-2 pb-3'>{item.heading}</h2>
+            <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-white w-full  py-2'>
+                <div className='py-6 text-primaryBlue px-6 md:px-10 xl:px-0 max-w-max mx-auto flex gap-5 justify-between items-center'>
+                    <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className='max-w-[200px] md:max-w-[250px]' /></Link>
+                    <div className={`absolute lg:static zr:top-[100%] lg:top-auto lg:bg-transparent bg-[#00000065] zr:w-full lg:w-auto lg:left-auto zr:left-0 px-6 md:px-10 lg:px-0 py-10 lg:py-0 flex gap-10 lg:gap-12 xl:gap-20 backdrop-blur-[2px] lg:backdrop-blur-none justify-between zr:flex-col lg:flex-row ${isMenu ? 'flex' : 'zr:hidden lg:flex'}`}>
+                        {
+                            navData.map((item, index) => {
+                                return <>
+                                    <div
+                                        key={index}
 
-                                                        <div className='flex flex-col text-white'>
-                                                            {
-                                                                item.links.map((item) => {
-                                                                    if (item.external) {
-                                                                        return <a href={item.path} target='_blank' className='text-sm capitalize py-3 border-b border-[#a09d9d]' >{item.text}</a>
-                                                                    }
-                                                                    return <Link onClick={() => {
-                                                                        setIsItems(false)
-                                                                        setIsMenu(false)
-                                                                    }
-                                                                    } to={item.path} className='text-sm capitalize py-3 border-b border-[#a09d9d]'>{item.text}</Link>
-                                                                })
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                )
-                                                )
-                                            }
-                                        </div>
+                                        onMouseEnter={() => item.items && handleItemsToggle(item)}
+                                        className='text-white lg:text-primaryBlue flex justify-between border-b lg:border-none border-white pb-3 lg:pb-0'
+                                    >
+                                        <Link to={item.path}
+                                            onClick={() => setIsMenu((prev) => !prev)}> <span className='text-[15px] xl:text-base'>{item.text}</span></Link>
+                                        {item.items && <span onClick={() => handleItemsToggle(item)} className=' zr:flex lg:hidden'><FaAngleDown /></span>}
                                     </div>
-                                }
-                            </>
-                        }
-                        )
-                    }
-                </div>
-                <div className='flex'>
-                    <button className='zr:hidden lg:flex border border-secondaryRed text-secondaryRed hover:border-primaryBlue hover:bg-primaryBlue hover:text-white px-4 py-3 rounded-[6px]'>SELF SERVICE</button>
-                    <button onClick={() => setIsMenu((prev) => !prev)} className='text-3xl zr:flex lg:hidden text-primaryBlue'>
-                        <span><FiMenu /></span>
-                    </button>
-                </div>
+                                    {isItems && activeItem.text === item.text &&
+                                        <div className='lg:absolute z-10 w-full h-fit top-full left-0 pt-0 lg:pt-20 lg:pb-20 lg:bg-[#0000008a] '>
+                                            <div className='w-full h-full flex gap-12 lg:px-20 mx-auto'>
+                                                {
+                                                    activeItem.items && activeItem.items.map((item, index) => (
+                                                        <div key={index} className='w-full max-w-[250px] flex flex-col '>
+                                                            <h2 className='text-lg md:text-xl text-white border-b-2 pb-3'>{item.heading}</h2>
 
+                                                            <div className='flex flex-col text-white'>
+                                                                {
+                                                                    item.links.map((item) => {
+                                                                        if (item.external) {
+                                                                            return <a href={item.path} target='_blank' className='text-sm capitalize py-3 border-b border-[#a09d9d]' >{item.text}</a>
+                                                                        }
+                                                                        return <Link onClick={() => {
+                                                                            setIsItems(false)
+                                                                            setIsMenu(false)
+                                                                        }
+                                                                        } to={item.path} className='text-sm capitalize py-3 border-b border-[#a09d9d]'>{item.text}</Link>
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </>
+                            }
+                            )
+                        }
+                    </div>
+                    <div className='flex'>
+                        <a
+                            target='_blank'
+                            href='https://cp-pac.zanibal.com/'>
+                            <button className='zr:hidden lg:flex border border-secondaryRed text-secondaryRed hover:border-primaryBlue hover:bg-secondaryRed hover:text-white px-4 py-3 rounded-full'>
+                                SELF SERVICE
+                            </button>
+                        </a>
+                        <button onClick={() => setIsMenu((prev) => !prev)} className='text-3xl zr:flex lg:hidden text-primaryBlue'>
+                            <span><FiMenu /></span>
+                        </button>
+                    </div>
+
+                </div>
             </nav>
         </>
     )

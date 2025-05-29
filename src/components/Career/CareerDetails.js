@@ -12,7 +12,7 @@ const CareerDetail = () => {
             <div className=' absolute right-[-25%] top-[20%]'>
                 <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
-            <div className=' py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+            <div className=' py-[150px] px-6 md:px-10 lg:px-5 w-full max-w-max mx-auto'>
                 <SlideIn duration={900} distance={90} direction="left" delay={150}>
                     <p className='mt-0 text-lg md:text-xl text-justify'>At PAC Asset Management, we continuously seek top talent who thrive on challenges, we are always looking for top talent who embrace challenges, offering opportunities that foster personal growth and career fulfilment. Together, we deliver transformational investment solutions tailored to meet the needs of our investors.</p>
 
@@ -23,9 +23,9 @@ const CareerDetail = () => {
                             {
                                 careers.map((item, index) => (
                                     <div onClick={() => setActiveItem(item)} key={index}
-                                        className={`py-10 md:py-12 lg:py-14 px-3 md:px-8 lg:px-10 text-sm mb:text-xl md:text-2xl lg:text-3xl uppercase w-[300px] lg:w-[400px] border border-primaryBlue  flex items-center justify-between cursor-pointer ${activeItem.heading === item.heading && 'bg-primaryBlue text-white'} `}>
+                                        className={`py-3 md:py-14 px-4 md:px-10 text-base md:text-2xl lg:text-3xl uppercase w-full mb:w-[180px] md:w-[300px] lg:w-[400px] border border-primaryBlue  flex items-center justify-between cursor-pointer ${activeItem.heading === item.heading && 'bg-primaryBlue text-white'} `}>
                                         {item.heading}
-                                        <span className='zr:hidden lg:flex'><FaAngleRight /></span>
+                                        <span className='zr:hidden md:flex'><FaAngleRight /></span>
                                     </div>
                                 ))
                             }
@@ -36,7 +36,7 @@ const CareerDetail = () => {
                         <div>
                             {
                                 <div className='w-full lg:max-w-[700px]'>
-                                    <div className='w-full  h-[400px]'>
+                                    <div className='w-full h-[200px] md:h-[400px]'>
                                         <img src={`/${activeItem.image}.jpg`} alt={activeItem.heading} className='w-full h-full object-cover' />
                                     </div>
                                     <div className='flex flex-col gap-5 p-5 md:p-10 bg-primaryBlue text-white'>

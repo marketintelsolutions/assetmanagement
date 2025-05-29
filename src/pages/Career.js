@@ -4,7 +4,7 @@ import CareerDetails from '../components/Career/CareerDetails'
 
 const Career = () => {
     return (
-        <>
+        <div className='w-full relative overflow-hidden'>
             <Hero
                 heading={'Career'}
                 text={'Together, we deliver transformational investment solutions tailored to meet the needs of our investors.'}
@@ -12,7 +12,7 @@ const Career = () => {
                 bgImage={'careerbg'}
             />
             <CareerDetails />
-        </>
+        </div>
     )
 }
 
