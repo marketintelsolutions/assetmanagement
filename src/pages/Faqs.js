@@ -9,7 +9,7 @@ const Faqs = () => {
                 heading={'Freqently Asked Questions'}
                 text={'Get answers to questions you might have.'}
                 image='FAQ'
-                bgImage='FAQBak'
+                bgImage='FAQbg'
             />
             <FaqDetails />
         </>
