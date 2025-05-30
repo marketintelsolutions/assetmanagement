@@ -684,6 +684,7 @@ const CorporateInvestmentForm = ({
                                     )}
                                 </div>
 
+                                {/* FIXED: Added all three name fields */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Surname *</label>
@@ -691,6 +692,26 @@ const CorporateInvestmentForm = ({
                                             type="text"
                                             value={signatory.surname}
                                             onChange={(e) => handleInputChange('surname', e.target.value, index)}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Enter surname"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
+                                        <input
+                                            type="text"
+                                            value={signatory.name}
+                                            onChange={(e) => handleInputChange('name', e.target.value, index)}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Enter first name"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name</label>
+                                        <input
+                                            type="text"
+                                            value={signatory.otherName}
+                                            onChange={(e) => handleInputChange('otherName', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter other name"
                                         />
@@ -886,7 +907,6 @@ const CorporateInvestmentForm = ({
                         ))}
                     </div>
                 );
-
             case 3:
                 return (
                     <div className="space-y-6">
