@@ -20,7 +20,7 @@ const SectionTwo = () => {
                     <SlideIn duration={900} distance={70} direction="left" delay={150}>
                         <div className='md:max-w-[500px] px-6 md:px-10 lg:px-0'>
                             <h1 className='uppercase text-3xl font-poppins'>INVEST FOR YOUR CHILDREN'S FUTURE: OPEN A GIFT MUTUAL FUND TODAY</h1>
-                            <p className='text-lg mt-5'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
+                            <p className='text-lg mt-5, text-justify'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
                             <a target='_blank' href='https://cp-pac.zanibal.com/'><Button>Invest Now</Button></a>
                         </div>
                     </SlideIn>
@@ -46,8 +46,9 @@ const SectionTwo = () => {
                         <SlideIn duration={900} distance={50} direction="bottom" delay={150}>
                             <h2 className='text-primaryBlue text-xl md:text-2xl lg:text-3xl uppercase font-poppins' >Talk to a Financial Advisor</h2>
                         </SlideIn>
+                        <br />
                         <SlideIn duration={900} distance={50} direction="bottom" delay={300}>
-                            <p className='text-base md:text-lg mt-10'>
+                            <p className='text-base md:text-lg mt-10, text-justify'>
                                 We believe that investing should not only be easy but that every interaction with us should be a memorable experience.
                                 <br /><br />
                                 Looking for more information about our products or are you in need of good advice regarding your Personal or corporate investments?

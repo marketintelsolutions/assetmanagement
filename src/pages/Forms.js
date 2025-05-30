@@ -13,8 +13,8 @@ const Forms = () => {
             <Hero
                 heading={'FORMS'}
                 text={'Fill the forms below and our team would get back to you'}
-                image='teambg'
-                bgImage={'about2'}
+                image='forms'
+                bgImage={'formsbg'}
             />
             <div className='relative w-full max-w-max mx-auto my-40'>
 

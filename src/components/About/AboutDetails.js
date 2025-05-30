@@ -23,9 +23,9 @@ const AboutDetails = () => {
             <div className='flex gap-10 items-center mt-20'>
                 <div className='w-full max-w-[500px]'><img src="/missionimg.jpg" alt="missionimg" className='w-full' /></div>
                 <div className='w-full max-w-[50%] flex flex-col gap-10'>
-                    <p className='text-[30px] font-normal'>"We are committed to providing a safe investment outlet to meet our client’s clearly understood investment objectives. <br /> Our services would provide innovative investment opportunities to meet
+                    <p className='text-[25px] font-normal, text-justify'>"We are committed to providing a safe investment outlet to meet our client’s clearly understood investment objectives. <br /> Our services would provide innovative investment opportunities to meet
                         the continuous changes of client needs with a passion for creating sustainable value."</p>
-                    <p className='text-lg font-bold text-primaryBlue'>MISSION</p>
+                    <p className='text-2xl font-bold text-primaryBlue'>MISSION</p>
                 </div>
             </div>
 

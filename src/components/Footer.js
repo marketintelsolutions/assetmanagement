@@ -15,7 +15,7 @@ const Footer = () => {
             <Link to={'/'} className='text-4xl  text-left font-bold'><img src="/logowhite.svg" alt="logo" className='w-full max-w-[280px]' /></Link>
 
             <p className="md:w-[310.36px] mt-[28px] mb-6  text-left text-xl font-normal font-['DM Sans'] leading-[30px]">
-              PAC Asset offers a wide range of investment advice, products and services, including brokerage; retirement accounts, ETFs, online trading & more.
+              PAC Asset Management offers a wide range of investment advice, products and services, including brokerage; retirement accounts, ETFs, online trading & more.
             </p>
             <div className="flex gap-[22px] text-[20px] text-primaryPurple items-center">
               <a href="https://www.linkedin.com/company/pac-asset-management" target="_blank">
