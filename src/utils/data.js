@@ -2,6 +2,11 @@ import { CiLocationOn } from "react-icons/ci";
 import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemptionForm";
 import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm";
 import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm";
+import MutualFundForm from "../components/Insights/Forms/MutualFund/MutualFundForm";
+import EquityFundRedemptionForm from "../components/Insights/Forms/EquityFundRedemptionForm";
+import EurobondFundRedemptionForm from "../components/Insights/Forms/EurobondRedemptionForm";
+import MoneyMarketFundRedemptionForm from "../components/Insights/Forms/MoneyMarketRedemptionForm";
+import FixedIncomeFundRedemptionForm from "../components/Insights/Forms/FixedIncomeFundRedemptionForm";
 
 export const services = [
     {
@@ -834,6 +839,41 @@ export const forms = [
         image: 'fundsub',
         slug: 'corporate-investment-application',
         component: <CorporateInvestmentForm />,
+    },
+    {
+        heading: 'Mutual Fund Individual',
+        icon: 'subscription',
+        image: 'fundsub',
+        slug: 'mutual-fund-individual',
+        component: <MutualFundForm />,
+    },
+    {
+        heading: 'Equity Fund Redemption Form',
+        icon: 'subscription',
+        image: 'fundsub',
+        slug: 'equity-fund-redemption-form',
+        component: <EquityFundRedemptionForm />,
+    },
+    {
+        heading: 'Eurobond Redemption Form',
+        icon: 'subscription',
+        image: 'fundsub',
+        slug: 'eurobond-redemption-form',
+        component: <EurobondFundRedemptionForm />,
+    },
+    {
+        heading: 'Money Market Redemption Form',
+        icon: 'subscription',
+        image: 'fundsub',
+        slug: 'money-market-redemption-form',
+        component: <MoneyMarketFundRedemptionForm />,
+    },
+    {
+        heading: 'Fixed Income Fund Redemption Form',
+        icon: 'subscription',
+        image: 'fundsub',
+        slug: 'fixed-income-fund-redemption-form',
+        component: <FixedIncomeFundRedemptionForm />,
     },
 
 ]
