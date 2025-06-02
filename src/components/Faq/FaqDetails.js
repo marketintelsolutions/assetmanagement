@@ -53,7 +53,7 @@ const FaqDetails = () => {
                                 className="w-full flex justify-between items-center py-5 px-4 hover:bg-primaryOrange transition-colors"
                                 onClick={() => toggleAccordion(index)}
                             >
-                                <span className="text-left text-base md:text-lg font-light">{item.question}</span>
+                                <span className="text-left text-primaryBlue text-base md:text-lg font-light">{item.question}</span>
                                 <IoIosArrowDown
                                     className={`transform transition-transform duration-300 ${activeIndex === index ? 'rotate-180' : ''
                                         }`}

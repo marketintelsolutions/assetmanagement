@@ -17,6 +17,8 @@ import TeamMember from "./pages/TeamMember";
 import Forms from "./pages/Forms";
 import WhatWeDo from "./pages/WhatWeDo";
 import FormItem from "./pages/FormItem";
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -153,6 +155,22 @@ function App() {
       element: (
         <MainLayout>
           <Contact />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/admin/login',
+      element: (
+        <MainLayout>
+          <AdminLogin />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/admin/dashboard',
+      element: (
+        <MainLayout>
+          <AdminDashboard />
         </MainLayout>
       )
     },
