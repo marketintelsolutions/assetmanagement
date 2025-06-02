@@ -4,7 +4,6 @@ import axios from 'axios';
 // Create the base axios instance
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api',
-    timeout: 30000, // 30 seconds timeout for large file uploads
     headers: {
         'Content-Type': 'application/json',
     },
@@ -153,6 +152,40 @@ export const apiService = {
         },
     },
 
+    // Email Indemnity API methods
+    emailIndemnity: {
+        submit: async (formData, pdfContent, adminEmail) => {
+            const response = await apiClient.post('/email-indemnity/submit', {
+                formData,
+                pdfContent,
+                adminEmail,
+            });
+            return response.data;
+        },
+
+        validate: async (formData) => {
+            try {
+                const response = await apiClient.post('/email-indemnity/validate', { formData });
+                return response.data;
+            } catch (error) {
+                console.error('Validation service error:', error);
+                return {
+                    valid: false,
+                    errors: ['Validation service unavailable'],
+                    message: 'Using local validation'
+                };
+            }
+        },
+
+        getStatus: async (email, referenceId = null) => {
+            const params = referenceId ? { referenceId } : {};
+            const response = await apiClient.get(`/email-indemnity/status`, {
+                params: { email, ...params }
+            });
+            return response.data;
+        },
+    },
+
     // Email API methods
     email: {
         sendRedemption: async (formData, pdfContent, fundManagerEmail) => {
@@ -160,6 +193,15 @@ export const apiService = {
                 formData,
                 pdfContent,
                 fundManagerEmail,
+            });
+            return response.data;
+        },
+
+        sendEmailIndemnity: async (formData, pdfContent, adminEmail) => {
+            const response = await apiClient.post('/email/send-email-indemnity', {
+                formData,
+                pdfContent,
+                adminEmail,
             });
             return response.data;
         },
@@ -189,6 +231,11 @@ export const apiService = {
 
         checkRedemption: async () => {
             const response = await apiClient.get('/redemption/health');
+            return response.data;
+        },
+
+        checkEmailIndemnity: async () => {
+            const response = await apiClient.get('/email-indemnity/health');
             return response.data;
         },
     },
@@ -229,8 +276,8 @@ export const apiUtils = {
     },
 
     // Retry function for failed requests
-    retry: async (fn, retries = 3, delay = 1000) => {
-        for (let i = 0; i < retries; i++) {
+    retry: async (fn, retries = 0, delay = 1000) => {
+        for (let i = 0; i <= retries; i++) {
             try {
                 return await fn();
             } catch (error) {
@@ -240,11 +287,11 @@ export const apiUtils = {
                 }
 
                 // If this is the last retry, throw the error
-                if (i === retries - 1) {
+                if (i === retries) {
                     throw error;
                 }
 
-                // Wait before retrying
+                // Wait before retrying with exponential backoff
                 await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
             }
         }
