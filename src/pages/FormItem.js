@@ -15,8 +15,8 @@ const FormItem = () => {
             <Hero
                 heading={item.heading}
                 text={''}
-                image={'about1'}
-                bgImage={'building1'}
+                image={'formsInner'}
+                bgImage={'formsInnerbg'}
             />
             <div className='py-40'>{item.component}</div>
         </div>
