@@ -18,10 +18,10 @@ const FaqDetails = () => {
     const categories = Object.keys(categorizedFaqData);
 
     return (
-        <div className="relative z-10 w-full bg-primarygray text-white py-20 my-40">
+        <div className="relative z-10 w-full bg-[#929295] text-white py-20 my-40">
             <div className="w-full max-w-[1000px] mx-auto px-4">
-                <h2 className="text-2xl md:text-3xl mb-4 font-light font-poppins tracking-[4px]">FREQUENTLY ASKED QUESTIONS</h2>
-                <p className="text-xs md:text-base font-light mb-10">Find answers to common questions about our investment funds and services.</p>
+                <h2 className="text-2xl md:text-3xl mb-4 text-primaryBlue font-bold font-poppins tracking-[4px]">FREQUENTLY ASKED QUESTIONS</h2>
+                <p className="text-xs md:text-base text-primaryBlue font-light mb-10">Find answers to common questions about our investment funds and services.</p>
 
                 {/* Category tabs */}
                 <div className=" grid grid-cols-2 md:flex flex-wrap mb-8  border-gray-700">
@@ -40,7 +40,7 @@ const FaqDetails = () => {
                 </div>
 
                 {/* Active category title */}
-                <h3 className="text-xl md:text-2xl mb-6 font-medium">{activeCategory}</h3>
+                <h3 className="text-xl md:text-2xl mb-6 text-primaryBlue font-medium">{activeCategory}</h3>
 
                 {/* FAQ accordion for active category */}
                 <div className="space-y-4">

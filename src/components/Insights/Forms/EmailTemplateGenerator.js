@@ -506,5 +506,126 @@ export const EmailTemplateGenerator = {
             };
         }
         return null;
-    }
+    },
+
+    createEmailIndemnityTemplate: ({
+        title = 'Email Indemnity Agreement',
+        subtitle = 'Electronic Communication Consent',
+        greeting,
+        formData,
+        isUserCopy = false,
+        brandColor = '#1e40af',
+        brandName = 'PACAM',
+        contactInfo = {
+            email: 'info@pacam.com',
+            phone: '+234-XXX-XXXX',
+            website: 'www.pacam.com'
+        }
+    }) => {
+        const currentDate = new Date().toLocaleString();
+        const referenceId = `${brandName.toUpperCase()}-INDEMNITY-${Date.now()}`;
+
+        const adminSections = [
+            EmailTemplateGenerator.createFormDataSection(
+                "Agreement Details",
+                {
+                    "Account Holder Name": formData.accountHolderName,
+                    "Preferred Email": formData.preferredEmail,
+                    "Preferred Phone": formData.preferredPhone || "Not provided",
+                    ...(formData.variant === "corporate" && formData.companyName && {
+                        "Company Name": formData.companyName,
+                    }),
+                    "Agreement Date": formData.signatureDate || new Date().toLocaleDateString(),
+                    "Form Type": formData.variant === "corporate" ? "Corporate" : "Individual",
+                    "Terms Accepted": formData.agreedToTerms ? "Yes" : "No"
+                }
+            ),
+        ];
+
+        const adminImportantNotes = `
+            <ul>
+                <li>The account holder has consented to electronic communication including email, SMS, WhatsApp, etc.</li>
+                <li>Instructions transmitted electronically are binding for all purposes including evidence.</li>
+                <li>The account holder indemnifies PAC Asset Management Limited against all losses from electronic communication.</li>
+                <li>There are acknowledged risks with electronic communication including delays, non-receipt, and third-party interference.</li>
+                <li>PAC Asset Management Limited is authorized to rely on electronic communications from the specified email account.</li>
+                <li>Please update the client's communication preferences in your system.</li>
+                <li>File this agreement in the client's permanent records.</li>
+            </ul>
+        `;
+
+        if (isUserCopy) {
+            const userSections = [
+                {
+                    title: "Agreement Confirmation",
+                    content: `
+                        <p>Thank you for submitting your Email Indemnity Agreement. This document confirms your consent to electronic communication with PAC Asset Management Limited.</p>
+                        <div class="info-grid">
+                            <div class="info-label">Your Email:</div>
+                            <div class="info-value">${formData.preferredEmail}</div>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-label">Agreement Date:</div>
+                            <div class="info-value">${new Date().toLocaleDateString()}</div>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-label">Agreement Type:</div>
+                            <div class="info-value">${formData.variant === "corporate" ? "Corporate" : "Individual"}</div>
+                        </div>
+                    `,
+                },
+                {
+                    title: "What This Means",
+                    content: `
+                        <ul>
+                            <li>You have consented to receive communications via email, SMS, WhatsApp, and other electronic means</li>
+                            <li>Electronic instructions from your specified email account will be considered binding</li>
+                            <li>This agreement will be added to your account records</li>
+                            <li>You can now receive account statements and communications electronically</li>
+                        </ul>
+                    `,
+                }
+            ];
+
+            return EmailTemplateGenerator.createTemplate({
+                title: "Email Indemnity Agreement - Copy",
+                subtitle: "Your Electronic Communication Consent",
+                greeting: `Dear ${formData.accountHolderName},`,
+                sections: userSections,
+                importantNotes: "<p>Keep this email for your records. This agreement remains in effect until formally revoked in writing.</p>",
+                isUserCopy: true,
+                brandName,
+                contactInfo,
+            });
+        } else {
+            return EmailTemplateGenerator.createTemplate({
+                title,
+                subtitle: "New Agreement Submission",
+                greeting: "Dear Administrator,",
+                sections: adminSections,
+                importantNotes: adminImportantNotes,
+                isUserCopy: false,
+                brandName,
+                contactInfo,
+            });
+        }
+    },
+
+    // Helper function to create email indemnity form data section
+    createEmailIndemnityFormDataSection: (formData) => {
+        return EmailTemplateGenerator.createFormDataSection(
+            "Agreement Details",
+            {
+                "Account Holder Name": formData.accountHolderName,
+                "Preferred Email": formData.preferredEmail,
+                "Preferred Phone": formData.preferredPhone || "Not provided",
+                ...(formData.variant === "corporate" && formData.companyName && {
+                    "Company Name": formData.companyName,
+                }),
+                "Agreement Date": formData.signatureDate || new Date().toLocaleDateString(),
+                "Form Type": formData.variant === "corporate" ? "Corporate" : "Individual",
+                "Terms Accepted": formData.agreedToTerms ? "Yes" : "No"
+            }
+        );
+    },
 };

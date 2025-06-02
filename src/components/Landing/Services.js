@@ -11,7 +11,8 @@ const Services = () => {
                 <h1 className="relative z-[2] text-3xl md:text-4xl w-full flex items-center justify-between lg:text-5xl font-poppins font-medium text-primaryBlue">
                     <span>SERVICES</span>
                     <Link to={'/services'}>
-                        <button className='text-secondaryRed text-base bg-white hover:border-white  border-secondaryRed hover:bg-secondaryRed hover:text-white border  py-3 px-6 rounded-full'>Read More</button>
+
+                        <button className='text-white text-sm md:text-base bg-secondaryRed min-w-[120px] border  border-secondaryRed hover:bg-white hover:text-primaryBlue  py-3 px-6 rounded-full'>Read More</button>
                     </Link>
                 </h1>
                 <h2 className='text-[20px]  md:text-[23px] lg:text-[26px] font-light mt-5 md:mt-10'>Providing transformational solutions for Africa’s unique challenges.</h2>

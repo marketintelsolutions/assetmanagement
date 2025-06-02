@@ -1,4 +1,4 @@
-// useFormLogic.js - Updated with Modal Support
+// useFormLogic.js - Updated with Signature Clearing on Submission
 import { useState } from 'react';
 import { PDFGenerator } from './PDFGenerator';
 import { apiService, apiUtils } from '../../../../services/apiClient';
@@ -185,6 +185,11 @@ export const useFormLogic = (fundManagerEmail) => {
                     userEmail: '',
                     primarySignature: null,
                     jointSignature: null
+                });
+                // Reset signature modes to default
+                setSignatureMode({
+                    primary: 'draw',
+                    joint: 'draw'
                 });
             }, 3000);
 

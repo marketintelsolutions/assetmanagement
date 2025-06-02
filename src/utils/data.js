@@ -1,6 +1,6 @@
 import { CiLocationOn } from "react-icons/ci";
 import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemption/PacamRedemptionForm";
-import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm";
+import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm/EmailIndemnityForm";
 import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm";
 import MutualFundForm from "../components/Insights/Forms/MutualFund/MutualFundForm";
 import EquityFundRedemptionForm from "../components/Insights/Forms/EquityFundRedemptionForm";
@@ -813,7 +813,7 @@ export const categorizedFaqData = {
 
 export const forms = [
     {
-        heading: 'Balanced Fund Redemption Form',
+        heading: 'Redemption Form - PACAM Balance Funds',
         icon: 'package',
         image: 'account_opening',
         slug: 'balanced-fund-redemption-form',

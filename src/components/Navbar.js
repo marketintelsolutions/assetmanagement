@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FaAngleDown, FaInstagram, FaLinkedin, FaPhone } from 'react-icons/fa6'
 import { IoLogoFacebook, IoMail } from 'react-icons/io5'
 import { FiMenu } from 'react-icons/fi'
+import Button from '../components/ui/Button'
 
 const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
@@ -89,9 +90,7 @@ const Navbar = () => {
                         <a
                             target='_blank'
                             href='https://cp-pac.zanibal.com/'>
-                            <button className='zr:hidden lg:flex border border-secondaryRed text-secondaryRed hover:border-primaryBlue hover:bg-secondaryRed hover:text-white px-4 py-3 rounded-full'>
-                                SELF SERVICE
-                            </button>
+                            <button className='text-white text-sm md:text-base bg-secondaryRed min-w-[120px] border  border-secondaryRed hover:bg-white hover:text-primaryBlue  py-3 px-6 rounded-full'>SELF SERVICE</button>
                         </a>
                         <button onClick={() => setIsMenu((prev) => !prev)} className='text-3xl zr:flex lg:hidden text-primaryBlue'>
                             <span><FiMenu /></span>
