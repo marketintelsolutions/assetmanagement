@@ -1,5 +1,5 @@
 import { CiLocationOn } from "react-icons/ci";
-import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemptionForm";
+import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemption/PacamRedemptionForm";
 import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm";
 import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm";
 import MutualFundForm from "../components/Insights/Forms/MutualFund/MutualFundForm";
@@ -255,12 +255,12 @@ export const navData = [
                 links: [
                     {
                         text: 'Daily Market',
-                        path: 'https://pacresearch.org/#/resources/daily%20financial%20market%20record',
+                        path: 'https://pacresearch.org/resources/',
                         external: true
                     },
                     {
-                        text: 'Sectorial Report',
-                        path: 'https://pacresearch.org/#/resources/sectoral%20report',
+                        text: 'MacroEconomics',
+                        path: 'https://pacresearch.org',
                         external: true
                     },
                 ]
@@ -834,7 +834,7 @@ export const forms = [
         component: <EmailIndemnityForm variant="corporate" />,
     },
     {
-        heading: 'Corporate Investment Application',
+        heading: 'Investment Application (Corporate)',
         icon: 'subscription',
         image: 'fundsub',
         slug: 'corporate-investment-application',

@@ -1219,16 +1219,7 @@ const CorporateInvestmentForm = ({
                 {/* Form Content */}
                 <div className="bg-white shadow-lg rounded-b-lg p-8">
 
-                    {/* Status Messages */}
-                    {submitStatus && (
-                        <div className={`flex items-center gap-3 p-4 rounded-lg mb-6 ${submitStatus.type === 'success'
-                            ? 'bg-green-50 text-green-800 border border-green-200'
-                            : 'bg-red-50 text-red-800 border border-red-200'
-                            }`}>
-                            {submitStatus.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                            <span>{submitStatus.message}</span>
-                        </div>
-                    )}
+
 
                     {/* Step Content */}
                     {renderStepContent()}
@@ -1273,6 +1264,16 @@ const CorporateInvestmentForm = ({
                             </button>
                         )}
                     </div>
+                    {/* Status Messages */}
+                    {submitStatus && (
+                        <div className={`flex items-center gap-3 p-4 rounded-lg mb-6 ${submitStatus.type === 'success'
+                            ? 'bg-green-50 text-green-800 border border-green-200'
+                            : 'bg-red-50 text-red-800 border border-red-200'
+                            }`}>
+                            {submitStatus.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+                            <span>{submitStatus.message}</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
