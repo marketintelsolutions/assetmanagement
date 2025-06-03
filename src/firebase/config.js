@@ -14,11 +14,11 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
   authDomain: `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
-  projectId: "pacresearch-feb77",
-  storageBucket: "pacresearch-feb77.appspot.com",
-  messagingSenderId: "232392725516",
+  projectId: "pac-asset-management",
+  storageBucket: "pac-asset-management.firebasestorage.app",
+  messagingSenderId: "567063377932",
   appId: `${process.env.REACT_APP_FIREBASE_API_ID}`,
-  measurementId: "G-GPH800339J",
+  measurementId: "G-C3BPMPM67M"
 };
 
 // Initialize Firebase

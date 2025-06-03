@@ -1,4 +1,4 @@
-// SignatureCanvas.jsx - Enhanced with external clear support
+// SignatureCanvas.jsx - Fixed coordinate scaling for accurate drawing
 import React, {
   useRef,
   useEffect,
@@ -23,9 +23,15 @@ const SignatureCanvas = forwardRef(
 
     useEffect(() => {
       const canvas = canvasRef.current;
+      if (!canvas) return;
+
       const ctx = canvas.getContext("2d");
 
-      // Set up canvas
+      // Set canvas internal dimensions
+      canvas.width = width;
+      canvas.height = height;
+
+      // Set up canvas context
       ctx.strokeStyle = "#000000";
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
@@ -34,35 +40,82 @@ const SignatureCanvas = forwardRef(
       // Set canvas background to white
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }, []);
+
+      // Ensure canvas CSS size matches internal dimensions to prevent scaling issues
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+    }, [width, height]);
 
     const getCanvasPosition = (e) => {
       const canvas = canvasRef.current;
+      if (!canvas) return { x: 0, y: 0 };
+
       const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
+
+      // Get the actual displayed size
+      const displayWidth = rect.width;
+      const displayHeight = rect.height;
+
+      // Calculate scaling factors
+      const scaleX = canvas.width / displayWidth;
+      const scaleY = canvas.height / displayHeight;
+
+      // Get client coordinates relative to canvas
+      const clientX = e.clientX - rect.left;
+      const clientY = e.clientY - rect.top;
 
       return {
-        x: (e.clientX - rect.left) * scaleX,
-        y: (e.clientY - rect.top) * scaleY,
+        x: clientX * scaleX,
+        y: clientY * scaleY,
+      };
+    };
+
+    const getTouchCanvasPosition = (touch) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return { x: 0, y: 0 };
+
+      const rect = canvas.getBoundingClientRect();
+
+      // Get the actual displayed size
+      const displayWidth = rect.width;
+      const displayHeight = rect.height;
+
+      // Calculate scaling factors
+      const scaleX = canvas.width / displayWidth;
+      const scaleY = canvas.height / displayHeight;
+
+      // Get touch coordinates relative to canvas
+      const clientX = touch.clientX - rect.left;
+      const clientY = touch.clientY - rect.top;
+
+      return {
+        x: clientX * scaleX,
+        y: clientY * scaleY,
       };
     };
 
     const startDrawing = (e) => {
+      e.preventDefault();
       setIsDrawing(true);
       const pos = getCanvasPosition(e);
       setLastPosition(pos);
+
+      // Start a new path
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
     };
 
     const draw = (e) => {
       if (!isDrawing) return;
+      e.preventDefault();
 
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       const currentPos = getCanvasPosition(e);
 
-      ctx.beginPath();
-      ctx.moveTo(lastPosition.x, lastPosition.y);
+      // Draw line from last position to current position
       ctx.lineTo(currentPos.x, currentPos.y);
       ctx.stroke();
 
@@ -73,17 +126,33 @@ const SignatureCanvas = forwardRef(
       onSignatureChange(signatureData);
     };
 
-    const stopDrawing = () => {
-      setIsDrawing(false);
+    const stopDrawing = (e) => {
+      if (isDrawing) {
+        e.preventDefault();
+        setIsDrawing(false);
+
+        // End the current path
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        ctx.beginPath(); // Start a new path for the next stroke
+      }
     };
 
     const clearSignature = () => {
       const canvas = canvasRef.current;
+      if (!canvas) return;
+
       const ctx = canvas.getContext("2d");
 
       // Clear and reset background
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Reset stroke properties
+      ctx.strokeStyle = "#000000";
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
 
       onSignatureChange(null);
     };
@@ -92,35 +161,55 @@ const SignatureCanvas = forwardRef(
     const handleTouchStart = (e) => {
       e.preventDefault();
       const touch = e.touches[0];
-      const mouseEvent = new MouseEvent("mousedown", {
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-      });
-      startDrawing(mouseEvent);
+      const pos = getTouchCanvasPosition(touch);
+
+      setIsDrawing(true);
+      setLastPosition(pos);
+
+      // Start a new path
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
     };
 
     const handleTouchMove = (e) => {
+      if (!isDrawing) return;
       e.preventDefault();
+
       const touch = e.touches[0];
-      const mouseEvent = new MouseEvent("mousemove", {
-        clientX: touch.clientX,
-        clientY: touch.clientY,
-      });
-      draw(mouseEvent);
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      const currentPos = getTouchCanvasPosition(touch);
+
+      // Draw line from last position to current position
+      ctx.lineTo(currentPos.x, currentPos.y);
+      ctx.stroke();
+
+      setLastPosition(currentPos);
+
+      // Convert to base64 and notify parent
+      const signatureData = canvas.toDataURL("image/png");
+      onSignatureChange(signatureData);
     };
 
     const handleTouchEnd = (e) => {
       e.preventDefault();
-      stopDrawing();
+      if (isDrawing) {
+        setIsDrawing(false);
+
+        // End the current path
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        ctx.beginPath(); // Start a new path for the next stroke
+      }
     };
 
     return (
       <div className="signature-container">
         <canvas
           ref={canvasRef}
-          width={width}
-          height={height}
-          className="border-2 border-gray-300 rounded-lg cursor-crosshair bg-white"
+          className="border-2 border-gray-300 rounded-lg cursor-crosshair bg-white touch-none"
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
@@ -128,6 +217,12 @@ const SignatureCanvas = forwardRef(
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            maxWidth: "100%",
+            display: "block",
+          }}
         />
         <button
           type="button"
