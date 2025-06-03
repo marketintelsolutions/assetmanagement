@@ -1,85 +1,34 @@
-// CorporateInvestmentForm.jsx
-import React, { useState } from 'react';
-import { Building, Users, FileText, CheckCircle, AlertCircle, ArrowLeft, ArrowRight, Send } from 'lucide-react';
-import { EmailTemplateGenerator } from './EmailTemplateGenerator';
-import { EmailService } from './EmailService';
+// CorporateInvestmentForm.jsx - Enhanced with Signatures and Document Uploads
+import React from 'react';
+import { Building, Users, FileText, CheckCircle, ArrowLeft, ArrowRight, Send, PenTool } from 'lucide-react';
+import Modal from '../PacamRedemption/Modal';
+import DocumentUploadSection from './DocumentUploadSection';
+import CorporateSignatureSection from './CorporateSignatureSection';
+import { useCorporateInvestmentLogic } from './useCorporateInvestmentLogic';
 
 const CorporateInvestmentForm = ({
-    apiKey = `${process.env.REACT_APP_PLUNK_API_KEY}`,
-    adminEmail = `${process.env.REACT_APP_SUBMISSION_EMAIL}`,
+    adminEmail = process.env.REACT_APP_SUBMISSION_EMAIL
 }) => {
-    const [currentStep, setCurrentStep] = useState(0);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null);
-
-    const [formData, setFormData] = useState({
-        // Investment Information
-        investmentType: '',
-        investmentValue: '',
-        tenor: '',
-        otherTenor: '',
-        investorType: '',
-
-        // Company Information
-        date: '',
-        cacNumber: '',
-        typeOfBusiness: '',
-        companyName: '',
-        registeredAddress: '',
-        country: '',
-        stateOfOrigin: '',
-        townCity: '',
-        emailAddress: '',
-        phoneNumber: '',
-        taxId: '',
-        companySignatureDate: '',
-
-        // Signatories (up to 3)
-        signatories: [
-            {
-                surname: '',
-                name: '',
-                otherName: '',
-                residentialAddress: '',
-                nationality: '',
-                stateOfOrigin: '',
-                dateOfBirth: '',
-                gender: '',
-                employmentDetails: '',
-                townCity: '',
-                bvn: '',
-                emailAddress: '',
-                mobileNumber: '',
-                taxId: '',
-                signatureDate: '',
-                idType: '',
-                idNumber: '',
-                idIssuedDate: '',
-                idExpiryDate: ''
-            }
-        ],
-
-        // PEP Information
-        isPep: '',
-        pepDetails: '',
-        isFinanciallyExposed: '',
-        financiallyExposedDetails: '',
-
-        // Bank Details
-        accountName: '',
-        accountNumber: '',
-        bankName: '',
-
-        // Investor Domicile
-        investorDomicile: '',
-
-        // Attestations
-        agreedToTerms: false,
-        agreedToRisks: false,
-
-        // Copy email
-        userEmail: ''
-    });
+    const {
+        formData,
+        currentStep,
+        isSubmitting,
+        modal,
+        signatureMode,
+        handleInputChange,
+        handleSignatureChange,
+        handleSignatureModeChange,
+        handleDocumentUpload,
+        removeDocument,
+        addSignatory,
+        removeSignatory,
+        validateStep,
+        nextStep,
+        prevStep,
+        handleSubmit,
+        handlePreviewPDF,
+        closeModal
+    } = useCorporateInvestmentLogic(adminEmail);
 
     const investmentOptions = [
         { value: 'pacam_high_yield', label: 'PACAM High Yield Note' },
@@ -124,295 +73,10 @@ const CorporateInvestmentForm = ({
         { title: 'Investment Info', icon: FileText },
         { title: 'Company Details', icon: Building },
         { title: 'Signatories', icon: Users },
-        { title: 'Additional Info', icon: CheckCircle },
+        { title: 'Documents & PEP', icon: CheckCircle },
+        { title: 'Signatures', icon: PenTool },
         { title: 'Review & Submit', icon: Send }
     ];
-
-    const handleInputChange = (field, value, signatoryIndex = null) => {
-        if (signatoryIndex !== null) {
-            setFormData(prev => ({
-                ...prev,
-                signatories: prev.signatories.map((sig, index) =>
-                    index === signatoryIndex ? { ...sig, [field]: value } : sig
-                )
-            }));
-        } else {
-            setFormData(prev => ({ ...prev, [field]: value }));
-        }
-    };
-
-    const addSignatory = () => {
-        if (formData.signatories.length < 3) {
-            setFormData(prev => ({
-                ...prev,
-                signatories: [...prev.signatories, {
-                    surname: '',
-                    name: '',
-                    otherName: '',
-                    residentialAddress: '',
-                    nationality: '',
-                    stateOfOrigin: '',
-                    dateOfBirth: '',
-                    gender: '',
-                    employmentDetails: '',
-                    townCity: '',
-                    bvn: '',
-                    emailAddress: '',
-                    mobileNumber: '',
-                    taxId: '',
-                    signatureDate: '',
-                    idType: '',
-                    idNumber: '',
-                    idIssuedDate: '',
-                    idExpiryDate: ''
-                }]
-            }));
-        }
-    };
-
-    const removeSignatory = (index) => {
-        if (formData.signatories.length > 1) {
-            setFormData(prev => ({
-                ...prev,
-                signatories: prev.signatories.filter((_, i) => i !== index)
-            }));
-        }
-    };
-
-    const validateStep = (step) => {
-        switch (step) {
-            case 0: // Investment Info
-                return formData.investmentType && formData.investmentValue && formData.investorType;
-            case 1: // Company Details
-                return formData.companyName && formData.emailAddress && formData.cacNumber;
-            case 2: // Signatories
-                return formData.signatories[0].surname && formData.signatories[0].name;
-            case 3: // Additional Info
-                return formData.isPep !== '' && formData.isFinanciallyExposed !== '';
-            case 4: // Review
-                return formData.agreedToTerms && formData.agreedToRisks;
-            default:
-                return true;
-        }
-    };
-
-    const nextStep = () => {
-        if (validateStep(currentStep) && currentStep < steps.length - 1) {
-            setCurrentStep(currentStep + 1);
-        }
-    };
-
-    const prevStep = () => {
-        if (currentStep > 0) {
-            setCurrentStep(currentStep - 1);
-        }
-    };
-
-    const createEmailTemplates = () => {
-        const commonContactInfo = {
-            email: 'info@pacassetmanagement.com',
-            phone: '+234-XXX-XXXX',
-            website: 'www.pacassetmanagement.com'
-        };
-
-        // Admin email sections
-        const adminSections = [
-            EmailTemplateGenerator.createFormDataSection(
-                'Investment Information',
-                {
-                    'Investment Type': investmentOptions.find(opt => opt.value === formData.investmentType)?.label || formData.investmentType,
-                    'Investment Value': formData.investmentValue,
-                    'Tenor': formData.tenor ? `${formData.tenor} Days` : formData.otherTenor,
-                    'Investor Type': investorTypes.find(opt => opt.value === formData.investorType)?.label || formData.investorType
-                }
-            ),
-            EmailTemplateGenerator.createFormDataSection(
-                'Company Information',
-                {
-                    'Company Name': formData.companyName,
-                    'CAC/RC Number': formData.cacNumber,
-                    'Type of Business': formData.typeOfBusiness,
-                    'Registered Address': formData.registeredAddress,
-                    'Country': formData.country,
-                    'State of Origin': formData.stateOfOrigin,
-                    'Email Address': formData.emailAddress,
-                    'Phone Number': formData.phoneNumber,
-                    'Tax ID': formData.taxId
-                }
-            ),
-            {
-                title: 'Account Signatories',
-                content: formData.signatories.map((sig, index) => `
-          <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <h4 style="color: #1e40af; margin-bottom: 10px;">Signatory ${index + 1}</h4>
-            <div class="info-grid">
-              <div class="info-label">Full Name:</div>
-              <div class="info-value">${sig.surname} ${sig.name} ${sig.otherName}</div>
-            </div>
-            <div class="info-grid">
-              <div class="info-label">Email:</div>
-              <div class="info-value">${sig.emailAddress}</div>
-            </div>
-            <div class="info-grid">
-              <div class="info-label">Mobile:</div>
-              <div class="info-value">${sig.mobileNumber}</div>
-            </div>
-            <div class="info-grid">
-              <div class="info-label">Employment:</div>
-              <div class="info-value">${sig.employmentDetails}</div>
-            </div>
-            <div class="info-grid">
-              <div class="info-label">BVN:</div>
-              <div class="info-value">${sig.bvn}</div>
-            </div>
-          </div>
-        `).join('')
-            },
-            EmailTemplateGenerator.createFormDataSection(
-                'Banking Information',
-                {
-                    'Account Name': formData.accountName,
-                    'Account Number': formData.accountNumber,
-                    'Bank Name': formData.bankName
-                }
-            ),
-            EmailTemplateGenerator.createFormDataSection(
-                'Compliance Information',
-                {
-                    'Politically Exposed Person': formData.isPep === 'yes' ? 'Yes' : 'No',
-                    'PEP Details': formData.pepDetails || 'N/A',
-                    'Financially Exposed': formData.isFinanciallyExposed === 'yes' ? 'Yes' : 'No',
-                    'Financial Exposure Details': formData.financiallyExposedDetails || 'N/A',
-                    'Investor Domicile': domicileZones.find(zone => zone.value === formData.investorDomicile)?.label || 'Not specified'
-                }
-            )
-        ];
-
-        const adminImportantNotes = `
-      <ul>
-        <li>Please verify all documentation as per the checklist: Passport photograph, Recent utility bill, Valid ID, CAC Forms (C07, C02), Board Resolution.</li>
-        <li>25% pre-liquidation charge applies if investments are liquidated before maturity.</li>
-        <li>All signatories must be verified and their details cross-checked with provided documentation.</li>
-        <li>Conduct enhanced due diligence if any signatory is marked as PEP or financially exposed.</li>
-        <li>Ensure all required attestations have been acknowledged by the client.</li>
-      </ul>
-    `;
-
-        const adminTemplate = EmailTemplateGenerator.createTemplate({
-            title: 'Corporate Investment Application',
-            subtitle: 'New corporate account opening request',
-            greeting: 'A new corporate investment application has been submitted. Please review and process according to standard procedures.',
-            sections: adminSections,
-            importantNotes: adminImportantNotes,
-            isUserCopy: false,
-            brandName: 'PAC Asset Management',
-            contactInfo: commonContactInfo
-        });
-
-        // User confirmation template
-        const userSections = [
-            {
-                title: 'Application Summary',
-                content: `
-          <p>Thank you for your investment application. We have received your corporate account opening request and will process it within 3-5 business days.</p>
-          <div class="info-grid">
-            <div class="info-label">Company Name:</div>
-            <div class="info-value">${formData.companyName}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Investment Type:</div>
-            <div class="info-value">${investmentOptions.find(opt => opt.value === formData.investmentType)?.label}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Investment Value:</div>
-            <div class="info-value">${formData.investmentValue}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Primary Contact:</div>
-            <div class="info-value">${formData.emailAddress}</div>
-          </div>
-        `
-            }
-        ];
-
-        const userTemplate = EmailTemplateGenerator.createTemplate({
-            title: 'Investment Application Received',
-            subtitle: 'Thank you for choosing PAC Asset Management',
-            greeting: `Dear ${formData.companyName} Team,`,
-            sections: userSections,
-            importantNotes: `
-        <ul>
-          <li>Our team will review your application and contact you within 3-5 business days.</li>
-          <li>Please ensure all required documentation is submitted for faster processing.</li>
-          <li>You will receive a separate communication once your account is activated.</li>
-          <li>For any inquiries, please contact our customer service team.</li>
-        </ul>
-      `,
-            isUserCopy: true,
-            brandName: 'PAC Asset Management',
-            contactInfo: commonContactInfo
-        });
-
-        return { adminTemplate, userTemplate };
-    };
-
-    const handleSubmit = async () => {
-        if (!validateStep(4)) {
-            setSubmitStatus({ type: 'error', message: 'Please complete all required fields and agree to the terms.' });
-            return;
-        }
-
-        setIsSubmitting(true);
-        setSubmitStatus(null);
-
-        try {
-            const { adminTemplate, userTemplate } = createEmailTemplates();
-
-            // Send to admin
-            await EmailService.sendEmail(
-                adminEmail,
-                'New Corporate Investment Application',
-                adminTemplate,
-                apiKey
-            );
-
-            // Send confirmation to company
-            await EmailService.sendEmail(
-                formData.emailAddress,
-                'Investment Application Confirmation',
-                userTemplate,
-                apiKey
-            );
-
-            // Send copy to user if different email provided
-            if (formData.userEmail && formData.userEmail !== formData.emailAddress) {
-                await EmailService.sendEmail(
-                    formData.userEmail,
-                    'Copy: Corporate Investment Application',
-                    userTemplate,
-                    apiKey
-                );
-            }
-
-            setSubmitStatus({
-                type: 'success',
-                message: 'Corporate investment application submitted successfully! You will receive confirmation shortly.'
-            });
-
-            // Reset form after successful submission
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
-
-        } catch (error) {
-            setSubmitStatus({
-                type: 'error',
-                message: 'Failed to submit application. Please check your configuration and try again.'
-            });
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -629,26 +293,15 @@ const CorporateInvestmentForm = ({
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
-                                <input
-                                    type="text"
-                                    value={formData.taxId}
-                                    onChange={(e) => handleInputChange('taxId', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Enter TIN"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Signature Date</label>
-                                <input
-                                    type="date"
-                                    value={formData.companySignatureDate}
-                                    onChange={(e) => handleInputChange('companySignatureDate', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                />
-                            </div>
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
+                            <input
+                                type="text"
+                                value={formData.taxId}
+                                onChange={(e) => handleInputChange('taxId', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter TIN"
+                            />
                         </div>
                     </div>
                 );
@@ -684,7 +337,7 @@ const CorporateInvestmentForm = ({
                                     )}
                                 </div>
 
-                                {/* FIXED: Added all three name fields */}
+                                {/* Name fields */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Surname *</label>
@@ -718,6 +371,7 @@ const CorporateInvestmentForm = ({
                                     </div>
                                 </div>
 
+                                {/* Address */}
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-2">Residential / Mailing Address</label>
                                     <textarea
@@ -729,7 +383,8 @@ const CorporateInvestmentForm = ({
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Personal Details */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Nationality</label>
                                         <input
@@ -750,9 +405,6 @@ const CorporateInvestmentForm = ({
                                             placeholder="Enter state"
                                         />
                                     </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth</label>
                                         <input
@@ -762,6 +414,10 @@ const CorporateInvestmentForm = ({
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         />
                                     </div>
+                                </div>
+
+                                {/* Gender and Employment */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
                                         <select
@@ -775,26 +431,13 @@ const CorporateInvestmentForm = ({
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
-                                        <input
-                                            type="text"
-                                            value={signatory.bvn}
-                                            onChange={(e) => handleInputChange('bvn', e.target.value, index)}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            placeholder="Enter BVN"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Employment Details / Position Held</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Employment Details</label>
                                         <input
                                             type="text"
                                             value={signatory.employmentDetails}
                                             onChange={(e) => handleInputChange('employmentDetails', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            placeholder="Enter position/employment details"
+                                            placeholder="Enter employment details"
                                         />
                                     </div>
                                     <div>
@@ -809,7 +452,18 @@ const CorporateInvestmentForm = ({
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Contact and ID */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
+                                        <input
+                                            type="text"
+                                            value={signatory.bvn}
+                                            onChange={(e) => handleInputChange('bvn', e.target.value, index)}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Enter BVN"
+                                        />
+                                    </div>
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                                         <input
@@ -832,31 +486,20 @@ const CorporateInvestmentForm = ({
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
-                                        <input
-                                            type="text"
-                                            value={signatory.taxId}
-                                            onChange={(e) => handleInputChange('taxId', e.target.value, index)}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            placeholder="Enter TIN"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Signature Date</label>
-                                        <input
-                                            type="date"
-                                            value={signatory.signatureDate}
-                                            onChange={(e) => handleInputChange('signatureDate', e.target.value, index)}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        />
-                                    </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
+                                    <input
+                                        type="text"
+                                        value={signatory.taxId}
+                                        onChange={(e) => handleInputChange('taxId', e.target.value, index)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="Enter TIN"
+                                    />
                                 </div>
 
                                 {/* ID Information */}
-                                <div className="border-t pt-4">
-                                    <h5 className="text-md font-semibold text-gray-700 mb-3">Means of Identification</h5>
+                                <div className="border-t border-gray-200 pt-4">
+                                    <h5 className="font-medium text-gray-700 mb-3">Means of Identification</h5>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-sm font-semibold text-gray-700 mb-2">ID Type</label>
@@ -866,7 +509,7 @@ const CorporateInvestmentForm = ({
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             >
                                                 <option value="">Select ID Type</option>
-                                                {idTypes.map((type) => (
+                                                {idTypes.map(type => (
                                                     <option key={type.value} value={type.value}>{type.label}</option>
                                                 ))}
                                             </select>
@@ -881,8 +524,6 @@ const CorporateInvestmentForm = ({
                                                 placeholder="Enter ID number"
                                             />
                                         </div>
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                                         <div>
                                             <label className="block text-sm font-semibold text-gray-700 mb-2">ID Issued Date</label>
                                             <input
@@ -907,10 +548,18 @@ const CorporateInvestmentForm = ({
                         ))}
                     </div>
                 );
+
             case 3:
                 return (
                     <div className="space-y-6">
-                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Additional Information</h3>
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Documents & Additional Information</h3>
+
+                        {/* Document Upload Section */}
+                        <DocumentUploadSection
+                            formData={formData}
+                            onDocumentUpload={handleDocumentUpload}
+                            onRemoveDocument={removeDocument}
+                        />
 
                         {/* PEP Information */}
                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
@@ -1087,6 +736,20 @@ const CorporateInvestmentForm = ({
             case 4:
                 return (
                     <div className="space-y-6">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Signatures & Date</h3>
+                        <CorporateSignatureSection
+                            formData={formData}
+                            signatureMode={signatureMode}
+                            onSignatureChange={handleSignatureChange}
+                            onSignatureModeChange={handleSignatureModeChange}
+                            handleInputChange={handleInputChange}
+                        />
+                    </div>
+                );
+
+            case 5:
+                return (
+                    <div className="space-y-6">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">Review & Submit</h3>
 
                         {/* Application Summary */}
@@ -1118,20 +781,39 @@ const CorporateInvestmentForm = ({
                                     <span className="font-semibold text-gray-700">CAC Number:</span>
                                     <span className="ml-2">{formData.cacNumber || 'Not provided'}</span>
                                 </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Documents Uploaded:</span>
+                                    <span className="ml-2">{Object.keys(formData.uploadedDocuments || {}).length} files</span>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Signatures Provided:</span>
+                                    <span className="ml-2">
+                                        {[formData.companySignature, ...formData.signatories.map(s => s.signature)].filter(Boolean).length} of {1 + formData.signatories.length}
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
                         {/* Documentation Checklist */}
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                             <h4 className="text-lg font-semibold text-blue-800 mb-4">Documentation Checklist</h4>
-                            <p className="text-sm text-blue-700 mb-3">Please ensure you have the following documents ready:</p>
-                            <ul className="text-sm text-blue-700 space-y-1">
-                                <li>• Passport photograph (for all signatories)</li>
-                                <li>• Recent utility bill (not more than 3 months old)</li>
-                                <li>• Valid means of identification (National ID, Driver's License, International passport, etc.)</li>
-                                <li>• Copy of CAC Forms (C07, C02)</li>
-                                <li>• Board Resolution</li>
-                            </ul>
+                            <p className="text-sm text-blue-700 mb-3">Document upload status:</p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                {[
+                                    { key: 'passportPhoto', label: 'Passport photograph' },
+                                    { key: 'utilityBill', label: 'Recent utility bill' },
+                                    { key: 'validId', label: 'Valid means of identification' },
+                                    { key: 'cacForms', label: 'Copy of CAC Forms (C07, C02)' },
+                                    { key: 'boardResolution', label: 'Board Resolution' }
+                                ].map(doc => (
+                                    <div key={doc.key} className="flex items-center">
+                                        <span className={`mr-2 ${formData.uploadedDocuments?.[doc.key] ? 'text-green-600' : 'text-red-600'}`}>
+                                            {formData.uploadedDocuments?.[doc.key] ? '✓' : '✗'}
+                                        </span>
+                                        <span className="text-blue-700">{doc.label}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Attestations */}
@@ -1218,9 +900,6 @@ const CorporateInvestmentForm = ({
 
                 {/* Form Content */}
                 <div className="bg-white shadow-lg rounded-b-lg p-8">
-
-
-
                     {/* Step Content */}
                     {renderStepContent()}
 
@@ -1235,49 +914,58 @@ const CorporateInvestmentForm = ({
                             Previous
                         </button>
 
-                        {currentStep < steps.length - 1 ? (
+                        <div className="flex gap-4">
                             <button
-                                onClick={nextStep}
-                                disabled={!validateStep(currentStep)}
-                                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                onClick={handlePreviewPDF}
+                                className="flex items-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
                             >
-                                Next
-                                <ArrowRight size={20} />
+                                <FileText size={20} />
+                                Preview PDF
                             </button>
-                        ) : (
-                            <button
-                                onClick={handleSubmit}
-                                disabled={isSubmitting || !validateStep(4)}
-                                className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                        Submitting...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send size={20} />
-                                        Submit Application
-                                    </>
-                                )}
-                            </button>
-                        )}
-                    </div>
-                    {/* Status Messages */}
-                    {submitStatus && (
-                        <div className={`flex items-center gap-3 p-4 rounded-lg mb-6 ${submitStatus.type === 'success'
-                            ? 'bg-green-50 text-green-800 border border-green-200'
-                            : 'bg-red-50 text-red-800 border border-red-200'
-                            }`}>
-                            {submitStatus.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                            <span>{submitStatus.message}</span>
+
+                            {currentStep < steps.length - 1 ? (
+                                <button
+                                    onClick={nextStep}
+                                    disabled={!validateStep(currentStep)}
+                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    Next
+                                    <ArrowRight size={20} />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitting || !validateStep(5)}
+                                    className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                            Submitting...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Send size={20} />
+                                            Submit Application
+                                        </>
+                                    )}
+                                </button>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
+
+            {/* Modal for success/error messages */}
+            <Modal
+                isOpen={modal.isOpen}
+                onClose={closeModal}
+                type={modal.type}
+                message={modal.message}
+                title={modal.title}
+            />
         </div>
     );
 };
 
-export default CorporateInvestmentForm
+export default CorporateInvestmentForm;

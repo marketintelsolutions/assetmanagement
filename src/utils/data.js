@@ -1,7 +1,7 @@
 import { CiLocationOn } from "react-icons/ci";
 import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemption/PacamRedemptionForm";
 import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm/EmailIndemnityForm";
-import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm";
+import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm/CorporateInvestmentForm";
 import MutualFundForm from "../components/Insights/Forms/MutualFund/MutualFundForm";
 import EquityFundRedemptionForm from "../components/Insights/Forms/EquityFundRedemptionForm";
 import EurobondFundRedemptionForm from "../components/Insights/Forms/EurobondRedemptionForm";
