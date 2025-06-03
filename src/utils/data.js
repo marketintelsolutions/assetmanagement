@@ -830,7 +830,7 @@ export const forms = [
         heading: 'Corporate Indemnity Form',
         icon: 'client',
         image: 'clientform',
-        slug: 'indemnity-form',
+        slug: 'corporate-indemnity-form',
         component: <EmailIndemnityForm variant="corporate" />,
     },
     {

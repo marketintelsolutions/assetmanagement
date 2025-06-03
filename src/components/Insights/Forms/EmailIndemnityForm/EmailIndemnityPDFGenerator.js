@@ -78,50 +78,11 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
         // Form Fields Section
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(11);
-        doc.text('CONTACT INFORMATION', leftMargin, yPosition);
+        doc.text(variant === 'corporate' ? 'COMPANY INFORMATION' : 'CONTACT INFORMATION', leftMargin, yPosition);
         yPosition += 10;
 
-        // Preferred Email Address
-        EmailIndemnityPDFGenerator.addFormRow(
-            doc,
-            'PREFERRED EMAIL ADDRESS:',
-            formData.preferredEmail || '',
-            leftMargin,
-            yPosition,
-            contentWidth
-        );
-        yPosition += 12;
-
-        checkNewPage(15);
-
-        // Preferred Phone Number
-        EmailIndemnityPDFGenerator.addFormRow(
-            doc,
-            'PREFERRED PHONE NUMBER:',
-            formData.preferredPhone || '',
-            leftMargin,
-            yPosition,
-            contentWidth
-        );
-        yPosition += 12;
-
-        checkNewPage(15);
-
-        // Name of Account Holder
-        EmailIndemnityPDFGenerator.addFormRow(
-            doc,
-            'NAME OF ACCOUNT HOLDER:',
-            formData.accountHolderName || '',
-            leftMargin,
-            yPosition,
-            contentWidth
-        );
-        yPosition += 12;
-
-        checkNewPage(15);
-
-        // Company Name (for corporate variant)
         if (variant === 'corporate') {
+            // Company Name
             EmailIndemnityPDFGenerator.addFormRow(
                 doc,
                 'COMPANY NAME:',
@@ -133,30 +94,128 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
             yPosition += 12;
 
             checkNewPage(15);
-        }
 
-        // Signature and Date
-        yPosition += 10;
-        checkNewPage(30);
+            // Official Email Address
+            EmailIndemnityPDFGenerator.addFormRow(
+                doc,
+                'OFFICIAL EMAIL ADDRESS:',
+                formData.preferredEmail || '',
+                leftMargin,
+                yPosition,
+                contentWidth
+            );
+            yPosition += 20;
 
-        // Create signature area
-        const signatureHeight = 25;
-        doc.rect(leftMargin, yPosition, contentWidth, signatureHeight);
+            checkNewPage(40);
 
-        // Add signature if available
-        if (formData.signature) {
-            try {
-                doc.addImage(formData.signature, 'PNG', leftMargin + 2, yPosition + 2, contentWidth - 4, signatureHeight - 8);
-            } catch (error) {
-                console.log('Could not add signature to PDF:', error);
+            // Corporate Signature Section - Two signatures side by side
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(11);
+            doc.text('AUTHORIZED SIGNATORIES', leftMargin, yPosition);
+            yPosition += 10;
+
+            const signatureWidth = (contentWidth - 10) / 2;
+            const signatureHeight = 25;
+
+            // First signature box
+            doc.rect(leftMargin, yPosition, signatureWidth, signatureHeight);
+            if (formData.primarySignature) {
+                try {
+                    console.log('Adding primary signature to PDF');
+                    doc.addImage(formData.primarySignature, 'PNG', leftMargin + 2, yPosition + 2, signatureWidth - 4, signatureHeight - 8);
+                } catch (error) {
+                    console.log('Could not add primary signature to PDF:', error);
+                }
+            } else {
+                console.log('No primary signature found');
             }
-        }
-        yPosition += signatureHeight + 5;
 
-        // Signature label
-        doc.text('SIGNATURE & DATE:', leftMargin, yPosition);
-        doc.text(currentDate, leftMargin + 60, yPosition);
-        yPosition += 15;
+            // Second signature box
+            doc.rect(leftMargin + signatureWidth + 10, yPosition, signatureWidth, signatureHeight);
+            if (formData.secondarySignature) {
+                try {
+                    console.log('Adding secondary signature to PDF');
+                    doc.addImage(formData.secondarySignature, 'PNG', leftMargin + signatureWidth + 12, yPosition + 2, signatureWidth - 4, signatureHeight - 8);
+                } catch (error) {
+                    console.log('Could not add secondary signature to PDF:', error);
+                }
+            } else {
+                console.log('No secondary signature found');
+            }
+            yPosition += signatureHeight + 5;
+
+            // Signature labels
+            doc.setFontSize(9);
+            doc.text('AUTHORIZED SIGNATORY', leftMargin + (signatureWidth / 2), yPosition, { align: 'center' });
+            doc.text('AUTHORIZED SIGNATORY', leftMargin + signatureWidth + 10 + (signatureWidth / 2), yPosition, { align: 'center' });
+            yPosition += 15;
+        } else {
+            // Individual form fields
+            // Preferred Email Address
+            EmailIndemnityPDFGenerator.addFormRow(
+                doc,
+                'PREFERRED EMAIL ADDRESS:',
+                formData.preferredEmail || '',
+                leftMargin,
+                yPosition,
+                contentWidth
+            );
+            yPosition += 12;
+
+            checkNewPage(15);
+
+            // Preferred Phone Number
+            EmailIndemnityPDFGenerator.addFormRow(
+                doc,
+                'PREFERRED PHONE NUMBER:',
+                formData.preferredPhone || '',
+                leftMargin,
+                yPosition,
+                contentWidth
+            );
+            yPosition += 12;
+
+            checkNewPage(15);
+
+            // Name of Account Holder
+            EmailIndemnityPDFGenerator.addFormRow(
+                doc,
+                'NAME OF ACCOUNT HOLDER:',
+                formData.accountHolderName || '',
+                leftMargin,
+                yPosition,
+                contentWidth
+            );
+            yPosition += 12;
+
+            checkNewPage(15);
+
+            // Signature and Date
+            yPosition += 10;
+            checkNewPage(30);
+
+            // Create signature area
+            const signatureHeight = 25;
+            doc.rect(leftMargin, yPosition, contentWidth, signatureHeight);
+
+            // Add signature if available
+            if (formData.signature) {
+                try {
+                    console.log('Adding signature to PDF:', formData.signature ? 'signature present' : 'no signature');
+                    doc.addImage(formData.signature, 'PNG', leftMargin + 2, yPosition + 2, contentWidth - 4, signatureHeight - 8);
+                } catch (error) {
+                    console.log('Could not add signature to PDF:', error);
+                }
+            } else {
+                console.log('No signature found in formData:', formData);
+            }
+            yPosition += signatureHeight + 5;
+
+            // Signature label
+            doc.text('SIGNATURE & DATE:', leftMargin, yPosition);
+            doc.text(currentDate, leftMargin + 60, yPosition);
+            yPosition += 15;
+        }
 
         checkNewPage(30);
 

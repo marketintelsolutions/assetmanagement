@@ -65,13 +65,34 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
           {/* Personal Information Section */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-800 border-b-2 border-blue-200 pb-2">
-              Contact Information
+              {variant === "corporate"
+                ? "Company Information"
+                : "Contact Information"}
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+              {variant === "corporate" && (
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Company Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter the company name"
+                  />
+                </div>
+              )}
+
+              <div className={variant === "corporate" ? "md:col-span-2" : ""}>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Preferred Email Address *
+                  {variant === "corporate"
+                    ? "Official Email Address *"
+                    : "Preferred Email Address *"}
                 </label>
                 <input
                   type="email"
@@ -80,79 +101,117 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter your preferred email address"
+                  placeholder={
+                    variant === "corporate"
+                      ? "Enter official company email address"
+                      : "Enter your preferred email address"
+                  }
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Preferred Phone Number
-                </label>
-                <input
-                  type="tel"
-                  name="preferredPhone"
-                  value={formData.preferredPhone}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter your preferred phone number"
-                />
-              </div>
+              {variant === "individual" && (
+                <>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Preferred Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="preferredPhone"
+                      value={formData.preferredPhone}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter your preferred phone number"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Name of Account Holder *
+                    </label>
+                    <input
+                      type="text"
+                      name="accountHolderName"
+                      value={formData.accountHolderName}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter the account holder's full name"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Signature Date
+                    </label>
+                    <input
+                      type="date"
+                      name="signatureDate"
+                      value={formData.signatureDate}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  {/* Individual Signature Section */}
+                  <div className="md:col-span-2">
+                    <SignatureInput
+                      label="Signature"
+                      value={formData.signature}
+                      onChange={(sig) =>
+                        handleSignatureChange("signature", sig)
+                      }
+                      mode={signatureMode}
+                      onModeChange={(mode) =>
+                        handleSignatureModeChange("signature", mode)
+                      }
+                      required={true}
+                    />
+                  </div>
+                </>
+              )}
+
+              {variant === "corporate" && (
+                <>
+                  {/* Corporate Signature Section - Two signatures side by side */}
+                  <div className="md:col-span-2">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-4">
+                      Authorized Signatories
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <SignatureInput
+                          label="First Authorized Signatory"
+                          value={formData.primarySignature}
+                          onChange={(sig) =>
+                            handleSignatureChange("primarySignature", sig)
+                          }
+                          mode={signatureMode.primary || signatureMode}
+                          onModeChange={(mode) =>
+                            handleSignatureModeChange("primary", mode)
+                          }
+                          required={true}
+                        />
+                      </div>
+                      <div>
+                        <SignatureInput
+                          label="Second Authorized Signatory"
+                          value={formData.secondarySignature}
+                          onChange={(sig) =>
+                            handleSignatureChange("secondarySignature", sig)
+                          }
+                          mode={signatureMode.secondary || signatureMode}
+                          onModeChange={(mode) =>
+                            handleSignatureModeChange("secondary", mode)
+                          }
+                          required={false}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Name of Account Holder *
-              </label>
-              <input
-                type="text"
-                name="accountHolderName"
-                value={formData.accountHolderName}
-                onChange={handleInputChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter the account holder's full name"
-              />
-            </div>
-
-            {variant === "corporate" && (
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Company Name *
-                </label>
-                <input
-                  type="text"
-                  name="companyName"
-                  value={formData.companyName}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter the company name"
-                />
-              </div>
-            )}
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Signature Date
-              </label>
-              <input
-                type="date"
-                name="signatureDate"
-                value={formData.signatureDate}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            {/* Signature Section */}
-            <SignatureInput
-              label="Signature"
-              value={formData.signature}
-              onChange={handleSignatureChange}
-              mode={signatureMode}
-              onModeChange={handleSignatureModeChange}
-              required={true}
-            />
           </div>
 
           {/* Agreement Checkbox */}
@@ -189,7 +248,10 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
             <button
               onClick={handleSubmit}
               disabled={
-                isSubmitting || !formData.agreedToTerms || !formData.signature
+                isSubmitting ||
+                !formData.agreedToTerms ||
+                (variant === "individual" && !formData.signature) ||
+                (variant === "corporate" && !formData.primarySignature)
               }
               className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
             >

@@ -11,10 +11,16 @@ export const useEmailIndemnityLogic = (variant, adminEmail) => {
         companyName: '',
         signatureDate: '',
         agreedToTerms: false,
-        signature: null,
+        signature: null, // For individual variant
+        primarySignature: null, // For corporate variant (first signatory)
+        secondarySignature: null, // For corporate variant (second signatory)
     });
 
-    const [signatureMode, setSignatureMode] = useState('draw');
+    const [signatureMode, setSignatureMode] = useState(
+        variant === 'corporate'
+            ? { primary: 'draw', secondary: 'draw' }
+            : 'draw'
+    );
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [modal, setModal] = useState({
@@ -32,12 +38,32 @@ export const useEmailIndemnityLogic = (variant, adminEmail) => {
         }));
     };
 
-    const handleSignatureChange = (signatureData) => {
-        setFormData(prev => ({ ...prev, signature: signatureData }));
+    const handleSignatureChange = (type, signatureData) => {
+        console.log('Signature changed:', type, signatureData ? 'signature present' : 'signature null');
+        if (variant === 'individual') {
+            if (type === 'signature') {
+                setFormData(prev => ({ ...prev, signature: signatureData }));
+            } else {
+                // Backwards compatibility - if called without type parameter
+                setFormData(prev => ({ ...prev, signature: type })); // type is actually signatureData in this case
+            }
+        } else {
+            setFormData(prev => ({ ...prev, [type]: signatureData }));
+        }
     };
 
-    const handleSignatureModeChange = (mode) => {
-        setSignatureMode(mode);
+    const handleSignatureModeChange = (type, mode) => {
+        console.log('Signature mode changed:', type, mode);
+        if (variant === 'individual') {
+            if (type === 'signature') {
+                setSignatureMode(mode);
+            } else {
+                // Backwards compatibility - if called without type parameter
+                setSignatureMode(type); // type is actually mode in this case
+            }
+        } else {
+            setSignatureMode(prev => ({ ...prev, [type]: mode }));
+        }
     };
 
     const showModal = (type, message, title = '') => {
@@ -59,17 +85,26 @@ export const useEmailIndemnityLogic = (variant, adminEmail) => {
     };
 
     const validateFormLocally = () => {
-        const required = ['preferredEmail', 'accountHolderName', 'agreedToTerms', 'signature'];
+        console.log('Validating form:', formData);
+        const required = ['preferredEmail', 'agreedToTerms'];
+
         if (variant === 'corporate') {
-            required.push('companyName');
+            required.push('companyName', 'primarySignature');
+        } else {
+            required.push('accountHolderName', 'signature');
         }
 
         for (let field of required) {
             if (!formData[field]) {
+                const fieldName = field === 'agreedToTerms' ? 'Agreement to terms' :
+                    field === 'signature' || field === 'primarySignature' ? 'Signature' :
+                        field === 'preferredEmail' ? 'Email address' :
+                            field === 'companyName' ? 'Company name' :
+                                field === 'accountHolderName' ? 'Account holder name' : field;
+                console.log('Validation failed for field:', field, 'Value:', formData[field]);
                 return {
                     valid: false,
-                    message: `${field === 'agreedToTerms' ? 'Agreement to terms' :
-                        field === 'signature' ? 'Signature' : field} is required`
+                    message: `${fieldName} is required`
                 };
             }
         }
@@ -80,6 +115,7 @@ export const useEmailIndemnityLogic = (variant, adminEmail) => {
             return { valid: false, message: 'Invalid email format' };
         }
 
+        console.log('Form validation passed');
         return { valid: true };
     };
 
@@ -155,8 +191,14 @@ export const useEmailIndemnityLogic = (variant, adminEmail) => {
                     signatureDate: '',
                     agreedToTerms: false,
                     signature: null,
+                    primarySignature: null,
+                    secondarySignature: null,
                 });
-                setSignatureMode('draw'); // Reset signature mode to default
+                setSignatureMode(
+                    variant === 'corporate'
+                        ? { primary: 'draw', secondary: 'draw' }
+                        : 'draw'
+                );
             }, 3000);
 
         } catch (error) {
