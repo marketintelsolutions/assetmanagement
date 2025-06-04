@@ -1,12 +1,12 @@
 import { CiLocationOn } from "react-icons/ci";
 import PacamRedemptionForm from "../components/Insights/Forms/PacamRedemption/PacamRedemptionForm";
 import EmailIndemnityForm from "../components/Insights/Forms/EmailIndemnityForm/EmailIndemnityForm";
-import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm";
+import CorporateInvestmentForm from "../components/Insights/Forms/CorporateInvestmentForm/CorporateInvestmentForm";
 import MutualFundForm from "../components/Insights/Forms/MutualFund/MutualFundForm";
-import EquityFundRedemptionForm from "../components/Insights/Forms/EquityFundRedemptionForm";
-import EurobondFundRedemptionForm from "../components/Insights/Forms/EurobondRedemptionForm";
-import MoneyMarketFundRedemptionForm from "../components/Insights/Forms/MoneyMarketRedemptionForm";
-import FixedIncomeFundRedemptionForm from "../components/Insights/Forms/FixedIncomeFundRedemptionForm";
+import EquityFundRedemptionForm from "../components/Insights/Forms/EquityFundRedemption/EquityFundRedemptionForm";
+import EurobondFundRedemptionForm from "../components/Insights/Forms/EurobondRedemption/EurobondRedemptionForm";
+import MoneyMarketFundRedemptionForm from "../components/Insights/Forms/MoneyMarketRedemption/MoneyMarketRedemptionForm";
+import FixedIncomeFundRedemptionForm from "../components/Insights/Forms/FixedIncomeRedemption/FixedIncomeFundRedemptionForm";
 
 export const services = [
     {

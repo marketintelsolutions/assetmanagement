@@ -32,7 +32,7 @@ const Forms = () => {
                                     className={`max-w-[450px] transform transition-transform duration-500 `}
                                 >
                                     <div className='h-full w-full p-10 bg-[#0000005b]  transition-all duration-300 hover:bg-[#00000080]'>
-                                        <span><img src={`/${item.icon}.png`} className='w-[80px]' /></span>
+                                        {/* <span><img src={`/${item.icon}.png`} className='w-[80px]' /></span> */}
                                         <h2 style={{ textShadow: '2px 2px #000' }} className='text-white mt-[200px] h-[80px] text-[30px]'>{item.heading}</h2>
                                         <Link to={`/insights/forms/${item.slug}`}><Button>View Form</Button></Link>
                                     </div>

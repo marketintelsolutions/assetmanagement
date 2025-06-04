@@ -1,470 +1,732 @@
-// MutualFundForm.jsx - Main Component
-import React, { useState } from 'react';
-import { User, Users, FileText, CheckCircle, AlertCircle, ArrowLeft, ArrowRight, Send } from 'lucide-react';
-import { EmailTemplateGenerator } from '../EmailTemplateGenerator';
-import { EmailService } from '../EmailService';
-import InvestmentInfoStep from './InvestmentInfoStep';
-import PersonalDetailsStep from './PersonalDetailsStep';
-import MinorNextOfKinStep from './MinorNextOfKinStep';
-import ComplianceStep from './ComplianceStep';
-import ReviewSubmitStep from './ReviewSubmitStep';
+// MutualFundForm.jsx
+import React from 'react';
+import { User, Users, FileText, CheckCircle, ArrowLeft, ArrowRight, Send, PenTool, DollarSign } from 'lucide-react';
+import Modal from '../PacamRedemption/Modal';
+import DocumentUploadSection from '../CorporateInvestmentForm/DocumentUploadSection';
+import MutualFundSignatureSection from './MutualFundSignatureSection';
+import { useMutualFundLogic } from './useMutualFundLogic';
 
 const MutualFundForm = ({
-    apiKey = `${process.env.REACT_APP_PLUNK_API_KEY}`,
-    adminEmail = `${process.env.REACT_APP_SUBMISSION_EMAIL}`,
+    adminEmail = process.env.REACT_APP_SUBMISSION_EMAIL
 }) => {
-    const [accountType, setAccountType] = useState('individual');
-    const [currentStep, setCurrentStep] = useState(0);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null);
+    const {
+        formData,
+        currentStep,
+        isSubmitting,
+        modal,
+        signatureMode,
+        handleInputChange,
+        handleSignatureChange,
+        handleSignatureModeChange,
+        handleDocumentUpload,
+        removeDocument,
+        addJointApplicant,
+        removeJointApplicant,
+        validateStep,
+        nextStep,
+        prevStep,
+        handleSubmit,
+        handlePreviewPDF,
+        closeModal
+    } = useMutualFundLogic(adminEmail);
 
-    const [formData, setFormData] = useState({
-        // Investment Information
-        fundType: '',
-        dividendMandate: 'reinvest',
-        investmentValue: '',
-        investorType: '',
+    const fundOptions = [
+        { value: 'pacam_money_market', label: 'PACAM Money Market Fund (N)' },
+        { value: 'pacam_fixed_income', label: 'PACAM Fixed Income Fund (N)' },
+        { value: 'pacam_balanced', label: 'PACAM Balanced Fund (N)' },
+        { value: 'pacam_equity', label: 'PACAM Equity Fund (N)' },
+        { value: 'pacam_eurobond', label: 'PACAM Eurobond Fund ($)' }
+    ];
 
+    const investorTypes = [
+        { value: 'retail_domestic', label: 'Retail Investors (Domestic)' },
+        { value: 'retail_foreign', label: 'Retail Investors (Foreign)' },
+        { value: 'institutional_domestic', label: 'Institutional Investors (Domestic)' },
+        { value: 'institutional_foreign', label: 'Institutional Investors (Foreign)' }
+    ];
 
-        // Primary Applicant
-        primaryApplicant: {
-            surname: '', name: '', otherName: '', residentialAddress: '',
-            nationality: '', dateOfBirth: '', occupation: '', gender: '',
-            stateOfOrigin: '', townCity: '', mobileNumber: '', emailAddress: '',
-            taxId: '', signatureDate: '', idType: '', idNumber: '',
-            idIssuedDate: '', idExpiryDate: '', bvn: '',
-            accountName: '', accountNumber: '', bankName: ''
-        },
+    const domicileZones = [
+        { value: 'north_central', label: 'North - Central Zone' },
+        { value: 'north_east', label: 'North - East Zone' },
+        { value: 'north_west', label: 'North - West Zone' },
+        { value: 'south_east', label: 'South - East Zone' },
+        { value: 'south_south', label: 'South - South Zone' },
+        { value: 'south_west', label: 'South - West Zone' },
+        { value: 'diaspora', label: 'Diaspora Investors' }
+    ];
 
-        // Secondary Applicant (Joint only)
-        secondaryApplicant: {
-            surname: '', name: '', otherName: '', residentialAddress: '',
-            nationality: '', dateOfBirth: '', occupation: '', gender: '',
-            stateOfOrigin: '', townCity: '', mobileNumber: '', emailAddress: '',
-            taxId: '', signatureDate: '', idType: '', idNumber: '',
-            idIssuedDate: '', idExpiryDate: '', bvn: '',
-            accountName: '', accountNumber: '', bankName: ''
-        },
+    const idTypes = [
+        { value: 'national_id', label: 'National ID' },
+        { value: 'drivers_license', label: "Driver's License" },
+        { value: 'international_passport', label: 'International Passport' },
+        { value: 'voters_card', label: "Voter's Card" }
+    ];
 
-        // Minor Investment Details
-        minorDetails: {
-            isForMinor: false, surname: '', name: '', otherName: '',
-            residentialAddress: '', dateOfBirth: '', relationshipToApplicant: '',
-            mobileNumber: '', emailAddress: ''
-        },
-
-        // Next of Kin
-        nextOfKin: {
-            surname: '', name: '', otherName: '', residentialAddress: '',
-            nationality: '', stateOfOrigin: '', relationship: '',
-            mobileNumber: '', emailAddress: ''
-        },
-
-        // PEP/FEP Information
-        pepInformation: {
-            investor1: { isPep: '', pepDetails: '', isFinanciallyExposed: '', fepDetails: '' },
-            investor2: { isPep: '', pepDetails: '', isFinanciallyExposed: '', fepDetails: '' }
-        },
-
-        // Other fields
-        investorDomicile: '',
-        agreedToCharges: false,
-        agreedToRisks: false,
-        userEmail: ''
-    });
-
-    const steps = accountType === 'individual'
-        ? [
-            { title: 'Investment Info', icon: FileText },
-            { title: 'Personal Details', icon: User },
-            { title: 'Minor/Next of Kin', icon: Users },
-            { title: 'Compliance', icon: CheckCircle },
-            { title: 'Review & Submit', icon: Send }
-        ]
-        : [
-            { title: 'Investment Info', icon: FileText },
-            { title: 'Investor 1', icon: User },
-            { title: 'Investor 2', icon: Users },
-            { title: 'Additional Info', icon: Users },
-            { title: 'Compliance', icon: CheckCircle },
-            { title: 'Review & Submit', icon: Send }
-        ];
-
-    const handleInputChange = (section, field, value) => {
-        if (section) {
-            setFormData(prev => ({
-                ...prev,
-                [section]: { ...prev[section], [field]: value }
-            }));
-        } else {
-            setFormData(prev => ({ ...prev, [field]: value }));
-        }
-    };
-
-    const handleNestedInputChange = (section, subsection, field, value) => {
-        setFormData(prev => ({
-            ...prev,
-            [section]: {
-                ...prev[section],
-                [subsection]: { ...prev[section][subsection], [field]: value }
-            }
-        }));
-    };
-
-    const validateStep = (step) => {
-        switch (step) {
-            case 0: return formData.fundType && formData.investmentValue && formData.investorType;
-            case 1: return formData.primaryApplicant.surname && formData.primaryApplicant.name && formData.primaryApplicant.emailAddress;
-            case 2:
-                if (accountType === 'individual') {
-                    return formData.nextOfKin.surname && formData.nextOfKin.name;
-                } else {
-                    return formData.secondaryApplicant.surname && formData.secondaryApplicant.name && formData.secondaryApplicant.emailAddress;
-                }
-            case 3:
-                if (accountType === 'joint') {
-                    return formData.nextOfKin.surname && formData.nextOfKin.name;
-                } else {
-                    return formData.pepInformation.investor1.isPep !== '' && formData.pepInformation.investor1.isFinanciallyExposed !== '';
-                }
-            case 4:
-                if (accountType === 'joint') {
-                    return formData.pepInformation.investor1.isPep !== '' && formData.pepInformation.investor1.isFinanciallyExposed !== '' &&
-                        formData.pepInformation.investor2.isPep !== '' && formData.pepInformation.investor2.isFinanciallyExposed !== '';
-                } else {
-                    return formData.agreedToCharges && formData.agreedToRisks;
-                }
-            case 5: return formData.agreedToCharges && formData.agreedToRisks;
-            default: return true;
-        }
-    };
-
-    const nextStep = () => {
-        if (validateStep(currentStep) && currentStep < steps.length - 1) {
-            setCurrentStep(currentStep + 1);
-        }
-    };
-
-    const prevStep = () => {
-        if (currentStep > 0) {
-            setCurrentStep(currentStep - 1);
-        }
-    };
-
-    const createEmailTemplates = () => {
-        const fundTypes = [
-            { value: 'money_market', label: 'PACAM Money Market Fund (₦)', account: '*1019535675' },
-            { value: 'fixed_income', label: 'PACAM Fixed Income Fund (₦)', account: '*1019535682' },
-            { value: 'balanced', label: 'PACAM Balanced Fund (₦)', account: '*1019045402' },
-            { value: 'equity', label: 'PACAM Equity Fund (₦)', account: '*1021941770' },
-            { value: 'eurobond', label: 'PACAM Eurobond Fund ($)', account: '*1021941866' }
-        ];
-
-        const investorTypes = [
-            { value: 'retail_domestic', label: 'Retail Investors (Domestic)' },
-            { value: 'retail_foreign', label: 'Retail Investors (Foreign)' },
-            { value: 'institutional_domestic', label: 'Institutional Investors (Domestic)' },
-            { value: 'institutional_foreign', label: 'Institutional Investors (Foreign)' }
-        ];
-
-        const domicileZones = [
-            { value: 'north_central', label: 'North - Central Zone' },
-            { value: 'north_east', label: 'North - East Zone' },
-            { value: 'north_west', label: 'North - West Zone' },
-            { value: 'south_east', label: 'South - East Zone' },
-            { value: 'south_south', label: 'South - South Zone' },
-            { value: 'south_west', label: 'South - West Zone' },
-            { value: 'diaspora', label: 'Diaspora Investors' }
-        ];
-
-        const commonContactInfo = {
-            email: 'info@pacassetmanagement.com',
-            phone: '+234-XXX-XXXX',
-            website: 'www.pacassetmanagement.com'
-        };
-
-        const selectedFund = fundTypes.find(fund => fund.value === formData.fundType);
-
-        const adminSections = [
-            EmailTemplateGenerator.createFormDataSection('Investment Information', {
-                'Account Type': accountType === 'individual' ? 'Individual Account' : 'Joint Account',
-                'Fund Type': selectedFund?.label || formData.fundType,
-                'UBA Account': selectedFund?.account || 'N/A',
-                'Investment Value': formData.investmentValue,
-                'Dividend Mandate': formData.dividendMandate === 'reinvest' ? 'Re-invest' : 'Pay Out',
-                'Investor Type': investorTypes.find(type => type.value === formData.investorType)?.label || formData.investorType
-            }),
-            {
-                title: 'Primary Applicant Details',
-                content: `
-          <div class="info-grid">
-            <div class="info-label">Full Name:</div>
-            <div class="info-value">${formData.primaryApplicant.surname} ${formData.primaryApplicant.name} ${formData.primaryApplicant.otherName}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Email:</div>
-            <div class="info-value">${formData.primaryApplicant.emailAddress}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Mobile:</div>
-            <div class="info-value">${formData.primaryApplicant.mobileNumber}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Date of Birth:</div>
-            <div class="info-value">${formData.primaryApplicant.dateOfBirth}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Occupation:</div>
-            <div class="info-value">${formData.primaryApplicant.occupation}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">BVN:</div>
-            <div class="info-value">${formData.primaryApplicant.bvn}</div>
-          </div>
-        `
-            }
-        ];
-
-        if (accountType === 'joint') {
-            adminSections.push({
-                title: 'Secondary Applicant Details (Joint Account)',
-                content: `
-          <div class="info-grid">
-            <div class="info-label">Full Name:</div>
-            <div class="info-value">${formData.secondaryApplicant.surname} ${formData.secondaryApplicant.name} ${formData.secondaryApplicant.otherName}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Email:</div>
-            <div class="info-value">${formData.secondaryApplicant.emailAddress}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Mobile:</div>
-            <div class="info-value">${formData.secondaryApplicant.mobileNumber}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Date of Birth:</div>
-            <div class="info-value">${formData.secondaryApplicant.dateOfBirth}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Occupation:</div>
-            <div class="info-value">${formData.secondaryApplicant.occupation}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">BVN:</div>
-            <div class="info-value">${formData.secondaryApplicant.bvn}</div>
-          </div>
-        `
-            });
-        }
-
-        if (formData.minorDetails.isForMinor) {
-            adminSections.push({
-                title: 'Minor Investment Details',
-                content: `
-          <div class="info-grid">
-            <div class="info-label">Minor Name:</div>
-            <div class="info-value">${formData.minorDetails.surname} ${formData.minorDetails.name} ${formData.minorDetails.otherName}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Date of Birth:</div>
-            <div class="info-value">${formData.minorDetails.dateOfBirth}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Relationship to Applicant:</div>
-            <div class="info-value">${formData.minorDetails.relationshipToApplicant}</div>
-          </div>
-        `
-            });
-        }
-
-        adminSections.push(
-            EmailTemplateGenerator.createFormDataSection('Next of Kin Information', {
-                'Full Name': `${formData.nextOfKin.surname} ${formData.nextOfKin.name} ${formData.nextOfKin.otherName}`,
-                'Relationship': formData.nextOfKin.relationship,
-                'Mobile Number': formData.nextOfKin.mobileNumber,
-                'Email': formData.nextOfKin.emailAddress,
-                'Nationality': formData.nextOfKin.nationality,
-                'State of Origin': formData.nextOfKin.stateOfOrigin
-            }),
-            EmailTemplateGenerator.createFormDataSection('Compliance Information', {
-                'Investor 1 - PEP Status': formData.pepInformation.investor1.isPep === 'yes' ? 'Yes' : 'No',
-                'Investor 1 - PEP Details': formData.pepInformation.investor1.pepDetails || 'N/A',
-                'Investor 1 - Financially Exposed': formData.pepInformation.investor1.isFinanciallyExposed === 'yes' ? 'Yes' : 'No',
-                'Investor 1 - FEP Details': formData.pepInformation.investor1.fepDetails || 'N/A',
-                ...(accountType === 'joint' && {
-                    'Investor 2 - PEP Status': formData.pepInformation.investor2.isPep === 'yes' ? 'Yes' : 'No',
-                    'Investor 2 - PEP Details': formData.pepInformation.investor2.pepDetails || 'N/A',
-                    'Investor 2 - Financially Exposed': formData.pepInformation.investor2.isFinanciallyExposed === 'yes' ? 'Yes' : 'No',
-                    'Investor 2 - FEP Details': formData.pepInformation.investor2.fepDetails || 'N/A'
-                }),
-                'Investor Domicile': domicileZones.find(zone => zone.value === formData.investorDomicile)?.label || 'Not specified'
-            })
-        );
-
-        const adminImportantNotes = `
-      <ul>
-        <li>Please verify all documentation as per the checklist: Passport photograph, Recent utility bill, Valid ID${accountType === 'joint' ? ', Board Resolution, CAC Forms (if applicable)' : ''}.</li>
-        <li>20% handling charge applies if units are redeemed within 30, 90, and 180 days of purchase.</li>
-        <li>All investor details must be verified and cross-checked with provided documentation.</li>
-        <li>Enhanced due diligence required if any investor is marked as PEP or financially exposed.</li>
-        <li>Fund Account Details: All mutual funds are held with United Bank for Africa (UBA) PLC.</li>
-        <li>${accountType === 'joint' ? 'Joint account requires both investors to sign all future transactions.' : 'Individual account setup - single signatory required.'}</li>
-      </ul>
-    `;
-
-        const adminTemplate = EmailTemplateGenerator.createTemplate({
-            title: 'Mutual Fund Application',
-            subtitle: `New ${accountType} account opening request`,
-            greeting: `A new mutual fund application has been submitted. Please review and process according to standard procedures.`,
-            sections: adminSections,
-            importantNotes: adminImportantNotes,
-            isUserCopy: false,
-            brandName: 'PAC Asset Management',
-            contactInfo: commonContactInfo
-        });
-
-        const userSections = [
-            {
-                title: 'Application Summary',
-                content: `
-          <p>Thank you for your mutual fund investment application. We have received your ${accountType} account opening request and will process it within 3-5 business days.</p>
-          <div class="info-grid">
-            <div class="info-label">Account Type:</div>
-            <div class="info-value">${accountType === 'individual' ? 'Individual Account' : 'Joint Account'}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Fund Type:</div>
-            <div class="info-value">${selectedFund?.label}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Investment Value:</div>
-            <div class="info-value">${formData.investmentValue}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Dividend Mandate:</div>
-            <div class="info-value">${formData.dividendMandate === 'reinvest' ? 'Re-invest Dividends' : 'Pay Out Dividends'}</div>
-          </div>
-          <div class="info-grid">
-            <div class="info-label">Primary Contact:</div>
-            <div class="info-value">${formData.primaryApplicant.emailAddress}</div>
-          </div>
-        `
-            }
-        ];
-
-        const userTemplate = EmailTemplateGenerator.createTemplate({
-            title: 'Mutual Fund Application Received',
-            subtitle: 'Thank you for choosing PAC Asset Management',
-            greeting: `Dear ${formData.primaryApplicant.surname} ${formData.primaryApplicant.name},`,
-            sections: userSections,
-            importantNotes: `
-        <ul>
-          <li>Our team will review your application and contact you within 3-5 business days.</li>
-          <li>Please ensure all required documentation is submitted for faster processing.</li>
-          <li>You will receive account details and investment confirmation once processing is complete.</li>
-          <li>Your selected fund: ${selectedFund?.label} (UBA Account: ${selectedFund?.account})</li>
-          <li>For any inquiries, please contact our customer service team.</li>
-        </ul>
-      `,
-            isUserCopy: true,
-            brandName: 'PAC Asset Management',
-            contactInfo: commonContactInfo
-        });
-
-        return { adminTemplate, userTemplate };
-    };
-
-    const handleSubmit = async () => {
-        const finalStep = accountType === 'individual' ? 4 : 5;
-        if (!validateStep(finalStep)) {
-            setSubmitStatus({ type: 'error', message: 'Please complete all required fields and agree to the terms.' });
-            return;
-        }
-
-        setIsSubmitting(true);
-        setSubmitStatus(null);
-
-        try {
-            const { adminTemplate, userTemplate } = createEmailTemplates();
-
-            await EmailService.sendEmail(adminEmail, 'New Mutual Fund Application', adminTemplate, apiKey);
-            await EmailService.sendEmail(formData.primaryApplicant.emailAddress, 'Mutual Fund Application Confirmation', userTemplate, apiKey);
-
-            if (accountType === 'joint' && formData.secondaryApplicant.emailAddress) {
-                await EmailService.sendEmail(formData.secondaryApplicant.emailAddress, 'Joint Mutual Fund Application Confirmation', userTemplate, apiKey);
-            }
-
-            if (formData.userEmail && formData.userEmail !== formData.primaryApplicant.emailAddress && formData.userEmail !== formData.secondaryApplicant.emailAddress) {
-                await EmailService.sendEmail(formData.userEmail, 'Copy: Mutual Fund Application', userTemplate, apiKey);
-            }
-
-            setSubmitStatus({ type: 'success', message: 'Mutual fund application submitted successfully! You will receive confirmation shortly.' });
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
-
-        } catch (error) {
-            setSubmitStatus({ type: 'error', message: 'Failed to submit application. Please check your configuration and try again.' });
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+    const steps = [
+        { title: 'Investment Info', icon: DollarSign },
+        { title: 'Applicant Details', icon: User },
+        { title: 'Joint Account', icon: Users },
+        { title: 'Documents & PEP', icon: CheckCircle },
+        { title: 'Signatures', icon: PenTool },
+        { title: 'Review & Submit', icon: Send }
+    ];
 
     const renderStepContent = () => {
         switch (currentStep) {
             case 0:
-                return <InvestmentInfoStep formData={formData} handleInputChange={handleInputChange} />;
+                return (
+                    <div className="space-y-6">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Investment Information</h3>
+
+                        {/* Fund Selection */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                Select Mutual Fund *
+                            </label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {fundOptions.map((option) => (
+                                    <label key={option.value} className="flex items-center p-3 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="fundType"
+                                            value={option.value}
+                                            checked={formData.fundType === option.value}
+                                            onChange={(e) => handleInputChange('fundType', e.target.value)}
+                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                        />
+                                        <span className="ml-3 text-sm font-medium text-gray-700">{option.label}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Dividend Mandate */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                Dividend Mandate
+                            </label>
+                            <div className="flex gap-6">
+                                <label className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="dividendMandate"
+                                        value="reinvest"
+                                        checked={formData.dividendMandate === 'reinvest'}
+                                        onChange={(e) => handleInputChange('dividendMandate', e.target.value)}
+                                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                    />
+                                    <span className="ml-2 text-sm font-medium text-gray-700">Re-invest</span>
+                                </label>
+                                <label className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="dividendMandate"
+                                        value="payout"
+                                        checked={formData.dividendMandate === 'payout'}
+                                        onChange={(e) => handleInputChange('dividendMandate', e.target.value)}
+                                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                    />
+                                    <span className="ml-2 text-sm font-medium text-gray-700">Pay Out</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Investment Value */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Investment Value *
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.investmentValue}
+                                onChange={(e) => handleInputChange('investmentValue', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter investment amount"
+                                required
+                            />
+                        </div>
+
+                        {/* Investor Type */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                Investor Type *
+                            </label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {investorTypes.map((type) => (
+                                    <label key={type.value} className="flex items-center p-3 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="investorType"
+                                            value={type.value}
+                                            checked={formData.investorType === type.value}
+                                            onChange={(e) => handleInputChange('investorType', e.target.value)}
+                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                        />
+                                        <span className="ml-3 text-sm font-medium text-gray-700">{type.label}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+
             case 1:
-                return <PersonalDetailsStep
-                    applicant={formData.primaryApplicant}
-                    applicantKey="primaryApplicant"
-                    title="Personal Details"
-                    handleInputChange={handleInputChange}
-                />;
+                return (
+                    <div className="space-y-6">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Individual Applicant Details</h3>
+
+                        {/* Name fields */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Surname *</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.surname}
+                                    onChange={(e) => handleInputChange('surname', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter surname"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.name}
+                                    onChange={(e) => handleInputChange('name', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter first name"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.otherName}
+                                    onChange={(e) => handleInputChange('otherName', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter other name"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Residential Address */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Residential Address *</label>
+                            <textarea
+                                value={formData.primaryApplicant.residentialAddress}
+                                onChange={(e) => handleInputChange('residentialAddress', e.target.value, 'primaryApplicant')}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter residential address"
+                                rows="3"
+                                required
+                            />
+                        </div>
+
+                        {/* Personal Details Row 1 */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Nationality</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.nationality}
+                                    onChange={(e) => handleInputChange('nationality', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter nationality"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth</label>
+                                <input
+                                    type="date"
+                                    value={formData.primaryApplicant.dateOfBirth}
+                                    onChange={(e) => handleInputChange('dateOfBirth', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Occupation</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.occupation}
+                                    onChange={(e) => handleInputChange('occupation', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter occupation"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Personal Details Row 2 */}
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                                <select
+                                    value={formData.primaryApplicant.gender}
+                                    onChange={(e) => handleInputChange('gender', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.stateOfOrigin}
+                                    onChange={(e) => handleInputChange('stateOfOrigin', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter state"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.townCity}
+                                    onChange={(e) => handleInputChange('townCity', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter town/city"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
+                                <input
+                                    type="tel"
+                                    value={formData.primaryApplicant.mobileNumber}
+                                    onChange={(e) => handleInputChange('mobileNumber', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter mobile number"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Contact & Identification */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                                <input
+                                    type="email"
+                                    value={formData.primaryApplicant.emailAddress}
+                                    onChange={(e) => handleInputChange('emailAddress', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter email address"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
+                                <input
+                                    type="text"
+                                    value={formData.primaryApplicant.taxId}
+                                    onChange={(e) => handleInputChange('taxId', e.target.value, 'primaryApplicant')}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter TIN"
+                                />
+                            </div>
+                        </div>
+
+                        {/* ID Information */}
+                        <div className="border-t border-gray-200 pt-6">
+                            <h4 className="text-lg font-semibold text-gray-800 mb-4">Means of Identification</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Type</label>
+                                    <select
+                                        value={formData.primaryApplicant.idType}
+                                        onChange={(e) => handleInputChange('idType', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="">Select ID Type</option>
+                                        {idTypes.map(type => (
+                                            <option key={type.value} value={type.value}>{type.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Number</label>
+                                    <input
+                                        type="text"
+                                        value={formData.primaryApplicant.idNumber}
+                                        onChange={(e) => handleInputChange('idNumber', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="Enter ID number"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Issued Date</label>
+                                    <input
+                                        type="date"
+                                        value={formData.primaryApplicant.idIssuedDate}
+                                        onChange={(e) => handleInputChange('idIssuedDate', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Expiry Date</label>
+                                    <input
+                                        type="date"
+                                        value={formData.primaryApplicant.idExpiryDate}
+                                        onChange={(e) => handleInputChange('idExpiryDate', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* BVN */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
+                            <input
+                                type="text"
+                                value={formData.primaryApplicant.bvn}
+                                onChange={(e) => handleInputChange('bvn', e.target.value, 'primaryApplicant')}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter BVN"
+                            />
+                        </div>
+
+                        {/* Bank Details */}
+                        <div className="border-t border-gray-200 pt-6">
+                            <h4 className="text-lg font-semibold text-gray-800 mb-4">Bank Account Details</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Name</label>
+                                    <input
+                                        type="text"
+                                        value={formData.primaryApplicant.accountName}
+                                        onChange={(e) => handleInputChange('accountName', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="Enter account name"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
+                                    <input
+                                        type="text"
+                                        value={formData.primaryApplicant.accountNumber}
+                                        onChange={(e) => handleInputChange('accountNumber', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="Enter account number"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
+                                    <input
+                                        type="text"
+                                        value={formData.primaryApplicant.bankName}
+                                        onChange={(e) => handleInputChange('bankName', e.target.value, 'primaryApplicant')}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="Enter bank name"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+
             case 2:
-                if (accountType === 'individual') {
-                    return <MinorNextOfKinStep formData={formData} handleInputChange={handleInputChange} />;
-                } else {
-                    return <PersonalDetailsStep
-                        applicant={formData.secondaryApplicant}
-                        applicantKey="secondaryApplicant"
-                        title="Secondary Investor Details"
-                        handleInputChange={handleInputChange}
-                    />;
-                }
+                return (
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-semibold text-gray-800">Joint Account (Optional)</h3>
+                            {!formData.isJointAccount && (
+                                <button
+                                    type="button"
+                                    onClick={() => handleInputChange('isJointAccount', true)}
+                                    disabled={isSubmitting}
+                                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    Add Joint Applicant
+                                </button>
+                            )}
+                        </div>
+
+                        {!formData.isJointAccount ? (
+                            <div className="text-center py-12 bg-gray-50 rounded-lg">
+                                <Users className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                                <p className="text-gray-600">This will be an individual account. Click "Add Joint Applicant" to make it a joint account.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-6">
+                                <div className="flex items-center justify-between">
+                                    <h4 className="text-lg font-semibold text-gray-700">Joint Applicant Details</h4>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleInputChange('isJointAccount', false)}
+                                        disabled={isSubmitting}
+                                        className="text-red-600 hover:text-red-800 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                    >
+                                        Remove Joint Applicant
+                                    </button>
+                                </div>
+
+                                {/* Joint Applicant form fields - similar to primary applicant */}
+                                <div className="border border-gray-200 rounded-lg p-6 space-y-4">
+                                    {/* Name fields */}
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">Surname *</label>
+                                            <input
+                                                type="text"
+                                                value={formData.jointApplicant?.surname || ''}
+                                                onChange={(e) => handleInputChange('surname', e.target.value, 'jointApplicant')}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Enter surname"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
+                                            <input
+                                                type="text"
+                                                value={formData.jointApplicant?.name || ''}
+                                                onChange={(e) => handleInputChange('name', e.target.value, 'jointApplicant')}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Enter first name"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name</label>
+                                            <input
+                                                type="text"
+                                                value={formData.jointApplicant?.otherName || ''}
+                                                onChange={(e) => handleInputChange('otherName', e.target.value, 'jointApplicant')}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Enter other name"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Continue with similar fields as primary applicant but condensed for space */}
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                                        <input
+                                            type="email"
+                                            value={formData.jointApplicant?.emailAddress || ''}
+                                            onChange={(e) => handleInputChange('emailAddress', e.target.value, 'jointApplicant')}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Enter email address"
+                                        />
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
+                                            <input
+                                                type="tel"
+                                                value={formData.jointApplicant?.mobileNumber || ''}
+                                                onChange={(e) => handleInputChange('mobileNumber', e.target.value, 'jointApplicant')}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Enter mobile number"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
+                                            <input
+                                                type="text"
+                                                value={formData.jointApplicant?.bvn || ''}
+                                                onChange={(e) => handleInputChange('bvn', e.target.value, 'jointApplicant')}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                placeholder="Enter BVN"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+
             case 3:
-                if (accountType === 'joint') {
-                    return <MinorNextOfKinStep formData={formData} handleInputChange={handleInputChange} />;
-                } else {
-                    return <ComplianceStep
-                        formData={formData}
-                        handleInputChange={handleInputChange}
-                        handleNestedInputChange={handleNestedInputChange}
-                        accountType={accountType}
-                    />;
-                }
+                return (
+                    <div className="space-y-6">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Documents & Additional Information</h3>
+
+                        {/* Document Upload Section */}
+                        <DocumentUploadSection
+                            formData={formData}
+                            onDocumentUpload={handleDocumentUpload}
+                            onRemoveDocument={removeDocument}
+                            documentContext="mutualFund"
+                        />
+
+                        {/* PEP Information */}
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                            <h4 className="text-lg font-semibold text-gray-800 mb-4">PEP/FEP Declaration</h4>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                        Are you currently / ever been a politically exposed person (PEP) or a relative/close associate of a PEP? *
+                                    </label>
+                                    <div className="flex gap-4">
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="isPep"
+                                                value="yes"
+                                                checked={formData.isPep === 'yes'}
+                                                onChange={(e) => handleInputChange('isPep', e.target.value)}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                            />
+                                            <span className="ml-2 text-sm font-medium text-gray-700">Yes</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="isPep"
+                                                value="no"
+                                                checked={formData.isPep === 'no'}
+                                                onChange={(e) => handleInputChange('isPep', e.target.value)}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                            />
+                                            <span className="ml-2 text-sm font-medium text-gray-700">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                        Have you currently / ever been a financially exposed person? *
+                                    </label>
+                                    <div className="flex gap-4">
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="isFinanciallyExposed"
+                                                value="yes"
+                                                checked={formData.isFinanciallyExposed === 'yes'}
+                                                onChange={(e) => handleInputChange('isFinanciallyExposed', e.target.value)}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                            />
+                                            <span className="ml-2 text-sm font-medium text-gray-700">Yes</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="isFinanciallyExposed"
+                                                value="no"
+                                                checked={formData.isFinanciallyExposed === 'no'}
+                                                onChange={(e) => handleInputChange('isFinanciallyExposed', e.target.value)}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                            />
+                                            <span className="ml-2 text-sm font-medium text-gray-700">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Investor Domicile */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                Investor Area of Domicile
+                            </label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {domicileZones.map((zone) => (
+                                    <label key={zone.value} className="flex items-center p-3 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="investorDomicile"
+                                            value={zone.value}
+                                            checked={formData.investorDomicile === zone.value}
+                                            onChange={(e) => handleInputChange('investorDomicile', e.target.value)}
+                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                        />
+                                        <span className="ml-3 text-sm font-medium text-gray-700">{zone.label}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+
             case 4:
-                if (accountType === 'joint') {
-                    return <ComplianceStep
-                        formData={formData}
-                        handleInputChange={handleInputChange}
-                        handleNestedInputChange={handleNestedInputChange}
-                        accountType={accountType}
-                    />;
-                } else {
-                    return <ReviewSubmitStep
-                        formData={formData}
-                        handleInputChange={handleInputChange}
-                        accountType={accountType}
-                    />;
-                }
+                return (
+                    <div className="space-y-6">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Signatures & Date</h3>
+                        <MutualFundSignatureSection
+                            formData={formData}
+                            signatureMode={signatureMode}
+                            onSignatureChange={handleSignatureChange}
+                            onSignatureModeChange={handleSignatureModeChange}
+                            handleInputChange={handleInputChange}
+                        />
+                    </div>
+                );
+
             case 5:
-                return <ReviewSubmitStep
-                    formData={formData}
-                    handleInputChange={handleInputChange}
-                    accountType={accountType}
-                />;
+                return (
+                    <div className="space-y-6">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Review & Submit</h3>
+
+                        {/* Application Summary */}
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                            <h4 className="text-lg font-semibold text-gray-800 mb-4">Application Summary</h4>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span className="font-semibold text-gray-700">Fund Type:</span>
+                                    <span className="ml-2">{fundOptions.find(opt => opt.value === formData.fundType)?.label || 'Not selected'}</span>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Investment Value:</span>
+                                    <span className="ml-2">{formData.investmentValue || 'Not provided'}</span>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Account Type:</span>
+                                    <span className="ml-2">{formData.isJointAccount ? 'Joint Account' : 'Individual Account'}</span>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Primary Applicant:</span>
+                                    <span className="ml-2">{formData.primaryApplicant.surname} {formData.primaryApplicant.name}</span>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Email:</span>
+                                    <span className="ml-2">{formData.primaryApplicant.emailAddress || 'Not provided'}</span>
+                                </div>
+                                <div>
+                                    <span className="font-semibold text-gray-700">Documents Uploaded:</span>
+                                    <span className="ml-2">{Object.keys(formData.uploadedDocuments || {}).length} files</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Attestations */}
+                        <div className="space-y-4">
+                            <h4 className="text-lg font-semibold text-gray-800">Attestations</h4>
+
+                            <div className="flex items-start gap-3 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <input
+                                    type="checkbox"
+                                    id="agreedToTerms"
+                                    checked={formData.agreedToTerms}
+                                    onChange={(e) => handleInputChange('agreedToTerms', e.target.checked)}
+                                    className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                />
+                                <label htmlFor="agreedToTerms" className="text-sm text-gray-700">
+                                    <span className="font-semibold">On the first investment, I/We agree that if these units are redeemed within 30, 90 and 180 days of the date of purchase, the fund manager shall deduct a handling charge equivalent to 20% of the redemption proceeds.</span>
+                                </label>
+                            </div>
+
+                            <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                <input
+                                    type="checkbox"
+                                    id="agreedToRisks"
+                                    checked={formData.agreedToRisks}
+                                    onChange={(e) => handleInputChange('agreedToRisks', e.target.checked)}
+                                    className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                />
+                                <label htmlFor="agreedToRisks" className="text-sm text-gray-700">
+                                    <span className="font-semibold">I/We understand that prices fluctuate and losses in the value of my/our investment may occur and the past performance is not necessarily an indication of future performance.</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                );
+
             default:
                 return null;
         }
@@ -481,47 +743,8 @@ const MutualFundForm = ({
                         </div>
                     </div>
                     <h2 className="text-2xl font-bold text-center text-gray-800">MUTUAL FUND APPLICATION</h2>
-                    <p className="text-center text-gray-600 mt-2">Individual/Joint Account Opening</p>
+                    <p className="text-center text-gray-600 mt-2">Individual/Joint Account</p>
                 </div>
-
-                {/* Account Type Selection */}
-                {currentStep === 0 && (
-                    <div className="bg-white border-b border-gray-200 px-6 py-4">
-                        <div className="flex items-center justify-center gap-6">
-                            <label className="flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                                <input
-                                    type="radio"
-                                    name="accountType"
-                                    value="individual"
-                                    checked={accountType === 'individual'}
-                                    onChange={(e) => setAccountType(e.target.value)}
-                                    className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
-                                />
-                                <User className="text-blue-600" size={24} />
-                                <div>
-                                    <div className="font-semibold text-gray-800">Individual Account</div>
-                                    <div className="text-sm text-gray-600">Single investor account</div>
-                                </div>
-                            </label>
-
-                            <label className="flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                                <input
-                                    type="radio"
-                                    name="accountType"
-                                    value="joint"
-                                    checked={accountType === 'joint'}
-                                    onChange={(e) => setAccountType(e.target.value)}
-                                    className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
-                                />
-                                <Users className="text-blue-600" size={24} />
-                                <div>
-                                    <div className="font-semibold text-gray-800">Joint Account</div>
-                                    <div className="text-sm text-gray-600">Two investors account</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                )}
 
                 {/* Step Indicator */}
                 <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -555,18 +778,6 @@ const MutualFundForm = ({
 
                 {/* Form Content */}
                 <div className="bg-white shadow-lg rounded-b-lg p-8">
-
-                    {/* Status Messages */}
-                    {submitStatus && (
-                        <div className={`flex items-center gap-3 p-4 rounded-lg mb-6 ${submitStatus.type === 'success'
-                            ? 'bg-green-50 text-green-800 border border-green-200'
-                            : 'bg-red-50 text-red-800 border border-red-200'
-                            }`}>
-                            {submitStatus.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                            <span>{submitStatus.message}</span>
-                        </div>
-                    )}
-
                     {/* Step Content */}
                     {renderStepContent()}
 
@@ -574,44 +785,64 @@ const MutualFundForm = ({
                     <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
                         <button
                             onClick={prevStep}
-                            disabled={currentStep === 0}
+                            disabled={currentStep === 0 || isSubmitting}
                             className="flex items-center gap-2 px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
                             <ArrowLeft size={20} />
                             Previous
                         </button>
 
-                        {currentStep < steps.length - 1 ? (
+                        <div className="flex gap-4">
                             <button
-                                onClick={nextStep}
-                                disabled={!validateStep(currentStep)}
-                                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                onClick={handlePreviewPDF}
+                                disabled={isSubmitting}
+                                className="flex items-center gap-2 px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
-                                Next
-                                <ArrowRight size={20} />
+                                <FileText size={20} />
+                                Preview PDF
                             </button>
-                        ) : (
-                            <button
-                                onClick={handleSubmit}
-                                disabled={isSubmitting || !validateStep(accountType === 'individual' ? 4 : 5)}
-                                className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                        Submitting...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send size={20} />
-                                        Submit Application
-                                    </>
-                                )}
-                            </button>
-                        )}
+
+                            {currentStep < steps.length - 1 ? (
+                                <button
+                                    onClick={nextStep}
+                                    disabled={!validateStep(currentStep) || isSubmitting}
+                                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    Next
+                                    <ArrowRight size={20} />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitting || !validateStep(5)}
+                                    className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                            Submitting...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Send size={20} />
+                                            Submit Application
+                                        </>
+                                    )}
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Modal for success/error messages */}
+            <Modal
+                isOpen={modal.isOpen}
+                onClose={closeModal}
+                type={modal.type}
+                message={modal.message}
+                title={modal.title}
+            />
         </div>
     );
 };
