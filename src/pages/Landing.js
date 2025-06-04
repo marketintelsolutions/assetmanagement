@@ -3,6 +3,7 @@ import Hero from '../components/Landing/Hero'
 import SectionTwo from '../components/Landing/SectionTwo'
 import Slider from '../components/Landing/Slider'
 import MobileAnimation from '../components/MobileAnimation'
+import AppSection from '../components/Landing/AppSection'
 
 const Landing = () => {
     return (
@@ -13,6 +14,7 @@ const Landing = () => {
             /> */}
             <Slider />
             <SectionTwo />
+            <AppSection />
         </div>
     )
 }
