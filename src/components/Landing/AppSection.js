@@ -83,10 +83,10 @@ const AppSection = () => {
                     {/* CIRCLES WITH ICONS END */}
                     <div className='relative z-[2] w-full  rounded-full flex items-end'>
                         <div className='w-full h-[300px]'>
-                            <img src="/apptwo.png" alt="appimage" className='w-full h-full object-contain -rotate-[40deg]' />
+                            <img src="/appone.png" alt="appimage" className='w-full h-full object-contain -rotate-[40deg]' />
                         </div>
-                        <div className='w-full h-[500px]'>
-                            <img src="/appone.png" alt="appimage" className='w-full h-full object-contain -rotate-[20deg] -translate-x-44' />
+                        <div className='w-full h-[500px] '>
+                            <img src="/apptwo.png" alt="appimage" className='w-full h-full object-contain -rotate-[20deg] -translate-x-44' />
                         </div>
                     </div>
                 </div>
