@@ -1,4 +1,4 @@
-// services/apiClient.js - Updated with Mutual Fund Support
+// services/apiClient.js - Updated with Equity Fund Support
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api';
@@ -143,6 +143,227 @@ export const apiService = {
                 return response.data;
             } catch (error) {
                 console.error('Mutual fund health check error:', error);
+                throw error;
+            }
+        },
+    },
+
+    // Equity Fund methods
+    equityFund: {
+        submit: async (formData, pdfContent, adminEmail, attachments = []) => {
+            try {
+                const response = await apiClient.post('/equity-fund/submit', {
+                    formData,
+                    pdfContent,
+                    adminEmail,
+                    attachments,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Equity fund submission error:', error);
+                throw error;
+            }
+        },
+
+        validate: async (formData) => {
+            try {
+                const response = await apiClient.post('/equity-fund/validate', {
+                    formData,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Equity fund validation error:', error);
+                throw error;
+            }
+        },
+
+        getStatus: async (clientName, referenceId = null) => {
+            try {
+                const params = { clientName };
+                if (referenceId) params.referenceId = referenceId;
+
+                const response = await apiClient.get('/equity-fund/status', {
+                    params,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Equity fund status check error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/equity-fund/health');
+                return response.data;
+            } catch (error) {
+                console.error('Equity fund health check error:', error);
+                throw error;
+            }
+        },
+    },
+
+    // Eurobond Fund methods
+    eurobondFund: {
+        submit: async (formData, pdfContent, adminEmail, attachments = []) => {
+            try {
+                const response = await apiClient.post('/eurobond-fund/submit', {
+                    formData,
+                    pdfContent,
+                    adminEmail,
+                    attachments,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Eurobond fund submission error:', error);
+                throw error;
+            }
+        },
+
+        validate: async (formData) => {
+            try {
+                const response = await apiClient.post('/eurobond-fund/validate', {
+                    formData,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Eurobond fund validation error:', error);
+                throw error;
+            }
+        },
+
+        getStatus: async (clientName, referenceId = null) => {
+            try {
+                const params = { clientName };
+                if (referenceId) params.referenceId = referenceId;
+
+                const response = await apiClient.get('/eurobond-fund/status', {
+                    params,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Eurobond fund status check error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/eurobond-fund/health');
+                return response.data;
+            } catch (error) {
+                console.error('Eurobond fund health check error:', error);
+                throw error;
+            }
+        },
+    },
+
+    // Money Market Fund methods
+    moneyMarketFund: {
+        submit: async (formData, pdfContent, adminEmail, attachments = []) => {
+            try {
+                const response = await apiClient.post('/money-market-fund/submit', {
+                    formData,
+                    pdfContent,
+                    adminEmail,
+                    attachments,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Money Market fund submission error:', error);
+                throw error;
+            }
+        },
+
+        validate: async (formData) => {
+            try {
+                const response = await apiClient.post('/money-market-fund/validate', {
+                    formData,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Money Market fund validation error:', error);
+                throw error;
+            }
+        },
+
+        getStatus: async (clientName, referenceId = null) => {
+            try {
+                const params = { clientName };
+                if (referenceId) params.referenceId = referenceId;
+
+                const response = await apiClient.get('/money-market-fund/status', {
+                    params,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Money Market fund status check error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/money-market-fund/health');
+                return response.data;
+            } catch (error) {
+                console.error('Money Market fund health check error:', error);
+                throw error;
+            }
+        },
+    },
+
+
+    // Fixed Income Redemption Fund methods
+    fixedIncomeFund: {
+        submit: async (formData, pdfContent, adminEmail, attachments = []) => {
+            try {
+                const response = await apiClient.post('/fixed-income-fund/submit', {
+                    formData,
+                    pdfContent,
+                    adminEmail,
+                    attachments,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Fixed Income Redemption submission error:', error);
+                throw error;
+            }
+        },
+
+        validate: async (formData) => {
+            try {
+                const response = await apiClient.post('/fixed-income-fund/validate', {
+                    formData,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Fixed Income Redemption validation error:', error);
+                throw error;
+            }
+        },
+
+        getStatus: async (clientName, referenceId = null) => {
+            try {
+                const params = { clientName };
+                if (referenceId) params.referenceId = referenceId;
+
+                const response = await apiClient.get('/fixed-income-fund/status', {
+                    params,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Fixed Income Redemption status check error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/fixed-income-fund/health');
+                return response.data;
+            } catch (error) {
+                console.error('Fixed Income Redemption health check error:', error);
                 throw error;
             }
         },
