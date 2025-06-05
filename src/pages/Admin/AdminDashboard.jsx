@@ -23,6 +23,7 @@ import LoadingOverlay from "../../components/Admin/LoadingOverlay";
 
 const AdminDashboard = () => {
   const { user, logout, loading: authLoading } = useAuth();
+  // console.log("user", user, authLoading);
   const navigate = useNavigate();
 
   // State management
