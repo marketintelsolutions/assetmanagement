@@ -92,6 +92,32 @@ export const apiService = {
             }
         },
     },
+    emailIndemnity: {
+        submit: async (formData, pdfContent, adminEmail, attachments = []) => {
+            try {
+                const response = await apiClient.post('/email-indemnity/submit', {
+                    formData,
+                    pdfContent,
+                    adminEmail,
+                    attachments,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Corporate investment submission error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/email-indemnity/health');
+                return response.data;
+            } catch (error) {
+                console.error('Corporate investment health check error:', error);
+                throw error;
+            }
+        },
+    },
 
     // Mutual Fund methods
     mutualFund: {

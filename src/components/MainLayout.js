@@ -15,7 +15,7 @@ const MainLayout = ({ children }) => {
             <Navbar />
             {children}
             <Footer />
-            <WhatsAppWidget phoneNumber="XXXXXXXXXX" />
+            <WhatsAppWidget phoneNumber="+2348111111006" companyName='PACAM Support' replyTimeText='Replies almost immediately' />
 
         </>
     )
