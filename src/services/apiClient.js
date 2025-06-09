@@ -92,6 +92,7 @@ export const apiService = {
             }
         },
     },
+
     emailIndemnity: {
         submit: async (formData, pdfContent, adminEmail, attachments = []) => {
             try {
@@ -111,6 +112,33 @@ export const apiService = {
         healthCheck: async () => {
             try {
                 const response = await apiClient.get('/email-indemnity/health');
+                return response.data;
+            } catch (error) {
+                console.error('Corporate investment health check error:', error);
+                throw error;
+            }
+        },
+    },
+
+    redemption: {
+        submit: async (formData, pdfContent, fundManagerEmail, attachments = []) => {
+            try {
+                const response = await apiClient.post('/redemption/submit', {
+                    formData,
+                    pdfContent,
+                    fundManagerEmail,
+                    attachments,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Corporate investment submission error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/redemption/health');
                 return response.data;
             } catch (error) {
                 console.error('Corporate investment health check error:', error);
