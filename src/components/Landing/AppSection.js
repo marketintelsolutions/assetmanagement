@@ -39,7 +39,7 @@ const AppSection = () => {
                 <div className='w-full max-w-[40%] flex flex-col gap-14'>
                     <h4 className='text-primaryBlue text-xl md:text-2xl lg:text-3xl uppercase font-poppins' >PAC Asset Management <br /> Mobile App</h4>
                     <p className='text-base md:text-lg mt-10, text-justify'>
-                        Explore our mobile app, 
+                        Explore our mobile app,
                         a platform you can use for your different Investments and also withdraw at any time you stated or wanted. You can open different accounts (like Individual Application, Joint Account Application, Corporate Account, etc.) and start earning immediately. Please click on the button below to download the app.
                     </p>
                     <div className='flex gap-5'>
@@ -57,6 +57,10 @@ const AppSection = () => {
                                 <span className='text-base'>Google Play</span>
                             </p>
                         </button>
+                    </div>
+                    <div className='flex gap-5 items-center'>
+                        <p className='font-light text-sm'>Approved by</p>
+                        <img src="/sec.jpg" alt="sec" className='h-[40px]' />
                     </div>
                 </div>
                 <div className='relative w-full max-w-[50%]'>

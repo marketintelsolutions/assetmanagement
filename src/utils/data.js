@@ -131,11 +131,6 @@ export const services = [
                 icon: '',
                 text: 'Estate/Tax Planning'
             },
-
-
-
-
-
             {
                 icon: '',
                 text: 'Retirement/Gratuity Planning'
@@ -164,7 +159,59 @@ export const services = [
         coloredIcon: 'investmentc',
         heading: 'Alternative Investment',
         text: 'Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.',
-        path: '/services/alternative-investment'
+        path: '/services/alternative-investment',
+        items: [
+            {
+                icon: 'mentor',
+                heading: 'Mentorship & Guidance',
+                text: [
+                    'Our seasoned industry experts and experienced entrepreneurs provide tailored mentorship, helping startups navigate challenges, refine strategies, and unlock their full potential.'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'network',
+                heading: 'Network',
+                text: [
+                    'We leverage an extensive network across Africa and beyond to connect our companies with investors, key influencers, and strategic partners, opening doors to collaboration and growth.'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'partner',
+                heading: 'Strategic Partnerships',
+                text: [
+                    'By forging alliances with leading industry players and institutions, we create opportunities for innovation, market expansion, and sustainable success.'
+                ],
+                image: 'building'
+            },
+        ],
+        funds: [
+            {
+                icon: 'mentor',
+                heading: 'Keynes Growth Fund',
+                text: [
+                    'Designed for tech-enabled, early and growth-stage startups, this fund targets high-growth companies within Africa’s dynamic tech ecosystem, positioning them for exponential success.'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'network',
+                heading: 'Keynes Inspire Fund',
+                text: [
+                    'Focused on Africa’s creative industries, this project-based fund supports transformative ventures that harness innovation in art, sports, music, movies and fashion to drive cultural impact.'
+                ],
+                image: 'building'
+            },
+            {
+                icon: 'partner',
+                heading: 'Keynes Hospitality Fund',
+                text: [
+                    'Tailored for the hospitality sector, this debt fund provides critical capital to hotels, restaurants, and leisure establishments across Africa, fueling expansion and service excellence.'
+                ],
+                image: 'building'
+            },
+        ]
     },
 ]
 export const careers = [
