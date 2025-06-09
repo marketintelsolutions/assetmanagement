@@ -59,7 +59,7 @@ const AppSection = () => {
                         </button>
                     </div>
                     <div className='flex gap-5 items-center'>
-                        <p className='font-light text-sm'>Approved by</p>
+                        <p className='font-normal text-sm'>Approved by SEC</p>
                         <img src="/sec.jpg" alt="sec" className='h-[40px]' />
                     </div>
                 </div>
