@@ -189,7 +189,7 @@ export const services = [
         funds: [
             {
                 icon: 'mentor',
-                heading: 'Keynes Growth Fund',
+                heading: 'Growth Fund',
                 text: [
                     'Designed for tech-enabled, early and growth-stage startups, this fund targets high-growth companies within Africa’s dynamic tech ecosystem, positioning them for exponential success.'
                 ],
@@ -197,7 +197,7 @@ export const services = [
             },
             {
                 icon: 'network',
-                heading: 'Keynes Inspire Fund',
+                heading: 'Inspire Fund',
                 text: [
                     'Focused on Africa’s creative industries, this project-based fund supports transformative ventures that harness innovation in art, sports, music, movies and fashion to drive cultural impact.'
                 ],
@@ -205,7 +205,7 @@ export const services = [
             },
             {
                 icon: 'partner',
-                heading: 'Keynes Hospitality Fund',
+                heading: 'Hospitality Fund',
                 text: [
                     'Tailored for the hospitality sector, this debt fund provides critical capital to hotels, restaurants, and leisure establishments across Africa, fueling expansion and service excellence.'
                 ],
