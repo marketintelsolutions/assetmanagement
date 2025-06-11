@@ -3,8 +3,12 @@ import { FaInstagram, FaLinkedin, FaX } from "react-icons/fa6";
 import { RiTwitterXFill } from "react-icons/ri";
 import { footerData } from "../utils/data";
 import { Link } from "react-router-dom";
+import { useDisclosure } from "../hooks/useDisclosure";
+import NdprModal from "./Modals/NdprModal";
 
 const Footer = () => {
+  const ndprModal = useDisclosure()
+
   return (
     <footer className="relative px-7 md:px-5 pt-[97px] bg-primaryBlue text-white border-t-[1px] border-[#EFF0F6]">
       <div className="absolute -top-10 right-0 bg-primarygray h-20 w-full max-w-[80%] md:max-w-[50%]"></div>
@@ -68,13 +72,15 @@ const Footer = () => {
             })}
           </div>
         </section>
-        <section className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full flex flex-col sm:flex-row justify-between">
-          <p className="  text-lg font-normal font-dm_sans text-left w-full max-w-[1100px] mx-auto leading-[30px]">
+        <div className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full max-w-[1300px] flex flex-col sm:flex-row gap-10 items-center">
+          <span className="w-fit  text-lg font-normal font-dm_sans  leading-[30px]">
             Copyright © {new Date().getFullYear()} PAC Asset Management
-          </p>
-
-        </section>
+          </span>
+          <span onClick={ndprModal.open} className="cursor-pointer text-secondaryBlue font-medium text-lg">NDPR</span>
+        </div>
       </article>
+
+      {ndprModal.isOpen && <NdprModal modal={ndprModal} />}
     </footer>
   );
 };
