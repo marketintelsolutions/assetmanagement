@@ -773,7 +773,7 @@ export const categorizedFaqData = {
         },
         {
             question: "How is a balanced fund different from other mutual funds?",
-            answer: "It combines the growth potential of stocks with the stability of other in fixed income instruments."
+            answer: "It combines the growth potential of stocks with the stability of other infixed income instruments."
         },
         {
             question: "Who should consider investing in a balanced fund?",
@@ -883,7 +883,7 @@ export const forms = [
     {
         heading: 'Corporate form indemnity',
         icon: 'client',
-        image: 'indemnity',
+        image: 'coperateform',
         slug: 'corporate-indemnity-form',
         component: <EmailIndemnityForm variant="corporate" />,
     },

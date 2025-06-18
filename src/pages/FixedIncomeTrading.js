@@ -58,7 +58,7 @@ const FixedIncomeTrading = () => {
                     </div>
                 </div>
                 <SlideIn duration={900} distance={70} direction="left" delay={150} className='w-full'>
-                    <div className='w-full h-[300px] md:h-[400px] object-cover relative '><div className='absolute top-0 left-0 w-full h-full bg-[#0000008e]'></div><img src="/corevalue.jpg" alt="corevalue" className='w-full h-full' /></div>
+                    <div className='w-full h-[300px] md:h-[400px] object-cover relative '><div className='absolute top-0 left-0 w-full h-full'></div><img src="/eurobonds.jpg" alt="eurobonds" className='w-full h-full' /></div>
 
                 </SlideIn>
             </div>
