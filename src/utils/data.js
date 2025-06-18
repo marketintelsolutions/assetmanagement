@@ -241,7 +241,7 @@ export const careers = [
     {
         icon: 'investment',
         heading: 'JOB POSTING',
-        text: ['We recruit experienced professionals whenever opportunities arise. If you have expertise in investment management, fund operations, sales, or relationship management, please submit your resume to'],
+        text: ['We recruit experienced professionals whenever opportunities arise. If you have expertise in investment management, fund operations, sales, or relationship management, please submit your resume to career@panafricancapitalholdings.com'],
         image: 'job',
     },
 ]
@@ -301,7 +301,7 @@ export const navData = [
                 heading: 'RESEARCH',
                 links: [
                     {
-                        text: 'Daily Market',
+                        text: 'Research Resource',
                         path: 'https://pacresearch.org/resources/',
                         external: true
                     },
@@ -860,39 +860,39 @@ export const categorizedFaqData = {
 
 export const forms = [
     {
-        heading: 'Redemption Form - PACAM Balance Funds',
-        icon: 'package',
-        image: 'account_opening',
-        slug: 'balanced-fund-redemption-form',
-        component: <PacamRedemptionForm />,
+        heading: 'Individual/joint account opening',
+        icon: 'subscription',
+        image: 'fundsub',
+        slug: 'mutual-fund-individual',
+        component: <MutualFundForm />,
     },
     {
-        heading: 'Individual Indemnity Form',
-        icon: 'client',
-        image: 'indemnity',
-        slug: 'indemnity-form',
-        component: <EmailIndemnityForm variant="individual" />,
-    },
-    {
-        heading: 'Corporate Indemnity Form',
-        icon: 'client',
-        image: 'Indemnity',
-        slug: 'corporate-indemnity-form',
-        component: <EmailIndemnityForm variant="corporate" />,
-    },
-    {
-        heading: 'Investment Application (Corporate)',
+        heading: 'Corporate account opening',
         icon: 'subscription',
         image: 'investmentapp',
         slug: 'corporate-investment-application',
         component: <CorporateInvestmentForm />,
     },
     {
-        heading: 'Mutual Fund (Individual/Joint)',
-        icon: 'subscription',
-        image: 'fundsub',
-        slug: 'mutual-fund-individual',
-        component: <MutualFundForm />,
+        heading: 'Individual/joint form indemnity',
+        icon: 'client',
+        image: 'indemnity',
+        slug: 'indemnity-form',
+        component: <EmailIndemnityForm variant="individual" />,
+    },
+    {
+        heading: 'Corporate form indemnity',
+        icon: 'client',
+        image: 'Indemnity',
+        slug: 'corporate-indemnity-form',
+        component: <EmailIndemnityForm variant="corporate" />,
+    },
+    {
+        heading: 'Redemption Form - PACAM Balance Funds',
+        icon: 'package',
+        image: 'account_opening',
+        slug: 'balanced-fund-redemption-form',
+        component: <PacamRedemptionForm />,
     },
     {
         heading: 'Equity Fund Redemption Form',
