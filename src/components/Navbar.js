@@ -48,10 +48,20 @@ const Navbar = () => {
                                         onMouseEnter={() => item.items && handleItemsToggle(item)}
                                         className='text-white lg:text-primaryBlue flex justify-between border-b lg:border-none border-white pb-3 lg:pb-0'
                                     >
-                                        <Link to={item.path}
-                                            onClick={() => setIsMenu((prev) => !prev)}> <span className='text-[15px] xl:text-base'>{item.text}</span></Link>
+                                        <Link
+                                            to={item.path}
+                                            onClick={() => {
+                                                setIsMenu((prev) => !prev)
+                                                setIsItems(false)
+                                            }}
+                                        >
+                                            <span
+                                                className='text-[15px] xl:text-base'>
+                                                {item.text}
+                                            </span>
+                                        </Link>
                                         {item.items && <span onClick={() => handleItemsToggle(item)} className=' zr:flex lg:hidden'><FaAngleDown /></span>}
-                                    </div>
+                                    </div >
                                     {isItems && activeItem.text === item.text &&
                                         <div className='lg:absolute z-10 w-full h-fit top-full left-0 pt-0 lg:pt-20 lg:pb-20 lg:bg-[#0000008a] '>
                                             <div className='w-full h-full flex gap-12 lg:px-20 mx-auto'>
@@ -98,7 +108,7 @@ const Navbar = () => {
                     </div>
 
                 </div>
-            </nav>
+            </nav >
         </>
     )
 }

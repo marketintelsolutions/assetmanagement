@@ -7,7 +7,7 @@ const FundManager = () => {
         <div className='w-full overflow-hidden'>
             <Hero
                 heading={'Fund Manager'}
-                text={'Fund Managers Report for each fund is published on a monthly basis which included performance of the funds for the month along with the Fund manager outlook on stock and money market and overall macro- economic environment.'}
+                text={'As Fund Managers, we publish a detailed monthly report for each fund. This report highlights the fund’s performance for the month and provides our outlook on the fund and the broader macroeconomic environment.'}
                 image='fundmanager'
                 bgImage='fundmanagerBak'
             />

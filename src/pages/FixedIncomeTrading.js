@@ -20,7 +20,7 @@ const FixedIncomeTrading = () => {
                 <div className=' absolute right-[-15%] top-[-0%]'>
                     <MobileAnimation animationData={spiralAsh} size={600} />
                 </div>
-                <div className='relative py-[150px] px-10 lg:px-5 w-full max-w-max mx-auto'>
+                <div className='relative pt-[150px] pb-24 px-10 lg:px-5 w-full max-w-max mx-auto'>
 
                     <SlideIn duration={900} distance={90} direction="left" delay={150}>
                         <h1 className='text-2xl md:text-3xl lg:text-4xl'>WHAT WE DO</h1>
@@ -34,6 +34,33 @@ const FixedIncomeTrading = () => {
                     <Link to={'/contact'}> <Button>CONTACT US</Button></Link>
 
                 </div>
+            </div>
+
+            <div className='max-w-max mx-auto flex flex-wrap md:flex-nowrap gap-6 mb-40 items-start'>
+
+                <div className='w-full md:max-w-[30%]'>
+                    <h2 className='text-2xl md:text-3xl font-medium text-primaryBlue font-poppins'>We assist your clients in the purchase of</h2>
+
+                    <div className=' grid grid-cols-1 mb:grid-cols-2 sm:grid-cols-3 md:flex flex-col gap-3 md:gap-5 mt-10 '>
+                        <p className='text-base md:text-lg flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            Commercial Papers</p>
+                        <p className='text-lg flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            Treasure Bills</p>
+                        <p className='text-lg flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            Bonds (Government/Corporate Bonds, Eurobonds, etc.)</p>
+                        <p className='text-lg flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            Fixed Income Placements.</p>
+
+                    </div>
+                </div>
+                <SlideIn duration={900} distance={70} direction="left" delay={150} className='w-full'>
+                    <div className='w-full h-[300px] md:h-[400px] object-cover relative '><div className='absolute top-0 left-0 w-full h-full bg-[#0000008e]'></div><img src="/corevalue.jpg" alt="corevalue" className='w-full h-full' /></div>
+
+                </SlideIn>
             </div>
 
         </>

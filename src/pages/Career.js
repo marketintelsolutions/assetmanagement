@@ -7,7 +7,7 @@ const Career = () => {
         <div className='w-full relative overflow-hidden'>
             <Hero
                 heading={'Career'}
-                text={'Together, we deliver transformational investment solutions tailored to meet the needs of our investors.'}
+                text={'We are always searching for exceptional talents and skills that will drive innovation, excellence, and sustainable growth across our organisation.'}
                 image={'career'}
                 bgImage={'careerbg'}
             />
