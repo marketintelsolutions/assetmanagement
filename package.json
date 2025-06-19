@@ -20,7 +20,10 @@
     "react-lottie": "^1.2.10",
     "react-router-dom": "^7.2.0",
     "react-scripts": "5.0.1",
-    "react-whatsapp-widget": "^2.2.0",
+    "react-whatsapp-widget": "^2.2.0"
+  },
+  "engines": {
+    "name": "pacassetmanagement",
     "node": "22.13.0"
   },
   "scripts": {
