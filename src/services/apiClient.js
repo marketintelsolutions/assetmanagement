@@ -1,7 +1,7 @@
 // services/apiClient.js - Updated with Equity Fund Support
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://pacassetbackend-88dc92ba44fc.herokuapp.com//api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://pacassetbackend-88dc92ba44fc.herokuapp.com/api';
 
 // Create axios instance with default config
 const apiClient = axios.create({
