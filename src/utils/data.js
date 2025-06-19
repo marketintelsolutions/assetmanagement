@@ -867,14 +867,14 @@ export const forms = [
         component: <MutualFundForm />,
     },
     {
-        heading: 'Corporate account opening',
+        heading: 'Corporate Account Opening',
         icon: 'subscription',
         image: 'investmentapp',
         slug: 'corporate-investment-application',
         component: <CorporateInvestmentForm />,
     },
     {
-        heading: 'Individual/joint form indemnity',
+        heading: 'Individual/Joint Form Indemnity',
         icon: 'client',
         image: 'indemnity',
         slug: 'indemnity-form',
@@ -883,7 +883,7 @@ export const forms = [
     {
         heading: 'Corporate form indemnity',
         icon: 'client',
-        image: 'Indemnity',
+        image: 'coperateform',
         slug: 'corporate-indemnity-form',
         component: <EmailIndemnityForm variant="corporate" />,
     },
