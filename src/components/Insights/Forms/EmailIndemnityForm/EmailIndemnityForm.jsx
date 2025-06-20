@@ -6,7 +6,7 @@ import SignatureInput from "./SignatureInput";
 import { useEmailIndemnityLogic } from "./useEmailIndemnityLogic";
 
 const EmailIndemnityForm = ({
-  variant = "individual", // "individual" or "corporate"
+  variant = "individual", // "individual" || "corporate"
   apiKey = process.env.REACT_APP_PLUNK_API_KEY,
   adminEmail = process.env.REACT_APP_SUBMISSION_EMAIL,
 }) => {

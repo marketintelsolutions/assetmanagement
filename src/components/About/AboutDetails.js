@@ -20,14 +20,14 @@ const AboutDetails = () => {
                     <p className='mt-10 text-base md:text-[20px] lg:text-lg text-justify'>PAC Asset Management Limited (PAC Asset) is an integrated asset management firm providing a range of mutual funds and diverse asset classes designed to meet the unique needs of its clients. The company also offers wealth management services for high-net-worth individuals, focusing on long-term goals and estate planning. The company is Licensed and regulated by the Securities & Exchange Commission (SEC), and operates as a Funds and Portfolio Manager in Nigeria.</p>
                 </SlideIn>
 
-            <div className='flex gap-10 items-center mt-20'>
-                <div className='w-full max-w-[500px]'><img src="/missionimg.jpg" alt="missionimg" className='w-full' /></div>
-                <div className='w-full max-w-[50%] flex flex-col gap-10'>
-                    <p className='text-[25px] font-normal, text-justify'>"We are committed to providing a safe investment outlet to meet our client’s clearly understood investment objectives. <br /> Our services would provide innovative investment opportunities to meet
-                        the continuous changes of client needs with a passion for creating sustainable value."</p>
-                    <p className='text-2xl font-bold text-primaryBlue'>MISSION</p>
+                <div className='flex gap-10 items-center mt-20'>
+                    <div className='w-full max-w-[500px]'><img src="/missionimg.jpg" alt="missionimg" className='w-full' /></div>
+                    <div className='w-full max-w-[50%] flex flex-col gap-10'>
+                        <p className='text-[25px] font-normal, text-justify'>"We are committed to providing a safe investment outlet to meet our client’s clearly understood investment objectives. <br /> Our services would provide innovative investment opportunities to meet
+                            the continuous changes of client needs with a passion for creating sustainable value."</p>
+                        <p className='text-2xl font-bold text-primaryBlue'>MISSION</p>
+                    </div>
                 </div>
-            </div>
 
                 <p className='mt-10 md:mt-20 text-2xl md:text-3xl'><span className='font-bold'>Our vision</span> is to become the preferred Asset Manager of Choice to our clients.</p>
 
@@ -62,31 +62,31 @@ const AboutDetails = () => {
                     </SlideIn>
                 </div>
 
-            <div className='bg-primaryBlue py-10 px-20 mt-20 flex flex-col '>
-                <h2 className='text-4xl font-medium text-white font-poppins'>PAC AT A GLANCE</h2>
-                <div className=' gap-8 mt-10 text-white text-lg grid grid-cols-2'>
-                    <p className='flex items-center gap-2'>
-                        <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        Over ₦30 Billion Assets Under Management (AUM)
-                    </p>
-                    <p className='flex items-center gap-2'>
-                        <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        Regulated by the Securities & Exchange Commission
-                    </p>
-                    <p className='flex items-center gap-2'>
-                        <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        12+ Years of Investment Management Experience
-                    </p>
-                    <p className='flex items-center gap-2'>
-                        <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        5 Active Mutual Funds
-                    </p>
-                    <p className='flex items-center gap-2'>
-                        <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
-                        A member company of PanAfrican Capital Holdings
-                    </p>
+                <div className='bg-primaryBlue py-10 px-20 mt-20 flex flex-col '>
+                    <h2 className='text-4xl font-medium text-white font-poppins'>PAC AT A GLANCE</h2>
+                    <div className=' gap-8 mt-10 text-white text-lg grid grid-cols-2'>
+                        <p className='flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            Over ₦30 Billion Assets Under Management (AUM)
+                        </p>
+                        <p className='flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            Regulated by the Securities & Exchange Commission
+                        </p>
+                        <p className='flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            12+ Years of Investment Management Experience
+                        </p>
+                        <p className='flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            5 Active Mutual Funds
+                        </p>
+                        <p className='flex items-center gap-2'>
+                            <span className='inline-flex h-3 w-3 bg-secondaryRed'></span>
+                            A member company of PanAfrican Capital Holdings
+                        </p>
+                    </div>
                 </div>
-            </div>
 
                 <h2 className='text-3xl md:text-4xl mt-20 md:mt-28 font-medium text-primaryBlue font-poppins'>WHY CHOOSE PAC ASSET MANAGEMENT</h2>
 
@@ -171,20 +171,24 @@ const AboutDetails = () => {
                                 the economy."</p>
                         </SlideIn>
                         <p className='text-lg text-white font-bold'>OUR TRACK RECORD SPEAKS</p>
+                        <div className='flex justify-center'>
+                            <img src="/award.png" alt="award" className='w-full max-w-[300px]' />
+                        </div>
                     </div>
                     <div className='w-full max-w-[400px] flex flex-col gap-8 '>
                         <SlideIn direction='right'>
-                            <div className='w-full flex flex-col items-center bg-[#d2ac47] px-12 py-16 text-white'>
-                                <img src="/awardone.png" alt="awardone" className='w-full max-w-[100px]' />
-                                <h3 className='mt-10 text-center uppercase font-bold text-xl'>PACAM Fixed Income Fund</h3>
-                                <p className='mt-4 text-lg text-center'>Best Fixed Income Fund <br /> for the Year 2022</p>
+                            <div className='w-full flex flex-col items-center  text-white'>
+                                <img src="/awardone.png" alt="awardone" className='w-full ' />
                             </div>
                         </SlideIn>
                         <SlideIn direction='right' delay={250}>
-                            <div className='w-full flex flex-col items-center bg-[#d2ac47] px-12 py-16 text-white'>
-                                <img src="/awardtwo.png" alt="awardone" className='w-full max-w-[100px]' />
-                                <h3 className='mt-10 text-center uppercase font-bold text-xl'>PACAM Eurobond Fund</h3>
-                                <p className='mt-4 text-lg text-center'>Best Fixed Income Fund <br /> for the Year 2023</p>
+                            <div className='w-full flex flex-col items-center  text-white'>
+                                <img src="/awardtwo.png" alt="awardone" className='w-full ' />
+                            </div>
+                        </SlideIn>
+                        <SlideIn direction='right' delay={250}>
+                            <div className='w-full flex flex-col items-center  text-white'>
+                                <img src="/awardthree.png" alt="awardone" className='w-full ' />
                             </div>
                         </SlideIn>
                     </div>
