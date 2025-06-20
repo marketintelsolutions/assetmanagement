@@ -183,12 +183,12 @@ const AboutDetails = () => {
                         </SlideIn>
                         <SlideIn direction='right' delay={250}>
                             <div className='w-full flex flex-col items-center  text-white'>
-                                <img src="/awardtwo.png" alt="awardone" className='w-full ' />
+                                <img src="/awardthree.png" alt="awardone" className='w-full ' />
                             </div>
                         </SlideIn>
                         <SlideIn direction='right' delay={250}>
                             <div className='w-full flex flex-col items-center  text-white'>
-                                <img src="/awardthree.png" alt="awardone" className='w-full ' />
+                                <img src="/awardtwo.png" alt="awardone" className='w-full ' />
                             </div>
                         </SlideIn>
                     </div>
