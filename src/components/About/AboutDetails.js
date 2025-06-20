@@ -172,7 +172,7 @@ const AboutDetails = () => {
                         </SlideIn>
                         <p className='text-lg text-white font-bold'>OUR TRACK RECORD SPEAKS</p>
                         <div className='flex justify-center'>
-                            <img src="/award.png" alt="award" className='w-full max-w-[300px]' />
+                            <img src="/award.png" alt="pacam award" className='w-full max-w-[300px]' />
                         </div>
                     </div>
                     <div className='w-full max-w-[400px] flex flex-col gap-8 '>
