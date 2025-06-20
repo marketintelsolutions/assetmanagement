@@ -44,8 +44,13 @@ const Navbar = () => {
                                 return <>
                                     <div
                                         key={index}
-
-                                        onMouseEnter={() => item.items && handleItemsToggle(item)}
+                                        onMouseEnter={() => {
+                                            if (item.items) {
+                                                handleItemsToggle(item)
+                                            } else {
+                                                setIsItems(false)
+                                            }
+                                        }}
                                         className='text-white lg:text-primaryBlue flex justify-between border-b lg:border-none border-white pb-3 lg:pb-0'
                                     >
                                         <Link
