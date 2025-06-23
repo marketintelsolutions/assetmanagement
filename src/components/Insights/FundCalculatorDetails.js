@@ -67,7 +67,7 @@ const FundCalculatorDetails = () => {
         const tenor = parseFloat(formData.tenor) || 0
 
         // Calculate upfront interest: face value × rate × tenor / 365
-        const upfrontInterest = (faceValue * rate * tenor) / 365
+        const upfrontInterest = (faceValue * (rate / 100) * tenor) / 365
 
         // Gross interest = upfront interest
         const grossInterest = upfrontInterest
