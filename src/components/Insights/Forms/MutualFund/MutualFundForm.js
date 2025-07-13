@@ -40,9 +40,7 @@ const MutualFundForm = ({
 
     const investorTypes = [
         { value: 'retail_domestic', label: 'Retail Investors (Domestic)' },
-        { value: 'retail_foreign', label: 'Retail Investors (Foreign)' },
-        { value: 'institutional_domestic', label: 'Institutional Investors (Domestic)' },
-        { value: 'institutional_foreign', label: 'Institutional Investors (Foreign)' }
+        { value: 'retail_foreign', label: 'Retail Investors (Foreign)' }
     ];
 
     const domicileZones = [
@@ -62,6 +60,14 @@ const MutualFundForm = ({
         { value: 'voters_card', label: "Voter's Card" }
     ];
 
+    const hearAboutOptions = [
+        { value: 'referral', label: 'Referral' },
+        { value: 'social_media', label: 'Social Media' },
+        { value: 'google', label: 'Google' },
+        { value: 'media', label: 'Media' },
+        { value: 'others', label: 'Others' }
+    ];
+
     const steps = [
         { title: 'Investment Info', icon: DollarSign },
         { title: 'Applicant Details', icon: User },
@@ -70,6 +76,11 @@ const MutualFundForm = ({
         { title: 'Signatures', icon: PenTool },
         { title: 'Review & Submit', icon: Send }
     ];
+
+    const showExpiryDate = () => {
+        return formData.primaryApplicant.idType === 'drivers_license' ||
+            formData.primaryApplicant.idType === 'international_passport';
+    };
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -103,7 +114,7 @@ const MutualFundForm = ({
                         {/* Dividend Mandate */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                Dividend Mandate
+                                Dividend Mandate *
                             </label>
                             <div className="flex gap-6">
                                 <label className="flex items-center">
@@ -134,7 +145,7 @@ const MutualFundForm = ({
                         {/* Investment Value */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Investment Value *
+                                Investment Value
                             </label>
                             <input
                                 type="text"
@@ -142,7 +153,6 @@ const MutualFundForm = ({
                                 onChange={(e) => handleInputChange('investmentValue', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter investment amount"
-                                required
                             />
                         </div>
 
@@ -167,6 +177,45 @@ const MutualFundForm = ({
                                 ))}
                             </div>
                         </div>
+
+                        {/* How did you hear about us */}
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                How did you hear about PAC Asset Management? *
+                            </label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {hearAboutOptions.map((option) => (
+                                    <label key={option.value} className="flex items-center p-3 border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="hearAbout"
+                                            value={option.value}
+                                            checked={formData.hearAbout === option.value}
+                                            onChange={(e) => handleInputChange('hearAbout', e.target.value)}
+                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                        />
+                                        <span className="ml-3 text-sm font-medium text-gray-700">{option.label}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Additional details for referral or others */}
+                        {(formData.hearAbout === 'referral' || formData.hearAbout === 'others') && (
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Please provide additional details *
+                                </label>
+                                <input
+                                    type="text"
+                                    value={formData.hearAboutDetails}
+                                    onChange={(e) => handleInputChange('hearAboutDetails', e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder={formData.hearAbout === 'referral' ? "Who referred you?" : "Please specify"}
+                                    required
+                                />
+                            </div>
+                        )}
                     </div>
                 );
 
@@ -200,13 +249,14 @@ const MutualFundForm = ({
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name *</label>
                                 <input
                                     type="text"
                                     value={formData.primaryApplicant.otherName}
                                     onChange={(e) => handleInputChange('otherName', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter other name"
+                                    required
                                 />
                             </div>
                         </div>
@@ -227,22 +277,24 @@ const MutualFundForm = ({
                         {/* Personal Details Row 1 */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Nationality</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Nationality *</label>
                                 <input
                                     type="text"
                                     value={formData.primaryApplicant.nationality}
                                     onChange={(e) => handleInputChange('nationality', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter nationality"
+                                    required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth *</label>
                                 <input
                                     type="date"
                                     value={formData.primaryApplicant.dateOfBirth}
                                     onChange={(e) => handleInputChange('dateOfBirth', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    required
                                 />
                             </div>
                             <div>
@@ -260,11 +312,12 @@ const MutualFundForm = ({
                         {/* Personal Details Row 2 */}
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Gender *</label>
                                 <select
                                     value={formData.primaryApplicant.gender}
                                     onChange={(e) => handleInputChange('gender', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    required
                                 >
                                     <option value="">Select</option>
                                     <option value="male">Male</option>
@@ -272,33 +325,36 @@ const MutualFundForm = ({
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin *</label>
                                 <input
                                     type="text"
                                     value={formData.primaryApplicant.stateOfOrigin}
                                     onChange={(e) => handleInputChange('stateOfOrigin', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter state"
+                                    required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City *</label>
                                 <input
                                     type="text"
                                     value={formData.primaryApplicant.townCity}
                                     onChange={(e) => handleInputChange('townCity', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter town/city"
+                                    required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
                                 <input
                                     type="tel"
                                     value={formData.primaryApplicant.mobileNumber}
                                     onChange={(e) => handleInputChange('mobileNumber', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter mobile number"
+                                    required
                                 />
                             </div>
                         </div>
@@ -317,13 +373,14 @@ const MutualFundForm = ({
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN) *</label>
                                 <input
                                     type="text"
                                     value={formData.primaryApplicant.taxId}
                                     onChange={(e) => handleInputChange('taxId', e.target.value, 'primaryApplicant')}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter TIN"
+                                    required
                                 />
                             </div>
                         </div>
@@ -333,11 +390,12 @@ const MutualFundForm = ({
                             <h4 className="text-lg font-semibold text-gray-800 mb-4">Means of Identification</h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Type</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Type *</label>
                                     <select
                                         value={formData.primaryApplicant.idType}
                                         onChange={(e) => handleInputChange('idType', e.target.value, 'primaryApplicant')}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        required
                                     >
                                         <option value="">Select ID Type</option>
                                         {idTypes.map(type => (
@@ -346,45 +404,51 @@ const MutualFundForm = ({
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Number</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Number *</label>
                                     <input
                                         type="text"
                                         value={formData.primaryApplicant.idNumber}
                                         onChange={(e) => handleInputChange('idNumber', e.target.value, 'primaryApplicant')}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter ID number"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Issued Date</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Issued Date *</label>
                                     <input
                                         type="date"
                                         value={formData.primaryApplicant.idIssuedDate}
                                         onChange={(e) => handleInputChange('idIssuedDate', e.target.value, 'primaryApplicant')}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        required
                                     />
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">ID Expiry Date</label>
-                                    <input
-                                        type="date"
-                                        value={formData.primaryApplicant.idExpiryDate}
-                                        onChange={(e) => handleInputChange('idExpiryDate', e.target.value, 'primaryApplicant')}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    />
-                                </div>
+                                {showExpiryDate() && (
+                                    <div>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">ID Expiry Date *</label>
+                                        <input
+                                            type="date"
+                                            value={formData.primaryApplicant.idExpiryDate}
+                                            onChange={(e) => handleInputChange('idExpiryDate', e.target.value, 'primaryApplicant')}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            required
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         {/* BVN */}
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">BVN *</label>
                             <input
                                 type="text"
                                 value={formData.primaryApplicant.bvn}
                                 onChange={(e) => handleInputChange('bvn', e.target.value, 'primaryApplicant')}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter BVN"
+                                required
                             />
                         </div>
 
@@ -393,33 +457,36 @@ const MutualFundForm = ({
                             <h4 className="text-lg font-semibold text-gray-800 mb-4">Bank Account Details</h4>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Name</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Name *</label>
                                     <input
                                         type="text"
                                         value={formData.primaryApplicant.accountName}
                                         onChange={(e) => handleInputChange('accountName', e.target.value, 'primaryApplicant')}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter account name"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Number *</label>
                                     <input
                                         type="text"
                                         value={formData.primaryApplicant.accountNumber}
                                         onChange={(e) => handleInputChange('accountNumber', e.target.value, 'primaryApplicant')}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter account number"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Bank Name *</label>
                                     <input
                                         type="text"
                                         value={formData.primaryApplicant.bankName}
                                         onChange={(e) => handleInputChange('bankName', e.target.value, 'primaryApplicant')}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter bank name"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -467,26 +534,6 @@ const MutualFundForm = ({
                                 <div className="border border-gray-200 rounded-lg p-6 space-y-4">
                                     {/* Name fields */}
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">Surname *</label>
-                                            <input
-                                                type="text"
-                                                value={formData.jointApplicant?.surname || ''}
-                                                onChange={(e) => handleInputChange('surname', e.target.value, 'jointApplicant')}
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                placeholder="Enter surname"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
-                                            <input
-                                                type="text"
-                                                value={formData.jointApplicant?.name || ''}
-                                                onChange={(e) => handleInputChange('name', e.target.value, 'jointApplicant')}
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                placeholder="Enter first name"
-                                            />
-                                        </div>
                                         <div>
                                             <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name</label>
                                             <input
@@ -622,7 +669,7 @@ const MutualFundForm = ({
                         {/* Investor Domicile */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                Investor Area of Domicile
+                                Investor Area of Domicile *
                             </label>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {domicileZones.map((zone) => (
@@ -747,8 +794,8 @@ const MutualFundForm = ({
                 </div>
 
                 {/* Step Indicator */}
-                <div className="bg-white border-b border-gray-200 px-6 py-4">
-                    <div className="flex items-center justify-between">
+                <div className="bg-white border-b border-gray-200 px-2 py-4">
+                    <div className="flex items-center justify-between ">
                         {steps.map((step, index) => {
                             const IconComponent = step.icon;
                             const isActive = index === currentStep;
@@ -756,11 +803,11 @@ const MutualFundForm = ({
 
                             return (
                                 <div key={index} className="flex items-center">
-                                    <div className={`flex items-center justify-center w-10 h-10 rounded-full ${isActive ? 'bg-blue-600 text-white' :
+                                    <div className={`flex items-center justify-center w-8 h-8 rounded-full ${isActive ? 'bg-blue-600 text-white' :
                                         isCompleted ? 'bg-green-600 text-white' :
                                             'bg-gray-300 text-gray-600'
                                         }`}>
-                                        <IconComponent size={20} />
+                                        <IconComponent size={17} />
                                     </div>
                                     <div className="ml-3 hidden sm:block">
                                         <div className={`text-sm font-medium ${isActive ? 'text-blue-600' : 'text-gray-500'}`}>
@@ -768,7 +815,7 @@ const MutualFundForm = ({
                                         </div>
                                     </div>
                                     {index < steps.length - 1 && (
-                                        <div className="hidden sm:block w-16 h-0.5 bg-gray-300 mx-4"></div>
+                                        <div className="hidden sm:block w-12 h-0.5 bg-gray-300 mx-4"></div>
                                     )}
                                 </div>
                             );

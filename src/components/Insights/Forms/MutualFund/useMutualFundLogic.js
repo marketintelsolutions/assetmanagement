@@ -19,6 +19,8 @@ export const useMutualFundLogic = (adminEmail) => {
         dividendMandate: '',
         investmentValue: '',
         investorType: '',
+        hearAbout: '',
+        hearAboutDetails: '',
 
         // Account Type
         isJointAccount: false,
@@ -206,23 +208,63 @@ export const useMutualFundLogic = (adminEmail) => {
     const validateStep = (step) => {
         switch (step) {
             case 0: // Investment Info
-                return formData.fundType && formData.investmentValue && formData.investorType;
+                const hearAboutValid = formData.hearAbout &&
+                    (formData.hearAbout === 'referral' || formData.hearAbout === 'others'
+                        ? formData.hearAboutDetails?.trim()
+                        : true);
+                return formData.fundType &&
+                    formData.dividendMandate &&
+                    formData.investorType &&
+                    hearAboutValid;
+
             case 1: // Applicant Details
-                return formData.primaryApplicant.surname &&
-                    formData.primaryApplicant.name &&
-                    formData.primaryApplicant.emailAddress;
+                const primary = formData.primaryApplicant;
+                const requiresExpiry = primary.idType === 'drivers_license' || primary.idType === 'international_passport';
+
+                return primary.surname &&
+                    primary.name &&
+                    primary.otherName &&
+                    primary.residentialAddress &&
+                    primary.nationality &&
+                    primary.dateOfBirth &&
+                    primary.gender &&
+                    primary.stateOfOrigin &&
+                    primary.townCity &&
+                    primary.mobileNumber &&
+                    primary.emailAddress &&
+                    primary.taxId &&
+                    primary.idType &&
+                    primary.idNumber &&
+                    primary.idIssuedDate &&
+                    (requiresExpiry ? primary.idExpiryDate : true) &&
+                    primary.bvn &&
+                    primary.accountName &&
+                    primary.accountNumber &&
+                    primary.bankName;
+
             case 2: // Joint Account
                 return !formData.isJointAccount ||
                     (formData.jointApplicant.surname && formData.jointApplicant.name);
+
             case 3: // Documents & PEP
-                return formData.isPep !== '' && formData.isFinanciallyExposed !== '';
+                const requiredDocs = ['passportPhoto', 'utilityBill', 'validId'];
+                const hasAllRequiredDocs = requiredDocs.every(docKey =>
+                    formData.uploadedDocuments && formData.uploadedDocuments[docKey]
+                );
+                return formData.isPep !== '' &&
+                    formData.isFinanciallyExposed !== '' &&
+                    formData.investorDomicile !== '' &&
+                    hasAllRequiredDocs;
+
             case 4: // Signatures
                 return formData.primaryApplicant.signature &&
                     formData.primaryApplicant.signatureDate &&
                     (!formData.isJointAccount ||
                         (formData.jointApplicant?.signature && formData.jointApplicant?.signatureDate));
+
             case 5: // Review
                 return formData.agreedToTerms && formData.agreedToRisks;
+
             default:
                 return true;
         }
@@ -288,17 +330,45 @@ export const useMutualFundLogic = (adminEmail) => {
 
         // Investment Information validation
         if (!formData.fundType) errors.push('Fund type is required');
-        if (!formData.investmentValue) errors.push('Investment value is required');
+        if (!formData.dividendMandate) errors.push('Dividend mandate is required');
         if (!formData.investorType) errors.push('Investor type is required');
+        if (!formData.hearAbout) errors.push('How you heard about PAC Asset Management is required');
+        if ((formData.hearAbout === 'referral' || formData.hearAbout === 'others') && !formData.hearAboutDetails?.trim()) {
+            errors.push('Additional details are required for the selected option');
+        }
 
         // Primary Applicant validation
-        if (!formData.primaryApplicant.surname) errors.push('Primary applicant surname is required');
-        if (!formData.primaryApplicant.name) errors.push('Primary applicant name is required');
-        if (!formData.primaryApplicant.emailAddress) errors.push('Primary applicant email is required');
+        const primary = formData.primaryApplicant;
+        if (!primary.surname) errors.push('Primary applicant surname is required');
+        if (!primary.name) errors.push('Primary applicant name is required');
+        if (!primary.otherName) errors.push('Primary applicant other name is required');
+        if (!primary.residentialAddress) errors.push('Primary applicant residential address is required');
+        if (!primary.nationality) errors.push('Primary applicant nationality is required');
+        if (!primary.dateOfBirth) errors.push('Primary applicant date of birth is required');
+        if (!primary.gender) errors.push('Primary applicant gender is required');
+        if (!primary.stateOfOrigin) errors.push('Primary applicant state of origin is required');
+        if (!primary.townCity) errors.push('Primary applicant town/city is required');
+        if (!primary.mobileNumber) errors.push('Primary applicant mobile number is required');
+        if (!primary.emailAddress) errors.push('Primary applicant email is required');
+        if (!primary.taxId) errors.push('Primary applicant TIN is required');
+        if (!primary.idType) errors.push('Primary applicant ID type is required');
+        if (!primary.idNumber) errors.push('Primary applicant ID number is required');
+        if (!primary.idIssuedDate) errors.push('Primary applicant ID issued date is required');
+
+        // ID expiry validation for specific ID types
+        const requiresExpiry = primary.idType === 'drivers_license' || primary.idType === 'international_passport';
+        if (requiresExpiry && !primary.idExpiryDate) {
+            errors.push('ID expiry date is required for the selected ID type');
+        }
+
+        if (!primary.bvn) errors.push('Primary applicant BVN is required');
+        if (!primary.accountName) errors.push('Primary applicant account name is required');
+        if (!primary.accountNumber) errors.push('Primary applicant account number is required');
+        if (!primary.bankName) errors.push('Primary applicant bank name is required');
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (formData.primaryApplicant.emailAddress && !emailRegex.test(formData.primaryApplicant.emailAddress)) {
+        if (primary.emailAddress && !emailRegex.test(primary.emailAddress)) {
             errors.push('Invalid primary applicant email format');
         }
 
@@ -320,6 +390,23 @@ export const useMutualFundLogic = (adminEmail) => {
         // PEP validation
         if (!formData.isPep) errors.push('PEP declaration is required');
         if (!formData.isFinanciallyExposed) errors.push('Financial exposure declaration is required');
+        if (!formData.investorDomicile) errors.push('Investor domicile is required');
+
+        // Document validation
+        const requiredDocs = ['passportPhoto', 'utilityBill', 'validId'];
+        const missingDocs = requiredDocs.filter(docKey =>
+            !formData.uploadedDocuments || !formData.uploadedDocuments[docKey]
+        );
+        if (missingDocs.length > 0) {
+            const docLabels = {
+                passportPhoto: 'Passport Photograph',
+                utilityBill: 'Recent Utility Bill',
+                validId: 'Valid Means of Identification'
+            };
+            missingDocs.forEach(docKey => {
+                errors.push(`${docLabels[docKey]} is required`);
+            });
+        }
 
         // Attestations validation
         if (!formData.agreedToTerms) errors.push('Agreement to terms is required');
@@ -388,6 +475,8 @@ export const useMutualFundLogic = (adminEmail) => {
                     dividendMandate: '',
                     investmentValue: '',
                     investorType: '',
+                    hearAbout: '',
+                    hearAboutDetails: '',
                     isJointAccount: false,
                     primaryApplicant: {
                         surname: '',
