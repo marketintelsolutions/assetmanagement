@@ -364,7 +364,7 @@ export const MutualFundPDFGenerator = {
         checkNewPage(40);
         // New page for additional sections
         // doc.addPage();
-        // yPosition += 20;
+        yPosition += 15;
 
         // PEP/FEP Information
         MutualFundPDFGenerator.addSectionHeader(doc, 'AUTHENTICATION FOR POLITICALLY EXPOSED AND FINANCIALLY EXPOSED PERSONS', leftMargin, yPosition, contentWidth);

@@ -1,4 +1,4 @@
-// EmailIndemnityForm.jsx
+// EmailIndemnityForm.jsx - Updated with all fields required
 import React from "react";
 import { Building, FileText } from "lucide-react";
 import Modal from "../PacamRedemption/Modal";
@@ -79,7 +79,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
                   <input
                     type="text"
                     name="companyName"
-                    value={formData.companyName}
+                    value={formData.companyName || ""}
                     onChange={handleInputChange}
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -97,7 +97,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
                 <input
                   type="email"
                   name="preferredEmail"
-                  value={formData.preferredEmail}
+                  value={formData.preferredEmail || ""}
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -113,13 +113,14 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
                 <>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Preferred Phone Number
+                      Preferred Phone Number *
                     </label>
                     <input
                       type="tel"
                       name="preferredPhone"
-                      value={formData.preferredPhone}
+                      value={formData.preferredPhone || ""}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Enter your preferred phone number"
                     />
@@ -132,7 +133,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
                     <input
                       type="text"
                       name="accountHolderName"
-                      value={formData.accountHolderName}
+                      value={formData.accountHolderName || ""}
                       onChange={handleInputChange}
                       required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -142,13 +143,14 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Signature Date
+                      Signature Date *
                     </label>
                     <input
                       type="date"
                       name="signatureDate"
-                      value={formData.signatureDate}
+                      value={formData.signatureDate || ""}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
@@ -173,6 +175,20 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
 
               {variant === "corporate" && (
                 <>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Signature Date *
+                    </label>
+                    <input
+                      type="date"
+                      name="signatureDate"
+                      value={formData.signatureDate || ""}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+
                   {/* Corporate Signature Section - Two signatures side by side */}
                   <div className="md:col-span-2">
                     <h4 className="text-lg font-semibold text-gray-800 mb-4">
@@ -204,7 +220,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
                           onModeChange={(mode) =>
                             handleSignatureModeChange("secondary", mode)
                           }
-                          required={false}
+                          required={true}
                         />
                       </div>
                     </div>
@@ -220,7 +236,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
               type="checkbox"
               id="agreedToTerms"
               name="agreedToTerms"
-              checked={formData.agreedToTerms}
+              checked={formData.agreedToTerms || false}
               onChange={handleInputChange}
               required
               className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
@@ -228,7 +244,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
             <label htmlFor="agreedToTerms" className="text-sm text-gray-700">
               <span className="font-semibold">
                 I hereby acknowledge that I have read, understood, and agree to
-                all the terms and conditions stated above.
+                all the terms and conditions stated above. *
               </span>{" "}
               I consent to electronic communication and indemnify PAC Asset
               Management Limited as described in this agreement.
@@ -250,8 +266,17 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
               disabled={
                 isSubmitting ||
                 !formData.agreedToTerms ||
-                (variant === "individual" && !formData.signature) ||
-                (variant === "corporate" && !formData.primarySignature)
+                (variant === "individual" &&
+                  (!formData.signature ||
+                    !formData.accountHolderName ||
+                    !formData.preferredPhone ||
+                    !formData.signatureDate)) ||
+                (variant === "corporate" &&
+                  (!formData.primarySignature ||
+                    !formData.secondarySignature ||
+                    !formData.companyName ||
+                    !formData.signatureDate)) ||
+                !formData.preferredEmail
               }
               className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
             >

@@ -191,8 +191,8 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
             checkNewPage(15);
 
             // Signature and Date
-            yPosition += 10;
-            checkNewPage(30);
+            // yPosition += 10;
+            // checkNewPage(30);
 
             // Create signature area
             const signatureHeight = 25;
@@ -217,7 +217,7 @@ You hereby authorize PAC Asset Management Limited to rely upon and act in accord
             yPosition += 15;
         }
 
-        checkNewPage(30);
+        // checkNewPage(30);
 
         // Footer
         doc.setFontSize(8);

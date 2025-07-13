@@ -46,8 +46,6 @@ const CorporateInvestmentForm = ({
     ];
 
     const investorTypes = [
-        { value: 'retail_domestic', label: 'Retail Investors (Domestic)' },
-        { value: 'retail_foreign', label: 'Retail Investors (Foreign)' },
         { value: 'institutional_domestic', label: 'Institutional Investors (Domestic)' },
         { value: 'institutional_foreign', label: 'Institutional Investors (Foreign)' }
     ];
@@ -110,7 +108,7 @@ const CorporateInvestmentForm = ({
                         {/* Tenor */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                Tenor (Days)
+                                Tenor (Days) *
                             </label>
                             <div className="grid grid-cols-5 gap-3 mb-3">
                                 {tenorOptions.map((option) => (
@@ -139,7 +137,7 @@ const CorporateInvestmentForm = ({
                         {/* Investment Value */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Investment Value *
+                                Investment Value
                             </label>
                             <input
                                 type="text"
@@ -147,7 +145,6 @@ const CorporateInvestmentForm = ({
                                 onChange={(e) => handleInputChange('investmentValue', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter investment amount"
-                                required
                             />
                         </div>
 
@@ -182,12 +179,13 @@ const CorporateInvestmentForm = ({
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Date</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Date *</label>
                                 <input
                                     type="date"
                                     value={formData.date}
                                     onChange={(e) => handleInputChange('date', e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    required
                                 />
                             </div>
                             <div>
@@ -202,13 +200,14 @@ const CorporateInvestmentForm = ({
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Type of Business</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Type of Business *</label>
                                 <input
                                     type="text"
                                     value={formData.typeOfBusiness}
                                     onChange={(e) => handleInputChange('typeOfBusiness', e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter business type"
+                                    required
                                 />
                             </div>
                         </div>
@@ -226,45 +225,49 @@ const CorporateInvestmentForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Registered Address</label>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Registered Address *</label>
                             <textarea
                                 value={formData.registeredAddress}
                                 onChange={(e) => handleInputChange('registeredAddress', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter registered address"
                                 rows="3"
+                                required
                             />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Country</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Country *</label>
                                 <input
                                     type="text"
                                     value={formData.country}
                                     onChange={(e) => handleInputChange('country', e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter country"
+                                    required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin *</label>
                                 <input
                                     type="text"
                                     value={formData.stateOfOrigin}
                                     onChange={(e) => handleInputChange('stateOfOrigin', e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter state"
+                                    required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City *</label>
                                 <input
                                     type="text"
                                     value={formData.townCity}
                                     onChange={(e) => handleInputChange('townCity', e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter town/city"
+                                    required
                                 />
                             </div>
                         </div>
@@ -282,25 +285,27 @@ const CorporateInvestmentForm = ({
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Office Line / Mobile Number</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Office Line / Mobile Number *</label>
                                 <input
                                     type="tel"
                                     value={formData.phoneNumber}
                                     onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                     placeholder="Enter phone number"
+                                    required
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN) *</label>
                             <input
                                 type="text"
                                 value={formData.taxId}
                                 onChange={(e) => handleInputChange('taxId', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter TIN"
+                                required
                             />
                         </div>
                     </div>
@@ -347,6 +352,7 @@ const CorporateInvestmentForm = ({
                                             onChange={(e) => handleInputChange('surname', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter surname"
+                                            required
                                         />
                                     </div>
                                     <div>
@@ -357,61 +363,67 @@ const CorporateInvestmentForm = ({
                                             onChange={(e) => handleInputChange('name', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter first name"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Other Name *</label>
                                         <input
                                             type="text"
                                             value={signatory.otherName}
                                             onChange={(e) => handleInputChange('otherName', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter other name"
+                                            required
                                         />
                                     </div>
                                 </div>
 
                                 {/* Address */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Residential / Mailing Address</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Residential / Mailing Address *</label>
                                     <textarea
                                         value={signatory.residentialAddress}
                                         onChange={(e) => handleInputChange('residentialAddress', e.target.value, index)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter address"
                                         rows="2"
+                                        required
                                     />
                                 </div>
 
                                 {/* Personal Details */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Nationality</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Nationality *</label>
                                         <input
                                             type="text"
                                             value={signatory.nationality}
                                             onChange={(e) => handleInputChange('nationality', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter nationality"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">State of Origin *</label>
                                         <input
                                             type="text"
                                             value={signatory.stateOfOrigin}
                                             onChange={(e) => handleInputChange('stateOfOrigin', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter state"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth *</label>
                                         <input
                                             type="date"
                                             value={signatory.dateOfBirth}
                                             onChange={(e) => handleInputChange('dateOfBirth', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -419,11 +431,12 @@ const CorporateInvestmentForm = ({
                                 {/* Gender and Employment */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Gender *</label>
                                         <select
                                             value={signatory.gender}
                                             onChange={(e) => handleInputChange('gender', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            required
                                         >
                                             <option value="">Select Gender</option>
                                             <option value="male">Male</option>
@@ -431,23 +444,25 @@ const CorporateInvestmentForm = ({
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Employment Details</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Employment Details *</label>
                                         <input
                                             type="text"
                                             value={signatory.employmentDetails}
                                             onChange={(e) => handleInputChange('employmentDetails', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter employment details"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Town/City *</label>
                                         <input
                                             type="text"
                                             value={signatory.townCity}
                                             onChange={(e) => handleInputChange('townCity', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter town/city"
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -455,45 +470,49 @@ const CorporateInvestmentForm = ({
                                 {/* Contact and ID */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">BVN</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">BVN *</label>
                                         <input
                                             type="text"
                                             value={signatory.bvn}
                                             onChange={(e) => handleInputChange('bvn', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter BVN"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
                                         <input
                                             type="email"
                                             value={signatory.emailAddress}
                                             onChange={(e) => handleInputChange('emailAddress', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter email"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number</label>
+                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
                                         <input
                                             type="tel"
                                             value={signatory.mobileNumber}
                                             onChange={(e) => handleInputChange('mobileNumber', e.target.value, index)}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Enter mobile number"
+                                            required
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN)</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Tax Identification Number (TIN) *</label>
                                     <input
                                         type="text"
                                         value={signatory.taxId}
                                         onChange={(e) => handleInputChange('taxId', e.target.value, index)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter TIN"
+                                        required
                                     />
                                 </div>
 
@@ -502,11 +521,12 @@ const CorporateInvestmentForm = ({
                                     <h5 className="font-medium text-gray-700 mb-3">Means of Identification</h5>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Type</label>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Type *</label>
                                             <select
                                                 value={signatory.idType}
                                                 onChange={(e) => handleInputChange('idType', e.target.value, index)}
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                required
                                             >
                                                 <option value="">Select ID Type</option>
                                                 {idTypes.map(type => (
@@ -515,33 +535,38 @@ const CorporateInvestmentForm = ({
                                             </select>
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Number</label>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Number *</label>
                                             <input
                                                 type="text"
                                                 value={signatory.idNumber}
                                                 onChange={(e) => handleInputChange('idNumber', e.target.value, index)}
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                                 placeholder="Enter ID number"
+                                                required
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Issued Date</label>
+                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Issued Date *</label>
                                             <input
                                                 type="date"
                                                 value={signatory.idIssuedDate}
                                                 onChange={(e) => handleInputChange('idIssuedDate', e.target.value, index)}
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                required
                                             />
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold text-gray-700 mb-2">ID Expiry Date</label>
-                                            <input
-                                                type="date"
-                                                value={signatory.idExpiryDate}
-                                                onChange={(e) => handleInputChange('idExpiryDate', e.target.value, index)}
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                            />
-                                        </div>
+                                        {(signatory.idType === 'drivers_license' || signatory.idType === 'international_passport') && (
+                                            <div>
+                                                <label className="block text-sm font-semibold text-gray-700 mb-2">ID Expiry Date *</label>
+                                                <input
+                                                    type="date"
+                                                    value={signatory.idExpiryDate}
+                                                    onChange={(e) => handleInputChange('idExpiryDate', e.target.value, index)}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    required
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -579,6 +604,7 @@ const CorporateInvestmentForm = ({
                                                 checked={formData.isPep === 'yes'}
                                                 onChange={(e) => handleInputChange('isPep', e.target.value)}
                                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                                required
                                             />
                                             <span className="ml-2 text-sm font-medium text-gray-700">Yes</span>
                                         </label>
@@ -590,6 +616,7 @@ const CorporateInvestmentForm = ({
                                                 checked={formData.isPep === 'no'}
                                                 onChange={(e) => handleInputChange('isPep', e.target.value)}
                                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                                required
                                             />
                                             <span className="ml-2 text-sm font-medium text-gray-700">No</span>
                                         </label>
@@ -599,7 +626,7 @@ const CorporateInvestmentForm = ({
                                 {formData.isPep === 'yes' && (
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            Please provide details:
+                                            Please provide details: *
                                         </label>
                                         <textarea
                                             value={formData.pepDetails}
@@ -607,6 +634,7 @@ const CorporateInvestmentForm = ({
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Provide PEP details"
                                             rows="3"
+                                            required
                                         />
                                     </div>
                                 )}
@@ -624,6 +652,7 @@ const CorporateInvestmentForm = ({
                                                 checked={formData.isFinanciallyExposed === 'yes'}
                                                 onChange={(e) => handleInputChange('isFinanciallyExposed', e.target.value)}
                                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                                required
                                             />
                                             <span className="ml-2 text-sm font-medium text-gray-700">Yes</span>
                                         </label>
@@ -635,6 +664,7 @@ const CorporateInvestmentForm = ({
                                                 checked={formData.isFinanciallyExposed === 'no'}
                                                 onChange={(e) => handleInputChange('isFinanciallyExposed', e.target.value)}
                                                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                                required
                                             />
                                             <span className="ml-2 text-sm font-medium text-gray-700">No</span>
                                         </label>
@@ -644,7 +674,7 @@ const CorporateInvestmentForm = ({
                                 {formData.isFinanciallyExposed === 'yes' && (
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            Please provide details:
+                                            Please provide details: *
                                         </label>
                                         <textarea
                                             value={formData.financiallyExposedDetails}
@@ -652,6 +682,7 @@ const CorporateInvestmentForm = ({
                                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             placeholder="Provide financial exposure details"
                                             rows="3"
+                                            required
                                         />
                                     </div>
                                 )}
@@ -663,33 +694,36 @@ const CorporateInvestmentForm = ({
                             <h4 className="text-lg font-semibold text-gray-800 mb-4">Bank Account Details</h4>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Name</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Name *</label>
                                     <input
                                         type="text"
                                         value={formData.accountName}
                                         onChange={(e) => handleInputChange('accountName', e.target.value)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter account name"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Account Number *</label>
                                     <input
                                         type="text"
                                         value={formData.accountNumber}
                                         onChange={(e) => handleInputChange('accountNumber', e.target.value)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter account number"
+                                        required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Bank Name *</label>
                                     <input
                                         type="text"
                                         value={formData.bankName}
                                         onChange={(e) => handleInputChange('bankName', e.target.value)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         placeholder="Enter bank name"
+                                        required
                                     />
                                 </div>
                             </div>
@@ -698,7 +732,7 @@ const CorporateInvestmentForm = ({
                         {/* Investor Domicile */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                Investor Area of Domicile
+                                Investor Area of Domicile *
                             </label>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {domicileZones.map((zone) => (
@@ -710,6 +744,7 @@ const CorporateInvestmentForm = ({
                                             checked={formData.investorDomicile === zone.value}
                                             onChange={(e) => handleInputChange('investorDomicile', e.target.value)}
                                             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                            required
                                         />
                                         <span className="ml-3 text-sm font-medium text-gray-700">{zone.label}</span>
                                     </label>
@@ -720,7 +755,7 @@ const CorporateInvestmentForm = ({
                         {/* User Email for Copy */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Your Email (to receive a copy of this application)
+                                Your Email (to receive a copy of this application) *
                             </label>
                             <input
                                 type="email"
@@ -728,6 +763,7 @@ const CorporateInvestmentForm = ({
                                 onChange={(e) => handleInputChange('userEmail', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="Enter your email to receive a copy"
+                                required
                             />
                         </div>
                     </div>
@@ -827,9 +863,10 @@ const CorporateInvestmentForm = ({
                                     checked={formData.agreedToTerms}
                                     onChange={(e) => handleInputChange('agreedToTerms', e.target.checked)}
                                     className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    required
                                 />
                                 <label htmlFor="agreedToTerms" className="text-sm text-gray-700">
-                                    <span className="font-semibold">I/We agree that there will be a pre-liquidation charge of 25% of accrued returns if investment(s) are liquidated before maturity.</span>
+                                    <span className="font-semibold">I/We agree that there will be a pre-liquidation charge of 25% of accrued returns if investment(s) are liquidated before maturity. *</span>
                                 </label>
                             </div>
 
@@ -840,9 +877,10 @@ const CorporateInvestmentForm = ({
                                     checked={formData.agreedToRisks}
                                     onChange={(e) => handleInputChange('agreedToRisks', e.target.checked)}
                                     className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    required
                                 />
                                 <label htmlFor="agreedToRisks" className="text-sm text-gray-700">
-                                    <span className="font-semibold">I/We understand that prices fluctuate and losses in the value of my/our investment may occur and the past performance is not necessarily an indication of future performance.</span>
+                                    <span className="font-semibold">I/We understand that prices fluctuate and losses in the value of my/our investment may occur and the past performance is not necessarily an indication of future performance. *</span>
                                 </label>
                             </div>
                         </div>
@@ -869,7 +907,7 @@ const CorporateInvestmentForm = ({
                 </div>
 
                 {/* Step Indicator */}
-                <div className="bg-white border-b border-gray-200 px-6 py-4">
+                <div className="bg-white border-b border-gray-200 px-2 py-4">
                     <div className="flex items-center justify-between">
                         {steps.map((step, index) => {
                             const IconComponent = step.icon;
@@ -890,7 +928,7 @@ const CorporateInvestmentForm = ({
                                         </div>
                                     </div>
                                     {index < steps.length - 1 && (
-                                        <div className="hidden sm:block w-16 h-0.5 bg-gray-300 mx-4"></div>
+                                        <div className="hidden sm:block w-12 h-0.5 bg-gray-300 mx-4"></div>
                                     )}
                                 </div>
                             );

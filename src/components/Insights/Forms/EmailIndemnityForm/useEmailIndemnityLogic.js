@@ -1,4 +1,4 @@
-// useEmailIndemnityLogic.js
+// useEmailIndemnityLogic.js - Updated with all fields required and fixed validation
 import { useState } from 'react';
 import { EmailIndemnityPDFGenerator } from './EmailIndemnityPDFGenerator';
 import { apiService, apiUtils } from '../../../../services/apiClient';
@@ -86,33 +86,58 @@ export const useEmailIndemnityLogic = (variant, adminEmail) => {
 
     const validateFormLocally = () => {
         console.log('Validating form:', formData);
-        const required = ['preferredEmail', 'agreedToTerms'];
+        const errors = [];
 
-        if (variant === 'corporate') {
-            required.push('companyName', 'primarySignature');
+        // Common required fields
+        if (!formData.preferredEmail) {
+            errors.push('Email address is required');
         } else {
-            required.push('accountHolderName', 'signature');
-        }
-
-        for (let field of required) {
-            if (!formData[field]) {
-                const fieldName = field === 'agreedToTerms' ? 'Agreement to terms' :
-                    field === 'signature' || field === 'primarySignature' ? 'Signature' :
-                        field === 'preferredEmail' ? 'Email address' :
-                            field === 'companyName' ? 'Company name' :
-                                field === 'accountHolderName' ? 'Account holder name' : field;
-                console.log('Validation failed for field:', field, 'Value:', formData[field]);
-                return {
-                    valid: false,
-                    message: `${fieldName} is required`
-                };
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.preferredEmail)) {
+                errors.push('Invalid email format');
             }
         }
 
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.preferredEmail)) {
-            return { valid: false, message: 'Invalid email format' };
+        if (!formData.signatureDate) {
+            errors.push('Signature date is required');
+        }
+
+        if (!formData.agreedToTerms) {
+            errors.push('Agreement to terms is required');
+        }
+
+        // Variant-specific validation
+        if (variant === 'corporate') {
+            if (!formData.companyName || formData.companyName.trim() === '') {
+                errors.push('Company name is required');
+            }
+            if (!formData.primarySignature) {
+                errors.push('First authorized signatory signature is required');
+            }
+            if (!formData.secondarySignature) {
+                errors.push('Second authorized signatory signature is required');
+            }
+        } else {
+            // Individual variant
+            if (!formData.accountHolderName || formData.accountHolderName.trim() === '') {
+                errors.push('Account holder name is required');
+            }
+            if (!formData.preferredPhone || formData.preferredPhone.trim() === '') {
+                errors.push('Preferred phone number is required');
+            }
+            if (!formData.signature) {
+                errors.push('Signature is required');
+            }
+        }
+
+        console.log('Validation errors:', errors);
+
+        if (errors.length > 0) {
+            return {
+                valid: false,
+                message: `Please correct the following errors:\n\n${errors.map(err => `• ${err}`).join('\n')}`
+            };
         }
 
         console.log('Form validation passed');
