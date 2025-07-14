@@ -1,4 +1,4 @@
-// useCorporateInvestmentLogic.js - Updated with Signature Support
+// useCorporateInvestmentLogic.js - Updated with Signature Support and new validation rules
 import { useState } from 'react';
 import { CorporateInvestmentPDFGenerator } from './CorporateInvestmentPDFGenerator';
 import { apiService, apiUtils } from '../../../../services/apiClient';
@@ -257,19 +257,90 @@ export const useCorporateInvestmentLogic = (adminEmail) => {
 
     const validateStep = (step) => {
         switch (step) {
-            case 0: // Investment Info
-                return formData.investmentType && formData.investmentValue && formData.investorType;
-            case 1: // Company Details
-                return formData.companyName && formData.emailAddress && formData.cacNumber;
-            case 2: // Signatories
-                return formData.signatories[0].surname && formData.signatories[0].name;
-            case 3: // Documents & PEP Info
-                return formData.isPep !== '' && formData.isFinanciallyExposed !== '';
-            case 4: // Signatures
-                return formData.companySignature && formData.companySignatureDate &&
-                    formData.signatories[0]?.signature && formData.signatories[0]?.signatureDate;
-            case 5: // Review
+            case 0: // Investment Info - Updated validation
+                // Investment Type is required
+                if (!formData.investmentType) return false;
+
+                // Tenor is required - either from predefined options or custom
+                if (!formData.tenor && !formData.otherTenor) return false;
+
+                // Investor Type is required
+                if (!formData.investorType) return false;
+
+                // Investment Value is optional, so we don't check for it
+                return true;
+
+            case 1: // Company Details - All fields required
+                return formData.companyName &&
+                    formData.emailAddress &&
+                    formData.cacNumber &&
+                    formData.date &&
+                    formData.typeOfBusiness &&
+                    formData.registeredAddress &&
+                    formData.country &&
+                    formData.stateOfOrigin &&
+                    formData.townCity &&
+                    formData.phoneNumber &&
+                    formData.taxId;
+
+            case 2: // Signatories - All fields required
+                return formData.signatories.every(signatory =>
+                    signatory.surname &&
+                    signatory.name &&
+                    signatory.otherName &&
+                    signatory.residentialAddress &&
+                    signatory.nationality &&
+                    signatory.stateOfOrigin &&
+                    signatory.dateOfBirth &&
+                    signatory.gender &&
+                    signatory.employmentDetails &&
+                    signatory.townCity &&
+                    signatory.bvn &&
+                    signatory.emailAddress &&
+                    signatory.mobileNumber &&
+                    signatory.taxId &&
+                    signatory.idType &&
+                    signatory.idNumber &&
+                    signatory.idIssuedDate &&
+                    // ID Expiry Date only required for driver's license and passport
+                    (signatory.idType === 'drivers_license' || signatory.idType === 'international_passport'
+                        ? signatory.idExpiryDate
+                        : true)
+                );
+
+            case 3: // Documents & PEP Info - All fields required
+                // PEP declaration required
+                if (!formData.isPep) return false;
+
+                // If PEP is 'yes', details are required
+                if (formData.isPep === 'yes' && !formData.pepDetails) return false;
+
+                // Financially exposed declaration required
+                if (!formData.isFinanciallyExposed) return false;
+
+                // If financially exposed is 'yes', details are required
+                if (formData.isFinanciallyExposed === 'yes' && !formData.financiallyExposedDetails) return false;
+
+                // Bank details required
+                if (!formData.accountName || !formData.accountNumber || !formData.bankName) return false;
+
+                // Investor domicile required
+                if (!formData.investorDomicile) return false;
+
+                // User email required
+                if (!formData.userEmail) return false;
+
+                return true;
+
+            case 4: // Signatures - Required signatures and dates
+                return formData.companySignature &&
+                    formData.companySignatureDate &&
+                    formData.signatories[0]?.signature &&
+                    formData.signatories[0]?.signatureDate;
+
+            case 5: // Review - Attestations required
                 return formData.agreedToTerms && formData.agreedToRisks;
+
             default:
                 return true;
         }
@@ -336,13 +407,22 @@ export const useCorporateInvestmentLogic = (adminEmail) => {
 
         // Investment Information validation
         if (!formData.investmentType) errors.push('Investment type is required');
-        if (!formData.investmentValue) errors.push('Investment value is required');
+        if (!formData.tenor && !formData.otherTenor) errors.push('Tenor is required');
         if (!formData.investorType) errors.push('Investor type is required');
+        // Investment value is optional
 
-        // Company Information validation
+        // Company Information validation - all required
         if (!formData.companyName) errors.push('Company name is required');
         if (!formData.emailAddress) errors.push('Company email address is required');
         if (!formData.cacNumber) errors.push('CAC/RC number is required');
+        if (!formData.date) errors.push('Date is required');
+        if (!formData.typeOfBusiness) errors.push('Type of business is required');
+        if (!formData.registeredAddress) errors.push('Registered address is required');
+        if (!formData.country) errors.push('Country is required');
+        if (!formData.stateOfOrigin) errors.push('State of origin is required');
+        if (!formData.townCity) errors.push('Town/City is required');
+        if (!formData.phoneNumber) errors.push('Phone number is required');
+        if (!formData.taxId) errors.push('Tax ID is required');
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -353,13 +433,34 @@ export const useCorporateInvestmentLogic = (adminEmail) => {
             errors.push('Invalid user email format');
         }
 
-        // Signatory validation
+        // Signatory validation - all fields required
         if (!formData.signatories || formData.signatories.length === 0) {
             errors.push('At least one signatory is required');
         } else {
             formData.signatories.forEach((signatory, index) => {
                 if (!signatory.surname) errors.push(`Signatory ${index + 1}: Surname is required`);
                 if (!signatory.name) errors.push(`Signatory ${index + 1}: First name is required`);
+                if (!signatory.otherName) errors.push(`Signatory ${index + 1}: Other name is required`);
+                if (!signatory.residentialAddress) errors.push(`Signatory ${index + 1}: Residential address is required`);
+                if (!signatory.nationality) errors.push(`Signatory ${index + 1}: Nationality is required`);
+                if (!signatory.stateOfOrigin) errors.push(`Signatory ${index + 1}: State of origin is required`);
+                if (!signatory.dateOfBirth) errors.push(`Signatory ${index + 1}: Date of birth is required`);
+                if (!signatory.gender) errors.push(`Signatory ${index + 1}: Gender is required`);
+                if (!signatory.employmentDetails) errors.push(`Signatory ${index + 1}: Employment details is required`);
+                if (!signatory.townCity) errors.push(`Signatory ${index + 1}: Town/City is required`);
+                if (!signatory.bvn) errors.push(`Signatory ${index + 1}: BVN is required`);
+                if (!signatory.emailAddress) errors.push(`Signatory ${index + 1}: Email address is required`);
+                if (!signatory.mobileNumber) errors.push(`Signatory ${index + 1}: Mobile number is required`);
+                if (!signatory.taxId) errors.push(`Signatory ${index + 1}: Tax ID is required`);
+                if (!signatory.idType) errors.push(`Signatory ${index + 1}: ID type is required`);
+                if (!signatory.idNumber) errors.push(`Signatory ${index + 1}: ID number is required`);
+                if (!signatory.idIssuedDate) errors.push(`Signatory ${index + 1}: ID issued date is required`);
+
+                // ID Expiry Date only required for driver's license and passport
+                if ((signatory.idType === 'drivers_license' || signatory.idType === 'international_passport') && !signatory.idExpiryDate) {
+                    errors.push(`Signatory ${index + 1}: ID expiry date is required for ${signatory.idType}`);
+                }
+
                 if (index === 0) {
                     if (!signatory.signature) errors.push(`Signatory ${index + 1}: Signature is required`);
                     if (!signatory.signatureDate) errors.push(`Signatory ${index + 1}: Signature date is required`);
@@ -371,9 +472,22 @@ export const useCorporateInvestmentLogic = (adminEmail) => {
         if (!formData.companySignature) errors.push('Company signature is required');
         if (!formData.companySignatureDate) errors.push('Company signature date is required');
 
-        // PEP validation
+        // PEP validation - all required
         if (!formData.isPep) errors.push('PEP declaration is required');
+        if (formData.isPep === 'yes' && !formData.pepDetails) errors.push('PEP details are required when PEP is Yes');
         if (!formData.isFinanciallyExposed) errors.push('Financial exposure declaration is required');
+        if (formData.isFinanciallyExposed === 'yes' && !formData.financiallyExposedDetails) errors.push('Financial exposure details are required when financially exposed is Yes');
+
+        // Bank details validation - all required
+        if (!formData.accountName) errors.push('Account name is required');
+        if (!formData.accountNumber) errors.push('Account number is required');
+        if (!formData.bankName) errors.push('Bank name is required');
+
+        // Investor domicile validation - required
+        if (!formData.investorDomicile) errors.push('Investor domicile is required');
+
+        // User email validation - required
+        if (!formData.userEmail) errors.push('User email is required');
 
         // Attestations validation
         if (!formData.agreedToTerms) errors.push('Agreement to terms is required');

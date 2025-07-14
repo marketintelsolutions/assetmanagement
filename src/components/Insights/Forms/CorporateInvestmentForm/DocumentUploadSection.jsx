@@ -25,14 +25,14 @@ const DocumentUploadSection = ({
           label: "Passport Photograph",
           description: "Passport photograph for all applicants",
           accept: ".jpg,.jpeg,.png",
-          required: false,
+          required: true,
         },
         {
           key: "utilityBill",
           label: "Recent Utility Bill",
           description: "Not more than 3 months old",
           accept: ".pdf,.jpg,.jpeg,.png",
-          required: false,
+          required: true,
         },
         {
           key: "validId",
@@ -40,21 +40,7 @@ const DocumentUploadSection = ({
           description:
             "National ID, Driver's License, International passport, etc.",
           accept: ".pdf,.jpg,.jpeg,.png",
-          required: false,
-        },
-        {
-          key: "boardResolution",
-          label: "Board Resolution",
-          description: "Board resolution (for institutional investors)",
-          accept: ".pdf,.doc,.docx",
-          required: false,
-        },
-        {
-          key: "cacForms",
-          label: "Copy of CAC Forms",
-          description: "CAC Forms (for corporate applicants)",
-          accept: ".pdf,.jpg,.jpeg,.png",
-          required: false,
+          required: true,
         },
       ];
     } else {

@@ -10,7 +10,7 @@ export const MutualFundPDFGenerator = {
         const pageHeight = 297;
         const leftMargin = 15;
         const rightMargin = 15;
-        const bottomMargin = 30; // Increased bottom margin
+        const bottomMargin = 30;
         const contentWidth = pageWidth - leftMargin - rightMargin;
 
         const checkNewPage = (requiredSpace = 25) => {
@@ -55,11 +55,11 @@ export const MutualFundPDFGenerator = {
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
 
-        // Fund options - 3 per row
-        for (let i = 0; i < fundOptions.length; i += 3) {
+        // Fund options - 2 per row (modified)
+        for (let i = 0; i < fundOptions.length; i += 2) {
             checkNewPage(10);
             let xPos = leftMargin;
-            for (let j = 0; j < 3 && (i + j) < fundOptions.length; j++) {
+            for (let j = 0; j < 2 && (i + j) < fundOptions.length; j++) {
                 const fund = fundOptions[i + j];
                 const isChecked = formData.fundType === fund.key;
                 doc.rect(xPos, yPosition - 3, 3, 3);
@@ -69,7 +69,7 @@ export const MutualFundPDFGenerator = {
                     doc.setFillColor(255, 255, 255);
                 }
                 doc.text(fund.label, xPos + 5, yPosition);
-                xPos += 60;
+                xPos += 90; // Increased spacing for 2 items per row
             }
             yPosition += 8;
         }
@@ -105,16 +105,14 @@ export const MutualFundPDFGenerator = {
 
         yPosition += 15;
 
-        // Investor Type
+        // Investor Type (updated to only show retail options)
         checkNewPage(30);
         MutualFundPDFGenerator.addSectionHeader(doc, 'INVESTOR TYPE', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
         const investorTypes = [
             { key: 'retail_domestic', label: 'RETAIL INVESTORS (DOMESTIC)' },
-            { key: 'retail_foreign', label: 'RETAIL INVESTORS (FOREIGN)' },
-            { key: 'institutional_domestic', label: 'INSTITUTIONAL INVESTORS (DOMESTIC)' },
-            { key: 'institutional_foreign', label: 'INSTITUTIONAL INVESTORS (FOREIGN)' }
+            { key: 'retail_foreign', label: 'RETAIL INVESTORS (FOREIGN)' }
         ];
 
         for (let i = 0; i < investorTypes.length; i += 2) {
@@ -136,6 +134,47 @@ export const MutualFundPDFGenerator = {
         }
         yPosition += 15;
 
+        // How did you hear about PAC Asset Management (new section)
+        checkNewPage(30);
+        MutualFundPDFGenerator.addSectionHeader(doc, 'HOW DID YOU HEAR ABOUT PAC ASSET MANAGEMENT?', leftMargin, yPosition, contentWidth);
+        yPosition += 12;
+
+        const hearAboutOptions = [
+            { key: 'referral', label: 'REFERRAL' },
+            { key: 'social_media', label: 'SOCIAL MEDIA' },
+            { key: 'google', label: 'GOOGLE' },
+            { key: 'media', label: 'MEDIA' },
+            { key: 'others', label: 'OTHERS' }
+        ];
+
+        for (let i = 0; i < hearAboutOptions.length; i += 2) {
+            checkNewPage(10);
+            let xPos = leftMargin;
+            for (let j = 0; j < 2 && (i + j) < hearAboutOptions.length; j++) {
+                const option = hearAboutOptions[i + j];
+                const isChecked = formData.hearAbout === option.key;
+                doc.rect(xPos, yPosition - 3, 3, 3);
+                if (isChecked) {
+                    doc.setFillColor(0, 0, 0);
+                    doc.rect(xPos, yPosition - 3, 3, 3, 'F');
+                    doc.setFillColor(255, 255, 255);
+                }
+                doc.text(option.label, xPos + 5, yPosition);
+                xPos += 90;
+            }
+            yPosition += 8;
+        }
+
+        // Additional details if referral or others
+        if (formData.hearAbout === 'referral' || formData.hearAbout === 'others') {
+            yPosition += 5;
+            checkNewPage(15);
+            const detailsLabel = formData.hearAbout === 'referral' ? 'REFERRAL DETAILS:' : 'OTHER DETAILS:';
+            MutualFundPDFGenerator.addFormRow(doc, detailsLabel, formData.hearAboutDetails || '', leftMargin, yPosition, contentWidth);
+            yPosition += 12;
+        }
+        yPosition += 15;
+
         checkNewPage(50);
 
         // Individual Applicant Details
@@ -143,24 +182,37 @@ export const MutualFundPDFGenerator = {
         yPosition += 12;
 
         // Name fields
-        MutualFundPDFGenerator.addFormRowTriple(doc,
+        MutualFundPDFGenerator.addFormRow(doc,
             'SURNAME:', formData.primaryApplicant.surname || '',
+            leftMargin, yPosition, contentWidth
+        );
+
+        yPosition += 12;
+
+        MutualFundPDFGenerator.addFormRowDouble(doc,
             'NAME:', formData.primaryApplicant.name || '',
             'OTHER NAME:', formData.primaryApplicant.otherName || '',
             leftMargin, yPosition, contentWidth
         );
         yPosition += 12;
 
-        checkNewPage(15);
+
+
+        // checkNewPage(15);
         // Residential Address
         MutualFundPDFGenerator.addFormRow(doc, 'RESIDENTIAL ADDRESS:', formData.primaryApplicant.residentialAddress || '', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
         checkNewPage(15);
         // Personal Details Row 1
-        MutualFundPDFGenerator.addFormRowTriple(doc,
+        MutualFundPDFGenerator.addFormRowDouble(doc,
             'NATIONALITY:', formData.primaryApplicant.nationality || '',
             'DATE OF BIRTH:', formData.primaryApplicant.dateOfBirth || '',
+            leftMargin, yPosition, contentWidth
+        );
+        yPosition += 12;
+
+        MutualFundPDFGenerator.addFormRow(doc,
             'OCCUPATION:', formData.primaryApplicant.occupation || '',
             leftMargin, yPosition, contentWidth
         );
@@ -177,9 +229,14 @@ export const MutualFundPDFGenerator = {
             genderText = '☐ Male ☐ Female';
         }
 
-        MutualFundPDFGenerator.addFormRowQuad(doc,
+        MutualFundPDFGenerator.addFormRowDouble(doc,
             'GENDER:', genderText,
             'STATE OF ORIGIN:', formData.primaryApplicant.stateOfOrigin || '',
+            leftMargin, yPosition, contentWidth
+        );
+        yPosition += 12;
+
+        MutualFundPDFGenerator.addFormRowDouble(doc,
             'TOWN/CITY:', formData.primaryApplicant.townCity || '',
             'MOBILE NUMBER:', formData.primaryApplicant.mobileNumber || '',
             leftMargin, yPosition, contentWidth
@@ -188,12 +245,17 @@ export const MutualFundPDFGenerator = {
 
         checkNewPage(15);
         // Email and TIN
-        MutualFundPDFGenerator.addFormRowDouble(doc,
+        MutualFundPDFGenerator.addFormRow(doc,
             'EMAIL ADDRESS:', formData.primaryApplicant.emailAddress || '',
-            'TAX IDENTIFICATION NUMBER (TIN):', formData.primaryApplicant.taxId || '',
             leftMargin, yPosition, contentWidth
         );
         yPosition += 12;
+
+        MutualFundPDFGenerator.addFormRow(doc,
+            'TAX IDENTIFICATION NUMBER:', formData.primaryApplicant.taxId || '',
+            leftMargin, yPosition, contentWidth
+        );
+        yPosition += 15;
 
         checkNewPage(40);
         // Enhanced signature section
@@ -203,7 +265,7 @@ export const MutualFundPDFGenerator = {
             formData.primaryApplicant.signatureDate || '',
             leftMargin, yPosition, contentWidth
         );
-        yPosition += 35;
+        yPosition += 55;
 
         checkNewPage(40);
 
@@ -211,13 +273,34 @@ export const MutualFundPDFGenerator = {
         MutualFundPDFGenerator.addSectionHeader(doc, 'MEANS OF IDENTIFICATION', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
-        MutualFundPDFGenerator.addFormRowQuad(doc,
-            'ID TYPE:', formData.primaryApplicant.idType || '',
-            'ID NUMBER:', formData.primaryApplicant.idNumber || '',
-            'ID ISSUED DATE:', formData.primaryApplicant.idIssuedDate || '',
-            'ID EXPIRY DATE:', formData.primaryApplicant.idExpiryDate || '',
-            leftMargin, yPosition, contentWidth
-        );
+        // Only show expiry date if ID type requires it
+        const requiresExpiry = formData.primaryApplicant.idType === 'drivers_license' ||
+            formData.primaryApplicant.idType === 'international_passport';
+
+        if (requiresExpiry) {
+            MutualFundPDFGenerator.addFormRowDouble(doc,
+                'ID TYPE:', formData.primaryApplicant.idType || '',
+                'ID NUMBER:', formData.primaryApplicant.idNumber || '',
+                leftMargin, yPosition, contentWidth
+            );
+            yPosition += 15;
+            MutualFundPDFGenerator.addFormRowDouble(doc,
+                'ID ISSUED DATE:', formData.primaryApplicant.idIssuedDate || '',
+                'ID EXPIRY DATE:', formData.primaryApplicant.idExpiryDate || '',
+                leftMargin, yPosition, contentWidth
+            );
+        } else {
+            MutualFundPDFGenerator.addFormRowDouble(doc,
+                'ID TYPE:', formData.primaryApplicant.idType || '',
+                'ID NUMBER:', formData.primaryApplicant.idNumber || '',
+                leftMargin, yPosition, contentWidth
+            );
+            yPosition += 15;
+            MutualFundPDFGenerator.addFormRow(doc,
+                'ID ISSUED DATE:', formData.primaryApplicant.idIssuedDate || '',
+                leftMargin, yPosition, contentWidth
+            );
+        }
         yPosition += 15;
 
         checkNewPage(20);
@@ -230,8 +313,13 @@ export const MutualFundPDFGenerator = {
         MutualFundPDFGenerator.addSectionHeader(doc, 'BANK ACCOUNT DETAILS', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
-        MutualFundPDFGenerator.addFormRowTriple(doc,
+        MutualFundPDFGenerator.addFormRow(doc,
             'ACCOUNT NAME:', formData.primaryApplicant.accountName || '',
+            leftMargin, yPosition, contentWidth
+        );
+        yPosition += 12;
+
+        MutualFundPDFGenerator.addFormRowDouble(doc,
             'ACCOUNT NUMBER:', formData.primaryApplicant.accountNumber || '',
             'BANK NAME:', formData.primaryApplicant.bankName || '',
             leftMargin, yPosition, contentWidth
@@ -273,9 +361,10 @@ export const MutualFundPDFGenerator = {
             yPosition += 35;
         }
 
+        checkNewPage(40);
         // New page for additional sections
-        doc.addPage();
-        yPosition = 20;
+        // doc.addPage();
+        yPosition += 15;
 
         // PEP/FEP Information
         MutualFundPDFGenerator.addSectionHeader(doc, 'AUTHENTICATION FOR POLITICALLY EXPOSED AND FINANCIALLY EXPOSED PERSONS', leftMargin, yPosition, contentWidth);
@@ -308,7 +397,7 @@ export const MutualFundPDFGenerator = {
         doc.text('NO', leftMargin + 155, yPosition - 4);
         yPosition += 15;
 
-        checkNewPage(15);
+        // checkNewPage(15);
         // Financially Exposed Question
         doc.text('2. Have you currently / ever been a financially exposed person?', leftMargin, yPosition);
         const finYes = formData.isFinanciallyExposed === 'yes';
@@ -365,22 +454,21 @@ export const MutualFundPDFGenerator = {
         yPosition += 20;
 
         checkNewPage(50);
-        // Documentation Checklist
+        // Documentation Checklist (updated to remove board resolution and CAC forms)
         MutualFundPDFGenerator.addSectionHeader(doc, 'DOCUMENTATION CHECKLIST', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
         const checklistItems = [
             { key: 'passportPhoto', label: 'Passport photograph' },
             { key: 'utilityBill', label: 'Recent Utility Bill' },
-            { key: 'validId', label: 'Valid Means of Identification' },
-            { key: 'boardResolution', label: 'Board Resolution' },
-            { key: 'cacForms', label: 'Copy of CAC Forms' }
+            { key: 'validId', label: 'Valid Means of Identification' }
         ];
 
-        for (let i = 0; i < checklistItems.length; i += 3) {
+        // 2 items per row (modified)
+        for (let i = 0; i < checklistItems.length; i += 2) {
             checkNewPage(10);
             let xPos = leftMargin;
-            for (let j = 0; j < 3 && (i + j) < checklistItems.length; j++) {
+            for (let j = 0; j < 2 && (i + j) < checklistItems.length; j++) {
                 const item = checklistItems[i + j];
                 const isUploaded = formData.uploadedDocuments && formData.uploadedDocuments[item.key];
 
@@ -392,14 +480,14 @@ export const MutualFundPDFGenerator = {
                 }
 
                 doc.text(item.label, xPos + 5, yPosition);
-                xPos += 60;
+                xPos += 90;
             }
             yPosition += 8;
         }
         yPosition += 15;
 
         checkNewPage(45);
-        // Investor Area of Domicile
+        // Investor Area of Domicile (2 items per row)
         MutualFundPDFGenerator.addSectionHeader(doc, 'INVESTORS AREA OF DOMICILE', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
@@ -412,10 +500,10 @@ export const MutualFundPDFGenerator = {
             'SOUTH - EAST ZONE', 'SOUTH - SOUTH ZONE', 'SOUTH - WEST ZONE', 'DIASPORA INVESTORS'
         ];
 
-        for (let i = 0; i < domicileLabels.length; i += 3) {
+        for (let i = 0; i < domicileLabels.length; i += 2) {
             checkNewPage(10);
             let xPos = leftMargin;
-            for (let j = 0; j < 3 && (i + j) < domicileLabels.length; j++) {
+            for (let j = 0; j < 2 && (i + j) < domicileLabels.length; j++) {
                 const index = i + j;
                 const isChecked = formData.investorDomicile === domicileZones[index];
                 doc.rect(xPos, yPosition - 3, 3, 3);
@@ -425,7 +513,7 @@ export const MutualFundPDFGenerator = {
                     doc.setFillColor(255, 255, 255);
                 }
                 doc.text(domicileLabels[index], xPos + 5, yPosition);
-                xPos += 60;
+                xPos += 90;
             }
             yPosition += 8;
         }
@@ -455,7 +543,7 @@ export const MutualFundPDFGenerator = {
         });
         yPosition += 15;
 
-        checkNewPage(45);
+        // checkNewPage(45);
         // For Office Use Only
         MutualFundPDFGenerator.addSectionHeader(doc, 'For Office Use Only', leftMargin, yPosition, contentWidth);
         yPosition += 15;
@@ -497,7 +585,6 @@ export const MutualFundPDFGenerator = {
         const signatureBoxHeight = 25;
         const dateBoxWidth = 50;
         const dateBoxHeight = 8;
-        const rightMargin = 15;
 
         // Position signature box on the right
         const signatureBoxX = x + width - signatureBoxWidth;
@@ -529,12 +616,12 @@ export const MutualFundPDFGenerator = {
 
         // Draw date box and label
         doc.setFontSize(8);
-        doc.text('DATE (DD/MM/YYYY):', dateBoxX, dateBoxY - 2);
-        doc.rect(dateBoxX, dateBoxY, dateBoxWidth, dateBoxHeight);
+        doc.text('DATE (DD/MM/YYYY):', dateBoxX, dateBoxY - 0);
+        doc.rect(dateBoxX, dateBoxY + 2, dateBoxWidth, dateBoxHeight);
 
         // Add date text
         if (signatureDate) {
-            doc.text(signatureDate, dateBoxX + 2, dateBoxY + 5);
+            doc.text(signatureDate, dateBoxX + 2, dateBoxY + 7);
         }
     },
 

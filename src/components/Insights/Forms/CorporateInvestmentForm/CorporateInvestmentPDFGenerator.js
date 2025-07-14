@@ -1,4 +1,4 @@
-// CorporateInvestmentPDFGenerator.js
+// CorporateInvestmentPDFGenerator.js - Updated for institutional investors only
 import jsPDF from 'jspdf';
 
 export const CorporateInvestmentPDFGenerator = {
@@ -54,45 +54,32 @@ export const CorporateInvestmentPDFGenerator = {
         doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
 
-        // Row 1: First 2 investment types
-        let xPos = leftMargin;
-        for (let i = 0; i < 2 && i < investmentTypes.length; i++) {
-            const type = investmentTypes[i];
-            const isChecked = formData.investmentType === type.key;
-            doc.rect(xPos, yPosition - 3, 3, 3);
-            if (isChecked) {
-                doc.setFillColor(0, 0, 0);
-                doc.rect(xPos, yPosition - 3, 3, 3, 'F');
-                doc.setFillColor(255, 255, 255);
+        // Investment types - 2 per row
+        for (let i = 0; i < investmentTypes.length; i += 2) {
+            let xPos = leftMargin;
+            for (let j = 0; j < 2 && (i + j) < investmentTypes.length; j++) {
+                const type = investmentTypes[i + j];
+                const isChecked = formData.investmentType === type.key;
+                doc.rect(xPos, yPosition - 3, 3, 3);
+                if (isChecked) {
+                    doc.setFillColor(0, 0, 0);
+                    doc.rect(xPos, yPosition - 3, 3, 3, 'F');
+                    doc.setFillColor(255, 255, 255);
+                }
+                doc.text(type.label, xPos + 5, yPosition);
+                xPos += 90;
             }
-            doc.text(type.label, xPos + 5, yPosition);
-            xPos += 90;
+            yPosition += 8;
         }
         yPosition += 8;
 
-        // Row 2: Next 2 investment types
-        xPos = leftMargin;
-        for (let i = 2; i < investmentTypes.length; i++) {
-            const type = investmentTypes[i];
-            const isChecked = formData.investmentType === type.key;
-            doc.rect(xPos, yPosition - 3, 3, 3);
-            if (isChecked) {
-                doc.setFillColor(0, 0, 0);
-                doc.rect(xPos, yPosition - 3, 3, 3, 'F');
-                doc.setFillColor(255, 255, 255);
-            }
-            doc.text(type.label, xPos + 5, yPosition);
-            xPos += 90;
-        }
-        yPosition += 12;
-
-        // Tenor - Max 2 per row with better spacing
+        // Tenor - Max 2 per row
         doc.text('TENOR (DAYS):', leftMargin, yPosition);
         yPosition += 8;
 
         const tenorOptions = ['30', '60', '90', '180', '365'];
         for (let i = 0; i < tenorOptions.length; i += 2) {
-            xPos = leftMargin;
+            let xPos = leftMargin;
             for (let j = 0; j < 2 && (i + j) < tenorOptions.length; j++) {
                 const tenor = tenorOptions[i + j];
                 const isChecked = formData.tenor === tenor;
@@ -120,32 +107,28 @@ export const CorporateInvestmentPDFGenerator = {
 
         checkNewPage(40);
 
-        // Investor Type Section - Max 2 per row
+        // Investor Type Section - Updated to only show institutional investors
         CorporateInvestmentPDFGenerator.addSectionHeader(doc, 'INVESTOR TYPE', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
         const investorTypes = [
-            { key: 'retail_domestic', label: 'RETAIL INVESTORS (DOMESTIC)' },
-            { key: 'retail_foreign', label: 'RETAIL INVESTORS (FOREIGN)' },
             { key: 'institutional_domestic', label: 'INSTITUTIONAL INVESTORS (DOMESTIC)' },
             { key: 'institutional_foreign', label: 'INSTITUTIONAL INVESTORS (FOREIGN)' }
         ];
 
-        for (let i = 0; i < investorTypes.length; i += 2) {
-            xPos = leftMargin;
-            for (let j = 0; j < 2 && (i + j) < investorTypes.length; j++) {
-                const type = investorTypes[i + j];
-                const isChecked = formData.investorType === type.key;
-                doc.rect(xPos, yPosition - 3, 3, 3);
-                if (isChecked) {
-                    doc.setFillColor(0, 0, 0);
-                    doc.rect(xPos, yPosition - 3, 3, 3, 'F');
-                    doc.setFillColor(255, 255, 255);
-                }
-                doc.text(type.label, xPos + 5, yPosition);
-                xPos += 90;
+        // Only 2 investor types now, display in one row
+        let xPos = leftMargin;
+        for (let i = 0; i < investorTypes.length; i++) {
+            const type = investorTypes[i];
+            const isChecked = formData.investorType === type.key;
+            doc.rect(xPos, yPosition - 3, 3, 3);
+            if (isChecked) {
+                doc.setFillColor(0, 0, 0);
+                doc.rect(xPos, yPosition - 3, 3, 3, 'F');
+                doc.setFillColor(255, 255, 255);
             }
-            yPosition += 8;
+            doc.text(type.label, xPos + 5, yPosition);
+            xPos += 90;
         }
         yPosition += 15;
 
@@ -169,17 +152,29 @@ export const CorporateInvestmentPDFGenerator = {
 
         checkNewPage(25);
 
-        // Company Name
+        // Company Name - full width
         CorporateInvestmentPDFGenerator.addFormRow(doc, 'COMPANY NAME:', formData.companyName || '', leftMargin, yPosition, contentWidth);
         yPosition += 15;
 
-        // Registered Address
+        // Registered Address - full width, larger
         CorporateInvestmentPDFGenerator.addFormRow(doc, 'REGISTERED ADDRESS:', formData.registeredAddress || '', leftMargin, yPosition, contentWidth, true);
         yPosition += 20;
 
         checkNewPage(25);
 
-        // Email and Phone
+        // Country and State - 2 per row
+        CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
+            'COUNTRY:', formData.country || '',
+            'STATE OF ORIGIN:', formData.stateOfOrigin || '',
+            leftMargin, yPosition, contentWidth
+        );
+        yPosition += 15;
+
+        // Town/City - full width
+        CorporateInvestmentPDFGenerator.addFormRow(doc, 'TOWN/CITY:', formData.townCity || '', leftMargin, yPosition, contentWidth);
+        yPosition += 15;
+
+        // Email and Phone - 2 per row
         CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
             'EMAIL ADDRESS:', formData.emailAddress || '',
             'OFFICE LINE:', formData.phoneNumber || '',
@@ -187,16 +182,15 @@ export const CorporateInvestmentPDFGenerator = {
         );
         yPosition += 15;
 
-        // TIN and Company Signature
+        // TIN - full width
         CorporateInvestmentPDFGenerator.addFormRow(doc,
-            'TAX IDENTIFICATION NUMBER:', formData.taxId || '',
-
+            'TAX IDENTIFICATION NO.:', formData.taxId || '',
             leftMargin, yPosition, contentWidth
         );
-        yPosition += 25;
+        yPosition += 15;
 
+        // Company Signature
         CorporateInvestmentPDFGenerator.addFormRow(doc,
-
             'SIGNATURE & DATE:', formData.companySignatureDate || '',
             leftMargin, yPosition, contentWidth
         );
@@ -220,18 +214,7 @@ export const CorporateInvestmentPDFGenerator = {
             }
         }
 
-        // Country and State
-        CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
-            'COUNTRY:', formData.country || '',
-            'STATE OF ORIGIN:', formData.stateOfOrigin || '',
-            leftMargin, yPosition, contentWidth
-        );
-        yPosition += 15;
-
-        // Town/City - full width
-        CorporateInvestmentPDFGenerator.addFormRow(doc, 'TOWN/CITY:', formData.townCity || '', leftMargin, yPosition, contentWidth);
         yPosition += 20;
-
         checkNewPage(70);
 
         // Account Signatories
@@ -244,7 +227,7 @@ export const CorporateInvestmentPDFGenerator = {
             // Name fields - 2 per row
             CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
                 'SURNAME:', signatory.surname || '',
-                'NAME:', signatory.name || '',
+                'FIRST NAME:', signatory.name || '',
                 leftMargin, yPosition, contentWidth
             );
             yPosition += 15;
@@ -259,7 +242,7 @@ export const CorporateInvestmentPDFGenerator = {
             CorporateInvestmentPDFGenerator.addFormRow(doc, 'RESIDENTIAL ADDRESS:', signatory.residentialAddress || '', leftMargin, yPosition, contentWidth, true);
             yPosition += 20;
 
-            // Nationality and State
+            // Nationality and State - 2 per row
             CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
                 'NATIONALITY:', signatory.nationality || '',
                 'STATE OF ORIGIN:', signatory.stateOfOrigin || '',
@@ -269,14 +252,12 @@ export const CorporateInvestmentPDFGenerator = {
 
             checkNewPage(25);
 
-            // Date of Birth and Gender
+            // Date of Birth and Gender - 2 per row
             let genderText = '';
             if (signatory.gender === 'male') {
-                genderText = 'Male ';
+                genderText = 'Male';
             } else if (signatory.gender === 'female') {
                 genderText = 'Female';
-            } else {
-                genderText = '';
             }
 
             CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
@@ -286,9 +267,9 @@ export const CorporateInvestmentPDFGenerator = {
             );
             yPosition += 15;
 
-            // Employment and Town/City
+            // Employment and Town/City - 2 per row
             CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
-                'EMPLOYMENT DETAILS:', signatory.employmentDetails || '',
+                'EMPLOYMENT DETAIL:', signatory.employmentDetails || '',
                 'TOWN/CITY:', signatory.townCity || '',
                 leftMargin, yPosition, contentWidth
             );
@@ -296,24 +277,23 @@ export const CorporateInvestmentPDFGenerator = {
 
             checkNewPage(25);
 
-            // BVN - full width
-            CorporateInvestmentPDFGenerator.addFormRow(doc, 'BVN:', signatory.bvn || '', leftMargin, yPosition, contentWidth);
-            yPosition += 15;
-
-            // Email and Mobile
+            // BVN and Email - 2 per row
             CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
+                'BVN:', signatory.bvn || '',
                 'EMAIL ADDRESS:', signatory.emailAddress || '',
-                'MOBILE NUMBER:', signatory.mobileNumber || '',
                 leftMargin, yPosition, contentWidth
             );
             yPosition += 15;
 
-            // TIN and Signature Date
-            CorporateInvestmentPDFGenerator.addFormRow(doc,
-                'TAX IDENTIFICATION NUMBER:', signatory.taxId || '',
+            // Mobile Number and TIN - 2 per row
+            CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
+                'MOBILE NUMBER:', signatory.mobileNumber || '',
+                'TAX ID NUMBER:', signatory.taxId || '',
                 leftMargin, yPosition, contentWidth
             );
-            yPosition += 25;
+            yPosition += 15;
+
+            // Signature Date - full width
             CorporateInvestmentPDFGenerator.addFormRow(doc,
                 'SIGNATURE & DATE:', signatory.signatureDate || '',
                 leftMargin, yPosition, contentWidth
@@ -346,7 +326,7 @@ export const CorporateInvestmentPDFGenerator = {
             doc.text('MEANS OF IDENTIFICATION', leftMargin, yPosition);
             yPosition += 8;
 
-            // ID Type and Number
+            // ID Type and Number - 2 per row
             CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
                 'ID TYPE:', signatory.idType || '',
                 'ID NUMBER:', signatory.idNumber || '',
@@ -354,17 +334,25 @@ export const CorporateInvestmentPDFGenerator = {
             );
             yPosition += 15;
 
-            // ID Dates
-            CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
-                'ID ISSUED DATE:', signatory.idIssuedDate || '',
-                'ID EXPIRY DATE:', signatory.idExpiryDate || '',
-                leftMargin, yPosition, contentWidth
-            );
+            // ID Dates - 2 per row (show expiry only if it exists)
+            if (signatory.idExpiryDate) {
+                CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
+                    'ID ISSUED DATE:', signatory.idIssuedDate || '',
+                    'ID EXPIRY DATE:', signatory.idExpiryDate || '',
+                    leftMargin, yPosition, contentWidth
+                );
+            } else {
+                CorporateInvestmentPDFGenerator.addFormRow(doc,
+                    'ID ISSUED DATE:', signatory.idIssuedDate || '',
+                    leftMargin, yPosition, contentWidth
+                );
+            }
             yPosition += 20;
         });
 
+        checkNewPage(35);
         // Start new page for additional information
-        doc.addPage();
+        // doc.addPage();
         yPosition = 20;
 
         // PEP Information
@@ -443,7 +431,7 @@ export const CorporateInvestmentPDFGenerator = {
         CorporateInvestmentPDFGenerator.addSectionHeader(doc, 'BANK ACCOUNT DETAILS', leftMargin, yPosition, contentWidth);
         yPosition += 12;
 
-        // Account Name and Number
+        // Account Name and Number - 2 per row
         CorporateInvestmentPDFGenerator.addFormRowDouble(doc,
             'ACCOUNT NAME:', formData.accountName || '',
             'ACCOUNT NUMBER:', formData.accountNumber || '',
@@ -472,7 +460,7 @@ export const CorporateInvestmentPDFGenerator = {
 
         // Max 2 per row
         for (let i = 0; i < domicileLabels.length; i += 2) {
-            xPos = leftMargin;
+            let xPos = leftMargin;
             for (let j = 0; j < 2 && (i + j) < domicileLabels.length; j++) {
                 const index = i + j;
                 const isChecked = formData.investorDomicile === domicileZones[index];
@@ -505,7 +493,7 @@ export const CorporateInvestmentPDFGenerator = {
 
         // Max 2 per row
         for (let i = 0; i < checklistItems.length; i += 2) {
-            xPos = leftMargin;
+            let xPos = leftMargin;
             for (let j = 0; j < 2 && (i + j) < checklistItems.length; j++) {
                 const item = checklistItems[i + j];
                 const isUploaded = formData.uploadedDocuments && formData.uploadedDocuments[item.key];
@@ -543,7 +531,7 @@ export const CorporateInvestmentPDFGenerator = {
             doc.rect(leftMargin, yPosition - 3, 3, 3, 'F');
             doc.setFillColor(255, 255, 255);
         }
-        doc.text('I/We agree that will be a pre-liquidation charge of 25% of accrued returns', leftMargin + 5, yPosition);
+        doc.text('I/We agree that there will be a pre-liquidation charge of 25% of accrued returns', leftMargin + 5, yPosition);
         yPosition += 4;
         doc.text('if investment(s) are liquidated before maturity.', leftMargin + 5, yPosition);
         yPosition += 12;
