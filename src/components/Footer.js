@@ -70,8 +70,15 @@ const Footer = () => {
                 </div>
               );
             })}
-          </div>
+          </div>  
         </section>
+        <div className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full max-w-[1300px] flex flex-col sm:flex-row gap-2 items-center">
+            <span className="w-fit  text-lg font-normal font-dm_sans  leading-[30px]"></span>
+              <p className="md:w-fix mt-[28px] mb-6  text-left text-l font-normal font-['DM Sans'] leading-[30px]">
+                PAC Asset Management is registered and regulated by the Securities and Exchange Commission, Nigeria.
+              </p>
+              <img src="/sec.jpg" alt="sec" className='h-[70px]' /> 
+          </div>
         <div className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full max-w-[1300px] flex flex-col sm:flex-row gap-10 items-center">
           <span className="w-fit  text-lg font-normal font-dm_sans  leading-[30px]">
             Copyright © {new Date().getFullYear()} PAC Asset Management
