@@ -9,33 +9,43 @@ const mutualfunds = [
     {
         icon: 'balance',
         heading: 'PACAM BALANCED FUND',
-        text: 'This Fund invests in a combination of equities and fixed income instruments giving you a chance to maximize the benefits across these asset classes. The Fund allocation model emphasizes diversification and stability of investment using fixed income asset class to balance out the volatility of equity investments whilst maximizing benefits of both asset classes.'
+        text: 'This Fund invests in a combination of equities and fixed income instruments giving you a chance to maximize the benefits across these asset classes. The Fund allocation model emphasizes diversification and stability of investment using fixed income asset class to balance out the volatility of equity investments whilst maximizing benefits of both asset classes.',
+        documentName: 'ABRIDGED PROSPECTUS_TRUST DEED',
+        documentLink: 'pacam_balanced_fund'
     },
     {
         icon: 'equity',
         heading: 'PACAM Equity Fund',
-        text: 'PACAM Equity Fund is a pure equity fund that invests your money predominantly in a portfolio of Nigerian companies, using a rigorous research-based system. The fund provides long-term capital preservation by investing at least 75% of the fund’s assets in a diversified portfolio of high-quality companies listed on the Nigerian Stock Exchange. To manage liquidity, the fund may also invest up to 23% in short-term money market instruments.'
+        text: 'PACAM Equity Fund is a pure equity fund that invests your money predominantly in a portfolio of Nigerian companies, using a rigorous research-based system. The fund provides long-term capital preservation by investing at least 75% of the fund’s assets in a diversified portfolio of high-quality companies listed on the Nigerian Stock Exchange. To manage liquidity, the fund may also invest up to 23% in short-term money market instruments.',
+        documentName: 'ABRIDGED PROSPECTUS_TRUST DEED',
+        documentLink: 'pacam_equity_fund'
     },
     {
         icon: 'fixed',
         heading: 'PACAM Fixed Income Fund',
-        text: 'PACAM Fixed Income Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds and other investment grade ﬁxed income instruments giving investors opportunity to invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.'
+        text: 'PACAM Fixed Income Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds and other investment grade ﬁxed income instruments giving investors opportunity to invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.',
+        documentName: 'ABRIDGED PROSPECTUS_TRUST DEED',
+        documentLink: 'pacam_fixed_income_fund'
     },
     {
         icon: 'market',
         heading: 'PACAM Money Market Fund',
-        text: 'The PACAM Money Market Fund invests in high-quality short-term Money Market securities such as Treasury Bills, Bank Placements, Commercial Papers, and other money market instruments.'
+        text: 'The PACAM Money Market Fund invests in high-quality short-term Money Market securities such as Treasury Bills, Bank Placements, Commercial Papers, and other money market instruments.',
+        documentName: 'ABRIDGED PROSPECTUS_TRUST DEED',
+        documentLink: 'pacam_money_market_fund'
     },
     {
         icon: 'euro',
         heading: 'PACAM Eurobond Fund',
-        text: 'This Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds, and other investment grade Fixed income instruments giving investor’s opportunity to Invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.'
+        text: 'This Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds, and other investment grade Fixed income instruments giving investor’s opportunity to Invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.',
+        documentName: 'ABRIDGED PROSPECTUS_TRUST DEED',
+        documentLink: 'pacam_eurobond_fund'
     },
 ]
 
 const MutualFundDetails = () => {
     return (
-        <section className='w-full relative'>
+        <section className='w-full relative overflow-x-hidden'>
             <div className=' absolute right-[-20%] Top-[-0%]'>
                 <MobileAnimation animationData={spiralAsh} size={800} />
             </div>
@@ -51,9 +61,14 @@ const MutualFundDetails = () => {
                                     </div>
                                     <h2 className='text-lg md:text-[22px]'>{item.heading}</h2>
                                     <p className='lg:h-[230px] text-center text-sm md:text-base'>{item.text}</p>
-                                    <Link to={'/contact'}>
-                                        <Button text={'CONTACT US'} />
-                                    </Link>
+                                    <div className='flex flex-col items-center gap-0 mt-10'>
+                                        <a href={`/${item.documentLink}.pdf`} target="_blank" rel="noopener noreferrer" className='text-secondaryBlue text-sm md:text-base underline'>
+                                            <span>{item.documentName}</span>
+                                        </a>
+                                        <Link to={'/contact'}>
+                                            <Button text={'CONTACT US'} />
+                                        </Link>
+                                    </div>
                                 </div>
                             </SlideIn>
                         ))
