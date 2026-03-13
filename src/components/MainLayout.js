@@ -13,7 +13,7 @@ const MainLayout = ({ children }) => {
     return (
         <>
             <Navbar />
-            {children}
+            <div className='overflow-x-hidden'>{children}</div>
             <Footer />
             <WhatsAppWidget phoneNumber="+2348111111006" companyName='PACAM Support' replyTimeText='Replies almost immediately' />
 

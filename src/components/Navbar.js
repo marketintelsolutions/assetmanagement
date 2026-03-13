@@ -105,7 +105,7 @@ const Navbar = () => {
                         <a
                             target='_blank'
                             href='https://pac-asset.portal.prod.mywealthcare.io/'>
-                            <button className='text-white text-sm md:text-base bg-secondaryRed min-w-[120px] border  border-secondaryRed hover:bg-white hover:text-primaryBlue  py-3 px-6 rounded-full'>SELF SERVICE</button>
+                            <button className='text-white hidden mb:flex text-xs md:text-base bg-secondaryRed min-w-[120px] border  border-secondaryRed hover:bg-white hover:text-primaryBlue  py-3 px-6 rounded-full'>SELF SERVICE</button>
                         </a>
                         <button onClick={() => setIsMenu((prev) => !prev)} className='text-3xl zr:flex lg:hidden text-primaryBlue'>
                             <span><FiMenu /></span>
