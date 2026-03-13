@@ -28,7 +28,7 @@ const AlternativeInvestment = () => {
                         <SlideIn duration={900} distance={90} direction="left" delay={150}><h1 className='text-2xl md:text-3xl lg:text-4xl'>WHAT WE DO</h1></SlideIn>
                         <SlideIn duration={900} distance={90} direction="right" delay={250}>
                             <p className='mt-10 text-base md:text-xl lg:text-2xl max-w-[600px] text-justify'>Alternative Investment enables our clients to invest in non-conventional asset classes such as commodities, real estate and other investment with special characteristics.</p>
-                            <p className='mt-2 text-base md:text-xl lg:text-2xl max-w-[600px] text-justify'>These products are available to HNIs with medium to long-term investment objectives and a more developed appetite for risk. Qualifying investment start at N100million.</p>
+                            <p className='mt-2 text-base md:text-xl lg:text-2xl max-w-[600px] text-justify'>These products are available to HNIs with medium to long-term investment objectives and a more developed appetite for risk. </p>
 
                         </SlideIn>
 

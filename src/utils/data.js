@@ -734,7 +734,7 @@ export const categorizedFaqData = {
     ],
     "Equity Fund": [
         {
-            question: "What is an equity fund?",
+            question: "What is an Equity Fund?",
             answer: "A mutual fund that invests primarily in shares (stocks) of listed companies. Stocks are usually selected from the different sectors of the economy to reduce risk exposure."
         },
         {
