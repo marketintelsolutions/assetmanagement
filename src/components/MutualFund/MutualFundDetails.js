@@ -16,23 +16,23 @@ const mutualfunds = [
     {
         icon: 'equity',
         heading: 'PACAM Equity Fund',
-        text: ' PEF PACAM Equity Fund is a pure equity fund that invests your money predominantly in a portfolio of Nigerian companies, using a rigorous research-based system. The fund provides long-term capital preservation by investing at least 75% of the fund’s assets in a diversified portfolio of high-quality companies listed on the Nigerian Stock Exchange. To manage liquidity, the fund may also invest up to 23% in short-term money market instruments.',
-        documentName: 'ABRIDGED PROSPECTUS & TRUST DEED',
+        text: 'PACAM Equity Fund is a pure equity fund that invests your money predominantly in a portfolio of Nigerian companies, using a rigorous research-based system. The fund provides long-term capital preservation by investing at least 75% of the fund’s assets in a diversified portfolio of high-quality companies listed on the Nigerian Stock Exchange. To manage liquidity, the fund may also invest up to 23% in short-term money market instruments.',
+        documentName: 'PEF ABRIDGED PROSPECTUS & TRUST DEED',
         documentLink: 'pacam_equity_fund'
     },
     {
         icon: 'fixed',
         heading: 'PACAM Fixed Income Fund',
-        text: 'PFIF PACAM Fixed Income Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds and other investment grade ﬁxed income instruments giving investors opportunity to invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.',
-        documentName: 'ABRIDGED PROSPECTUS & TRUST DEED',
+        text: 'PACAM Fixed Income Fund invests in Fixed Income instruments such as FGN Bonds, Sub National Bonds, Corporate Bonds and other investment grade ﬁxed income instruments giving investors opportunity to invest in secure and high yielding Bonds offered by Federal and State Governments of Nigeria and large Corporates.',
+        documentName: 'PFIF ABRIDGED PROSPECTUS & TRUST DEED',
         documentLink: 'pacam_fixed_income_fund'
     },
     {
         icon: 'market',
         heading: 'PACAM Money Market Fund',
         text: 'The PACAM Money Market Fund invests in high-quality short-term Money Market securities such as Treasury Bills, Bank Placements, Commercial Papers, and other money market instruments.',
-        documentName: 'ABRIDGED PROSPECTUS & TRUST DEED',
-        documentLink: 'PMMF pacam_money_market_fund'
+        documentName: 'PMMF ABRIDGED PROSPECTUS & TRUST DEED',
+        documentLink: 'pacam_money_market_fund'
     },
     {
         icon: 'euro',
