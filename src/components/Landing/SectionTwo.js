@@ -21,7 +21,7 @@ const SectionTwo = () => {
                         <div className='md:max-w-[500px] px-6 md:px-10 lg:px-0'>
                             <h1 className='uppercase text-3xl font-poppins'>INVEST FOR YOUR CHILDREN'S FUTURE: OPEN A GIFT MUTUAL FUND TODAY</h1>
                             <p className='text-lg mt-5, text-justify'>Money can be a great gift for a loved one. How it will be appreciated, however, depends on how much thought goes into it. A great way to gift money is in the form of an investment.</p>
-                            <a target='_blank' href='https://cp-pac.zanibal.com/'><Button>Invest Now</Button></a>
+                            <a target='_blank' href='https://pac-asset.portal.prod.mywealthcare.io/'><Button>Invest Now</Button></a>
                         </div>
                     </SlideIn>
                     <SlideIn duration={900} distance={90} direction="right" delay={350}>
