@@ -1,6 +1,5 @@
 {
   "buildCommand": "CI=false GENERATE_SOURCEMAP=false yarn build",
   "outputDirectory": "build",
-  "framework": "create-react-app",
-  "maxDuration": 300
+  "framework": "create-react-app"
 }
