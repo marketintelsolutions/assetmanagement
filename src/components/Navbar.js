@@ -37,7 +37,7 @@ const Navbar = () => {
             </div>
             <nav onMouseLeave={() => setIsItems(false)} className='sticky z-[99] top-0 left-0 bg-white w-full  py-2'>
                 <div className='py-6 text-primaryBlue px-6 md:px-10 xl:px-0 max-w-max mx-auto flex gap-5 justify-between items-center'>
-                    <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className='max-w-[200px] md:max-w-[250px]' /></Link>
+                    <Link to={'/'} className='text-4xl font-bold'><img src="/logo.png" alt="logo" className='max-w-[150px] mb:max-w-[200px] md:max-w-[250px]' /></Link>
                     <div className={`absolute lg:static zr:top-[100%] lg:top-auto lg:bg-transparent bg-[#00000065] zr:w-full lg:w-auto lg:left-auto zr:left-0 px-6 md:px-10 lg:px-0 py-10 lg:py-0 flex gap-10 lg:gap-12 xl:gap-20 backdrop-blur-[2px] lg:backdrop-blur-none justify-between zr:flex-col lg:flex-row ${isMenu ? 'flex' : 'zr:hidden lg:flex'}`}>
                         {
                             navData.map((item, index) => {
@@ -101,13 +101,13 @@ const Navbar = () => {
                             )
                         }
                     </div>
-                    <div className='flex'>
+                    <div className='flex items-center gap-4'>
                         <a
                             target='_blank'
                             href='https://pac-asset.portal.prod.mywealthcare.io/'>
-                            <button className='text-white hidden mb:flex text-xs md:text-base bg-secondaryRed min-w-[120px] border  border-secondaryRed hover:bg-white hover:text-primaryBlue  py-3 px-6 rounded-full'>SELF SERVICE</button>
+                            <button className='text-secondaryRed mb:text-white flex text-xs md:text-base mb:bg-secondaryRed mb:min-w-[120px] mb:border font-semibold mb:font-normal  border-secondaryRed hover:bg-white hover:text-primaryBlue  mb:py-3 mb:px-6 rounded-full'>SELF SERVICE</button>
                         </a>
-                        <button onClick={() => setIsMenu((prev) => !prev)} className='text-3xl zr:flex lg:hidden text-primaryBlue'>
+                        <button onClick={() => setIsMenu((prev) => !prev)} className='text-2xl mb:text-3xl zr:flex lg:hidden text-primaryBlue'>
                             <span><FiMenu /></span>
                         </button>
                     </div>
