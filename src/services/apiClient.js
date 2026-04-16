@@ -423,6 +423,32 @@ export const apiService = {
         },
     },
 
+    // Contact form methods
+    contact: {
+        submit: async (formData, adminEmail) => {
+            try {
+                const response = await apiClient.post('/contact/submit', {
+                    formData,
+                    adminEmail,
+                });
+                return response.data;
+            } catch (error) {
+                console.error('Contact form submission error:', error);
+                throw error;
+            }
+        },
+
+        healthCheck: async () => {
+            try {
+                const response = await apiClient.get('/contact/health');
+                return response.data;
+            } catch (error) {
+                console.error('Contact health check error:', error);
+                throw error;
+            }
+        },
+    },
+
     // Email methods
     email: {
         sendTest: async (testEmail) => {

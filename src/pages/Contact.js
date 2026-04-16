@@ -1,12 +1,61 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { IoLocationOutline, IoMailOutline } from 'react-icons/io5'
 import { LuPhone } from 'react-icons/lu'
 import Hero from '../components/Landing/Hero'
 import SlideIn from '../components/SlideIn'
 import MobileAnimation from '../components/MobileAnimation'
 import spiralAsh from "../utils/animations/spiral_ash.json";
+import { apiService, apiUtils } from '../services/apiClient'
+
+const ADMIN_EMAIL = 'info@pacassetmanagement.com'
+
+const initialForm = { name: '', email: '', phone: '', subject: '', message: '' }
 
 const Contact = () => {
+    const [formData, setFormData] = useState(initialForm)
+    const [errors, setErrors] = useState({})
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [status, setStatus] = useState(null) // 'success' | 'error'
+
+    const validate = () => {
+        const newErrors = {}
+        if (!formData.name.trim()) newErrors.name = 'Name is required'
+        if (!formData.email.trim()) newErrors.email = 'Email is required'
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+            newErrors.email = 'Enter a valid email address'
+        if (!formData.subject.trim()) newErrors.subject = 'Subject is required'
+        if (!formData.message.trim()) newErrors.message = 'Message is required'
+        return newErrors
+    }
+
+    const handleChange = (e) => {
+        const { id, value } = e.target
+        setFormData(prev => ({ ...prev, [id]: value }))
+        if (errors[id]) setErrors(prev => ({ ...prev, [id]: undefined }))
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const validationErrors = validate()
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors)
+            return
+        }
+
+        setIsSubmitting(true)
+        setStatus(null)
+
+        try {
+            await apiService.contact.submit(formData, ADMIN_EMAIL)
+            setStatus('success')
+            setFormData(initialForm)
+        } catch (error) {
+            console.error('Contact form error:', error)
+            setStatus('error')
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
 
     return (
         <section className='w-full relative overflow-hidden'>
@@ -48,29 +97,85 @@ const Contact = () => {
 
                     <div className='w-full lg:max-w-[50%]'>
                         <SlideIn duration={900} distance={90} direction="right" delay={300}>
-                            <form className='w-full flex flex-col gap-5 md:gap-10 px-5 py-8 md:py-10 md:px-10 rounded-[10px] bg-white shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)]'>
+                            <form onSubmit={handleSubmit} className='w-full flex flex-col gap-5 md:gap-10 px-5 py-8 md:py-10 md:px-10 rounded-[10px] bg-white shadow-[0px_0px_15px_5px_rgba(0,0,0,0.1)]'>
                                 <h2 className='text-xl font-semibold'>Send us a mail</h2>
-                                <div className='w-full flex flex-col gap-4'>
+
+                                {status === 'success' && (
+                                    <div className='bg-green-50 border border-green-400 text-green-800 rounded-lg px-4 py-3 text-sm'>
+                                        Your message has been sent! We'll get back to you within 1–2 business days.
+                                    </div>
+                                )}
+                                {status === 'error' && (
+                                    <div className='bg-red-50 border border-red-400 text-red-800 rounded-lg px-4 py-3 text-sm'>
+                                        Something went wrong. Please try again or email us directly at info@pacassetmanagement.com.
+                                    </div>
+                                )}
+
+                                <div className='w-full flex flex-col gap-2'>
                                     <label htmlFor="name" className='text-[15px] font-semibold text-gray-400'>Your name</label>
-                                    <input type="text" id='name' className='focus:outline-none  focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)]  text-base w-full' />
+                                    <input
+                                        type="text"
+                                        id='name'
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)] text-base w-full'
+                                    />
+                                    {errors.name && <p className='text-red-500 text-xs mt-1'>{errors.name}</p>}
                                 </div>
-                                <div className='w-full flex flex-col gap-4'>
+
+                                <div className='w-full flex flex-col gap-2'>
                                     <label htmlFor="email" className='text-[15px] font-semibold text-gray-400'>Email Address</label>
-                                    <input type="email" id='email' className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)]  text-sm w-full' />
+                                    <input
+                                        type="email"
+                                        id='email'
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)] text-sm w-full'
+                                    />
+                                    {errors.email && <p className='text-red-500 text-xs mt-1'>{errors.email}</p>}
                                 </div>
-                                <div className='w-full flex flex-col gap-4'>
+
+                                <div className='w-full flex flex-col gap-2'>
                                     <label htmlFor="phone" className='text-[15px] font-semibold text-gray-400'>Phone number</label>
-                                    <input type="number" id='phone' className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)] text-sm w-full' />
+                                    <input
+                                        type="tel"
+                                        id='phone'
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)] text-sm w-full'
+                                    />
                                 </div>
-                                <div className='w-full flex flex-col gap-4'>
+
+                                <div className='w-full flex flex-col gap-2'>
                                     <label htmlFor="subject" className='text-[15px] font-semibold text-gray-400'>Subject</label>
-                                    <input type="text" id='subject' className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)] text-sm w-full' />
+                                    <input
+                                        type="text"
+                                        id='subject'
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        className='focus:outline-none focus:border-black pb-4 rounded-full px-4 py-5 bg-[rgba(194,196,200,0.48)] text-sm w-full'
+                                    />
+                                    {errors.subject && <p className='text-red-500 text-xs mt-1'>{errors.subject}</p>}
                                 </div>
-                                <div className='w-full flex flex-col gap-4 mt-0'>
+
+                                <div className='w-full flex flex-col gap-2 mt-0'>
                                     <label htmlFor="message" className='text-[15px] font-semibold text-gray-400'>Your Message</label>
-                                    <textarea type="text" id='message' className='h-[120px] resize-none focus:outline-none focus:border-black pb-4 rounded-[10px] px-4 py-5 bg-[rgba(194,196,200,0.48)]  text-sm w-full' />
+                                    <textarea
+                                        id='message'
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        className='h-[120px] resize-none focus:outline-none focus:border-black pb-4 rounded-[10px] px-4 py-5 bg-[rgba(194,196,200,0.48)] text-sm w-full'
+                                    />
+                                    {errors.message && <p className='text-red-500 text-xs mt-1'>{errors.message}</p>}
                                 </div>
-                                <button type='button' className='w-full py-4 mt-10 rounded-full border border-secondaryRed hover:text-secondaryRed bg-secondaryRed  text-white hover:border-primaryBlue hover:bg-white  '>Send Message</button>
+
+                                <button
+                                    type='submit'
+                                    disabled={isSubmitting}
+                                    className='w-full py-4 mt-10 rounded-full border border-secondaryRed hover:text-secondaryRed bg-secondaryRed text-white hover:border-primaryBlue hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition-colors'
+                                >
+                                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                                </button>
                             </form>
                         </SlideIn>
                     </div>
