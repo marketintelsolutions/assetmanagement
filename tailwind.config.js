@@ -25,6 +25,15 @@ module.exports = {
         lg: "991px",
         xl: "1280px",
       },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 50s linear infinite',
+      },
     },
   },
   plugins: [],

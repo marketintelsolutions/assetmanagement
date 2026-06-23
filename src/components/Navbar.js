@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { navData } from '../utils/data'
 import { Link } from 'react-router-dom'
 import { FaAngleDown, FaInstagram, FaLinkedin, FaPhone } from 'react-icons/fa6'
@@ -6,10 +6,60 @@ import { IoLogoFacebook, IoMail } from 'react-icons/io5'
 import { FiMenu } from 'react-icons/fi'
 import Button from '../components/ui/Button'
 
+const FUND_CODES = [
+    { label: 'PACAM MMF', code: 'PMMF' },
+    { label: 'PACAM BF', code: 'PACAM_BF' },
+    { label: 'PACAM FIF', code: 'PFIF' },
+    { label: 'PACAM EqF', code: 'PEF' },
+    { label: 'PACAM EuF', code: 'PEUF' },
+]
+
+const fetchDaemonToken = async () => {
+    const res = await fetch('https://api.prod.mywealthcare.io/administration/api/v1/users/token/daemon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: process.env.REACT_APP_FUNDS_API_USERNAME,
+            password: process.env.REACT_APP_FUNDS_API_PASSWORD,
+            tenant: process.env.REACT_APP_FUNDS_API_TENANT,
+        }),
+    })
+    const data = await res.json()
+    return data.access_token
+}
+
+const fetchFundByCode = async (code, token) => {
+    const res = await fetch(`https://api.prod.mywealthcare.io/funds/api/v1/funds/code/${code}`, {
+        headers: { Authorization: `Bearer ${token}`, 'x-tenant-id': 'pac-asset' },
+    })
+    return res.json()
+}
+
 const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [activeItem, setActiveItem] = useState([])
     const [isItems, setIsItems] = useState(false)
+    const [liveFunds, setLiveFunds] = useState(FUND_CODES.map(f => ({ label: f.label, value: '₦ —' })))
+
+    useEffect(() => {
+        const loadFunds = async () => {
+            try {
+                const token = await fetchDaemonToken()
+                const results = await Promise.all(FUND_CODES.map(f => fetchFundByCode(f.code, token)))
+                setLiveFunds(FUND_CODES.map((f, i) => ({
+                    label: f.label,
+                    value: results[i]?.bidPrice != null
+                        ? `₦${Number(results[i].bidPrice).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}`
+                        : '—',
+                })))
+            } catch (e) {
+                console.error('Failed to load live fund prices', e)
+            }
+        }
+        loadFunds()
+        const interval = setInterval(loadFunds, 60 * 60 * 1000)
+        return () => clearInterval(interval)
+    }, [])
 
     const handleItemsToggle = (item) => {
         setIsItems(true)
@@ -114,6 +164,18 @@ const Navbar = () => {
                     {/*  */}
                 </div>
             </nav >
+            <div className='bg-primaryBlue text-white py-2 overflow-hidden'>
+                <div className='flex w-max animate-marquee'>
+                    {Array.from({ length: 8 }).flatMap((_, copy) =>
+                        liveFunds.map((item, index) => (
+                            <div key={`${copy}-${index}`} className='flex items-center gap-2 px-8 whitespace-nowrap text-sm md:text-base border-r border-white'>
+                                <span className='font-semibold '>{item.label}</span>
+                                <span className='text-sm text-secondaryRed'>{item.value}</span>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
         </>
     )
 }
