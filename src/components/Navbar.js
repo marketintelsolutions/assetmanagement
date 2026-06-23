@@ -7,12 +7,15 @@ import { FiMenu } from 'react-icons/fi'
 import Button from '../components/ui/Button'
 
 const FUND_CODES = [
-    { label: 'PACAM MMF', code: 'PMMF' },
-    { label: 'PACAM BF', code: 'PACAM_BF' },
-    { label: 'PACAM FIF', code: 'PFIF' },
-    { label: 'PACAM EqF', code: 'PEF' },
-    { label: 'PACAM EuF', code: 'PEUF' },
+    { label: 'PACAM MMF', code: 'PMMF', display: 'yield' },
+    { label: 'PACAM BF', code: 'PACAM_BF', display: 'bidOffer' },
+    { label: 'PACAM FIF', code: 'PFIF', display: 'bidOffer' },
+    { label: 'PACAM EqF', code: 'PEF', display: 'bidOffer' },
+    { label: 'PACAM EuF', code: 'PEUF', display: 'bidOffer' },
 ]
+
+const formatNGN = (val) =>
+    `₦${Number(val).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}`
 
 const fetchDaemonToken = async () => {
     const res = await fetch('https://api.prod.mywealthcare.io/administration/api/v1/users/token/daemon', {
@@ -42,22 +45,37 @@ const Navbar = () => {
     const [liveFunds, setLiveFunds] = useState(FUND_CODES.map(f => ({ label: f.label, value: '₦ —' })))
 
     useEffect(() => {
+        let token = null
+        let tokenFetchedAt = 0
+        const TOKEN_TTL = 55 * 60 * 1000 // refresh token 5 min before 1hr expiry
+
         const loadFunds = async () => {
             try {
-                const token = await fetchDaemonToken()
+                if (!token || Date.now() - tokenFetchedAt > TOKEN_TTL) {
+                    token = await fetchDaemonToken()
+                    tokenFetchedAt = Date.now()
+                }
                 const results = await Promise.all(FUND_CODES.map(f => fetchFundByCode(f.code, token)))
-                setLiveFunds(FUND_CODES.map((f, i) => ({
-                    label: f.label,
-                    value: results[i]?.bidPrice != null
-                        ? `₦${Number(results[i].bidPrice).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}`
-                        : '—',
-                })))
+                setLiveFunds(FUND_CODES.map((f, i) => {
+                    const r = results[i]
+                    if (f.display === 'yield') {
+                        return {
+                            label: f.label,
+                            value: r?.yield != null ? `${Number(r.yield).toFixed(2)}%` : '—',
+                        }
+                    }
+                    return {
+                        label: f.label,
+                        bid: r?.bidPrice != null ? formatNGN(r.bidPrice) : '—',
+                        offer: r?.offerPrice != null ? formatNGN(r.offerPrice) : '—',
+                    }
+                }))
             } catch (e) {
                 console.error('Failed to load live fund prices', e)
             }
         }
         loadFunds()
-        const interval = setInterval(loadFunds, 60 * 60 * 1000)
+        const interval = setInterval(loadFunds, 5 * 60 * 1000) // refresh fund prices every 5 minutes
         return () => clearInterval(interval)
     }, [])
 
@@ -169,8 +187,20 @@ const Navbar = () => {
                     {Array.from({ length: 8 }).flatMap((_, copy) =>
                         liveFunds.map((item, index) => (
                             <div key={`${copy}-${index}`} className='flex items-center gap-2 px-8 whitespace-nowrap text-sm md:text-base border-r border-white'>
-                                <span className='font-semibold '>{item.label}</span>
-                                <span className='text-sm text-secondaryRed'>{item.value}</span>
+                                <span className='font-semibold'>{item.label}</span>
+                                {item.bid !== undefined ? (
+                                    <>
+                                        <span className='text-xs text-gray-300'>Bid</span>
+                                        <span className='text-sm text-secondaryRed'>{item.bid}</span>
+                                        <span className='text-xs text-gray-300'>Offer</span>
+                                        <span className='text-sm text-secondaryRed'>{item.offer}</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className='text-xs text-gray-300'>Yield</span>
+                                        <span className='text-sm text-secondaryRed'>{item.value}</span>
+                                    </>
+                                )}
                             </div>
                         ))
                     )}
