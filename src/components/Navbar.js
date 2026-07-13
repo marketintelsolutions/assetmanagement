@@ -7,11 +7,11 @@ import { FiMenu } from 'react-icons/fi'
 import Button from '../components/ui/Button'
 
 const FUND_CODES = [
-    { label: 'PACAM MMF -', code: 'PMMF', display: 'yield' },
-    { label: 'PACAM BF - ', code: 'PACAM_BF', display: 'bidOffer' },
-    { label: 'PACAM FIF - ', code: 'PFIF', display: 'bidOffer' },
-    { label: 'PACAM EqF - ', code: 'PEF', display: 'bidOffer' },
-    { label: 'PACAM EuF - ', code: 'PEUF', display: 'bidOffer' },
+    { label: 'PACAM MMF', code: 'PMMF', display: 'yield' },
+    { label: 'PACAM BF', code: 'PACAM_BF', display: 'bidOffer' },
+    { label: 'PACAM FIF', code: 'PFIF', display: 'bidOffer' },
+    { label: 'PACAM EqF', code: 'PEF', display: 'bidOffer' },
+    { label: 'PACAM EuF', code: 'PEUF', display: 'bidOffer' },
 ]
 
 const formatNGN = (val) =>
@@ -42,7 +42,11 @@ const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [activeItem, setActiveItem] = useState([])
     const [isItems, setIsItems] = useState(false)
-    const [liveFunds, setLiveFunds] = useState(FUND_CODES.map(f => ({ label: f.label, value: '₦ —' })))
+    const [liveFunds, setLiveFunds] = useState(FUND_CODES.map(f =>
+        f.display === 'yield'
+            ? { label: f.label, value: '—' }
+            : { label: f.label, bid: '—', offer: '—' }
+    ))
 
     useEffect(() => {
         let token = null
