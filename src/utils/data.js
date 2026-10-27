@@ -442,7 +442,7 @@ export const footerData = [
         items: [
 
             {
-                text: "Plot 8A, Elsie Femi Pearse, Off Adeola Odeku, Victoria Island, Lagos.",
+                text: "4th Floor, 999C Danmole Street, Off Idejo Street, Victoria Island, Lagos.",
                 icon: false,
                 path: "",
             },
