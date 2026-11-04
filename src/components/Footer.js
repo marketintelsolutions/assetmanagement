@@ -79,10 +79,15 @@ const Footer = () => {
               </p>
               {/* <img src="/sec.jpg" alt="sec" className='h-[70px]' />  */}
           </div>
-        <div className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full max-w-[1300px] flex flex-col sm:flex-row gap-10 items-center">
+        <div className="py-[25px] border-t-[1px] border-[#D9DBE9] mx-auto w-full max-w-[1300px] flex flex-col sm:flex-row gap-2 sm:gap-6 items-center">
           <span className="w-fit  text-lg font-normal font-dm_sans  leading-[30px]">
             Copyright © {new Date().getFullYear()} PAC Asset Management
           </span>
+          <span aria-hidden="true" className="hidden sm:inline text-lg text-[#D9DBE9]">|</span>
+          <span className="w-fit text-lg font-normal font-dm_sans leading-[30px] text-center sm:text-left">
+            A subsidiary of PanAfrican Capital Holding Company
+          </span>
+          <span aria-hidden="true" className="hidden sm:inline text-lg text-[#D9DBE9]">|</span>
           <span onClick={ndprModal.open} className="cursor-pointer text-secondaryBlue font-medium text-lg">NDPR</span>
         </div>
       </article>
