@@ -123,7 +123,7 @@ const Navbar = () => {
                                                 setIsItems(false)
                                             }
                                         }}
-                                        className='text-white lg:text-primaryBlue flex justify-between border-b lg:border-none border-white pb-3 lg:pb-0'
+                                        className='group text-white lg:text-primaryBlue flex items-center justify-between border-b lg:border-none border-white pb-3 lg:pb-0 cursor-pointer'
                                     >
                                         <Link
                                             to={item.path}
@@ -131,13 +131,15 @@ const Navbar = () => {
                                                 setIsMenu((prev) => !prev)
                                                 setIsItems(false)
                                             }}
+                                            className='relative py-1 transition-colors duration-300 hover:text-secondaryBlue'
                                         >
                                             <span
-                                                className='text-[15px] xl:text-base'>
+                                                className={`text-[15px] xl:text-base transition-colors duration-300 group-hover:text-secondaryBlue ${isItems && activeItem.text === item.text ? 'text-secondaryBlue' : ''}`}>
                                                 {item.text}
                                             </span>
+                                            <span className={`hidden lg:block absolute left-0 -bottom-1 h-[2px] bg-secondaryBlue transition-all duration-300 ease-out group-hover:w-full ${isItems && activeItem.text === item.text ? 'w-full' : 'w-0'}`} />
                                         </Link>
-                                        {item.items && <span onClick={() => handleItemsToggle(item)} className=' zr:flex lg:hidden'><FaAngleDown /></span>}
+                                        {item.items && <span onClick={() => handleItemsToggle(item)} className={`zr:flex lg:hidden transition-transform duration-300 ${isItems && activeItem.text === item.text ? 'rotate-180' : ''}`}><FaAngleDown /></span>}
                                     </div >
                                     {isItems && activeItem.text === item.text &&
                                         <div className='lg:absolute z-10 w-full h-fit top-full left-0 pt-0 lg:pt-20 lg:pb-20 lg:bg-[#0000008a] '>
@@ -145,19 +147,19 @@ const Navbar = () => {
                                                 {
                                                     activeItem.items && activeItem.items.map((item, index) => (
                                                         <div key={index} className='w-full max-w-[250px] flex flex-col '>
-                                                            <h2 className='text-lg md:text-xl text-white border-b-2 pb-3'>{item.heading}</h2>
+                                                            <h2 className='text-lg md:text-xl text-white border-b-2 border-secondaryBlue pb-3'>{item.heading}</h2>
 
                                                             <div className='flex flex-col text-white'>
                                                                 {
                                                                     item.links.map((item) => {
                                                                         if (item.external) {
-                                                                            return <a href={item.path} target='_blank' className='text-sm capitalize py-3 border-b border-[#a09d9d]' >{item.text}</a>
+                                                                            return <a href={item.path} target='_blank' className='text-sm capitalize py-3 border-b border-[#a09d9d] transition-all duration-300 hover:text-secondaryBlue hover:pl-2 hover:border-secondaryBlue' >{item.text}</a>
                                                                         }
                                                                         return <Link onClick={() => {
                                                                             setIsItems(false)
                                                                             setIsMenu(false)
                                                                         }
-                                                                        } to={item.path} className='text-sm capitalize py-3 border-b border-[#a09d9d]'>{item.text}</Link>
+                                                                        } to={item.path} className='text-sm capitalize py-3 border-b border-[#a09d9d] transition-all duration-300 hover:text-secondaryBlue hover:pl-2 hover:border-secondaryBlue'>{item.text}</Link>
                                                                     })
                                                                 }
                                                             </div>
