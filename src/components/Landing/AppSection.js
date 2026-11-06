@@ -50,13 +50,15 @@ const AppSection = () => {
                                 <span className='text-base'>App Store</span>
                             </p>
                         </button>
-                        <button className='flex items-center gap-2 py-1 px-4 bg-black text-white rounded-[8px]'>
-                            <span><FaGooglePlay size={30} /></span>
-                            <p className='flex flex-col items-start'>
-                                <span className='text-[10px] font-light'>GET IT ON</span>
-                                <span className='text-base'>Google Play</span>
-                            </p>
-                        </button>
+                        <a href='https://play.google.com/store/apps/details?id=com.pacmobile' target='_blank'>
+                            <button className='flex items-center gap-2 py-1 px-4 bg-black text-white rounded-[8px]'>
+                                <span><FaGooglePlay size={30} /></span>
+                                <p className='flex flex-col items-start'>
+                                    <span className='text-[10px] font-light'>GET IT ON</span>
+                                    <span className='text-base'>Google Play</span>
+                                </p>
+                            </button>
+                        </a>
                     </div>
                     <div className='flex gap-5 items-center'>
                         <p className='font-normal text-sm'>Approved by SEC</p>
