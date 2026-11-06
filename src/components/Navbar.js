@@ -7,7 +7,7 @@ import { FiMenu } from 'react-icons/fi'
 import Button from '../components/ui/Button'
 
 const FUND_CODES = [
-    { label: 'PACAM MMF', code: 'PMMF', display: 'yield' },
+    { label: 'PACAM MMF', code: 'PMMF', display: 'bidOffer' },
     { label: 'PACAM BF', code: 'PACAM_BF', display: 'bidOffer' },
     { label: 'PACAM FIF', code: 'PFIF', display: 'bidOffer' },
     { label: 'PACAM EqF', code: 'PEF', display: 'bidOffer' },
@@ -31,11 +31,26 @@ const fetchDaemonToken = async () => {
     return data.access_token
 }
 
-const fetchFundByCode = async (code, token) => {
-    const res = await fetch(`https://api.prod.mywealthcare.io/funds/api/v1/funds/code/${code}`, {
+// Previous per-fund endpoint (one request per fund), replaced by fetchFundsList below
+// const fetchFundByCode = async (code, token) => {
+//     const res = await fetch(`https://api.prod.mywealthcare.io/funds/api/v1/funds/code/${code}`, {
+//         headers: { Authorization: `Bearer ${token}`, 'x-tenant-id': 'pac-asset' },
+//     })
+//     return res.json()
+// }
+
+const formatPrice = (val, currency) =>
+    currency === 'USD'
+        ? `$${Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}`
+        : formatNGN(val)
+
+const fetchFundsList = async (token) => {
+    const res = await fetch('https://api.prod.mywealthcare.io/position/api/v1/funds/list', {
         headers: { Authorization: `Bearer ${token}`, 'x-tenant-id': 'pac-asset' },
     })
-    return res.json()
+    if (!res.ok) throw new Error(`Funds list request failed: ${res.status}`)
+    const data = await res.json()
+    return data?.content ?? []
 }
 
 const Navbar = () => {
@@ -59,9 +74,28 @@ const Navbar = () => {
                     token = await fetchDaemonToken()
                     tokenFetchedAt = Date.now()
                 }
-                const results = await Promise.all(FUND_CODES.map(f => fetchFundByCode(f.code, token)))
-                setLiveFunds(FUND_CODES.map((f, i) => {
-                    const r = results[i]
+                // Previous approach: one request per fund
+                // const results = await Promise.all(FUND_CODES.map(f => fetchFundByCode(f.code, token)))
+                // setLiveFunds(FUND_CODES.map((f, i) => {
+                //     const r = results[i]
+                //     if (f.display === 'yield') {
+                //         return {
+                //             label: f.label,
+                //             value: r?.yield != null ? `${Number(r.yield).toFixed(2)}%` : '—',
+                //         }
+                //     }
+                //     return {
+                //         label: f.label,
+                //         bid: r?.bidPrice != null ? formatNGN(r.bidPrice) : '—',
+                //         offer: r?.offerPrice != null ? formatNGN(r.offerPrice) : '—',
+                //     }
+                // }))
+
+                // Single request for all funds, filtered down to the 5 PACAM funds by secId
+                const funds = await fetchFundsList(token)
+                const bySecId = Object.fromEntries(funds.map(fund => [fund.secId, fund]))
+                setLiveFunds(FUND_CODES.map((f) => {
+                    const r = bySecId[f.code]
                     if (f.display === 'yield') {
                         return {
                             label: f.label,
@@ -70,8 +104,8 @@ const Navbar = () => {
                     }
                     return {
                         label: f.label,
-                        bid: r?.bidPrice != null ? formatNGN(r.bidPrice) : '—',
-                        offer: r?.offerPrice != null ? formatNGN(r.offerPrice) : '—',
+                        bid: r?.bidPrice != null ? formatPrice(r.bidPrice, r.currency) : '—',
+                        offer: r?.offerPrice != null ? formatPrice(r.offerPrice, r.currency) : '—',
                     }
                 }))
             } catch (e) {
