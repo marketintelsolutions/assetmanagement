@@ -7,7 +7,7 @@ import { FiMenu } from 'react-icons/fi'
 import Button from '../components/ui/Button'
 
 const FUND_CODES = [
-    { label: 'PACAM MMF', code: 'PMMF', display: 'bidOffer' },
+    { label: 'PACAM MMF', code: 'PMMF', display: 'bidOffer', showYield: true },
     { label: 'PACAM BF', code: 'PACAM_BF', display: 'bidOffer' },
     { label: 'PACAM FIF', code: 'PFIF', display: 'bidOffer' },
     { label: 'PACAM EQF', code: 'PEF', display: 'bidOffer' },
@@ -57,11 +57,12 @@ const Navbar = () => {
     const [isMenu, setIsMenu] = useState(false)
     const [activeItem, setActiveItem] = useState([])
     const [isItems, setIsItems] = useState(false)
-    const [liveFunds, setLiveFunds] = useState(FUND_CODES.map(f =>
-        f.display === 'yield'
-            ? { label: f.label, value: '—' }
-            : { label: f.label, bid: '—', offer: '—' }
-    ))
+    const [liveFunds, setLiveFunds] = useState(FUND_CODES.map(f => ({
+        label: f.label,
+        bid: '—',
+        offer: '—',
+        ...(f.showYield ? { yield: '—' } : {}),
+    })))
 
     useEffect(() => {
         let token = null
@@ -96,16 +97,13 @@ const Navbar = () => {
                 const bySecId = Object.fromEntries(funds.map(fund => [fund.secId, fund]))
                 setLiveFunds(FUND_CODES.map((f) => {
                     const r = bySecId[f.code]
-                    if (f.display === 'yield') {
-                        return {
-                            label: f.label,
-                            value: r?.yield != null ? `${Number(r.yield).toFixed(2)}%` : '—',
-                        }
-                    }
                     return {
                         label: f.label,
                         bid: r?.bidPrice != null ? formatPrice(r.bidPrice, r.currency) : '—',
                         offer: r?.offerPrice != null ? formatPrice(r.offerPrice, r.currency) : '—',
+                        ...(f.showYield ? {
+                            yield: r?.yield != null ? `${Number(r.yield).toFixed(2)}%` : '—',
+                        } : {}),
                     }
                 }))
             } catch (e) {
@@ -228,17 +226,14 @@ const Navbar = () => {
                         liveFunds.map((item, index) => (
                             <div key={`${copy}-${index}`} className='flex items-center gap-2 px-8 whitespace-nowrap text-sm md:text-base border-r border-white'>
                                 <span className='font-semibold'>{item.label}</span>
-                                {item.bid !== undefined ? (
-                                    <>
-                                        <span className='text-xs text-gray-300'>Bid</span>
-                                        <span className='text-sm text-secondaryRed'>{item.bid}</span>
-                                        <span className='text-xs text-gray-300'>Offer</span>
-                                        <span className='text-sm text-secondaryRed'>{item.offer}</span>
-                                    </>
-                                ) : (
+                                <span className='text-xs text-gray-300'>Bid</span>
+                                <span className='text-sm text-secondaryRed'>{item.bid}</span>
+                                <span className='text-xs text-gray-300'>Offer</span>
+                                <span className='text-sm text-secondaryRed'>{item.offer}</span>
+                                {item.yield !== undefined && (
                                     <>
                                         <span className='text-xs text-gray-300'>Yield</span>
-                                        <span className='text-sm text-secondaryRed'>{item.value}</span>
+                                        <span className='text-sm text-secondaryRed'>{item.yield}</span>
                                     </>
                                 )}
                             </div>
